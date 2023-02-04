@@ -1,0 +1,20 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace BookWorldStore.Models
+{
+    public class OrderDetail
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int order_detail_id { get; set; }
+
+        [ForeignKey("order_id")]
+        public Order order { get; set; }
+
+        [ForeignKey("book_id")]
+        public Book book { get; set; }
+
+        public int quantity { get; set; }
+    }
+}
