@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "_adminLayout";
+    ViewData["title"] = "Book";
+}
+<div style="width: 100%;height: 4rem;background-color: white; position: fixed; z-index: 1; box-shadow: 0 2px 5px gray">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="d-flex" id="search_box_product" role="search">
+                    <input class="form-control me-2" id="txt_search_pro" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" id="btn_search_product">Search</button>
+                    <a href="/Book/Create"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#new_product_model" style="width: 8rem;margin-left: 2rem">New product</button></a>
+                    <a href="/Book" style="margin-left: 3rem"><button class="btn btn-primary">Refresh</button></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+<div style="padding-top: 3rem; padding-bottom: 1rem" id="container_pro_list">
+@*    @foreach (Book book in ViewBag.books)
+    {
+        <div class="card" style="width: 18rem; margin-right: 1.5rem; margin-top: 2rem;display: inline-block">
+            <img src="~/img/product/1667916784405asdfas.jpg" class="card-img-top" alt="..." style="height: 18rem">
+            <div class="card-body">
+                <h5 class="card-title" style="color: rgb(102, 95, 170); font-size: 1.7rem;"> @book.title </h5>
+                <h5 class="card-title">Price: @book.price </h5>
+                <h5 class="card-title">Inventory: @book.inventory </h5>
+                <h5 class="card-title">Category: @book.category.name </h5>
+                <h5 class="card-title">Supplier: @book.supplier.name </h5>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="/Book/edit/@book.book_id"><button type="button" class="btn btn-primary">Update</button></a>
+                    <button type="button" class="btn btn-danger btn-delete-product" data-pro-id="@book.book_id">Delete</button>
+                </div>
+            </div>
+        </div>
+    }*@
+
+    @for (int i = 0; i < 10; i++)
+    {
+        <div class="card" style="width: 18rem; margin-right: 1.5rem; margin-top: 2rem;display: inline-block">
+            <img src="~/img/product/1667916784405asdfas.jpg" class="card-img-top" alt="..." style="height: 18rem">
+            <div class="card-body">
+                <h5 class="card-title" style="color: rgb(102, 95, 170); font-size: 1.7rem;"> title @i </h5>
+                <h5 class="card-title">Price: @i$</h5>
+                <h5 class="card-title">Inventory: @i </h5>
+                <h5 class="card-title">Category: cateName @i </h5>
+                <h5 class="card-title">Supplier: suppName @i </h5>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="/Book/edit/@i"><button type="button" class="btn btn-primary">Update</button></a>
+                    <button type="button" class="btn btn-danger btn-delete-product" data-pro-id="@i">Delete</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

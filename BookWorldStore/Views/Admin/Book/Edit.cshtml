@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_adminLayout";
+    ViewData["title"] = "Book";
+}
+
+@model Book
+<div style="text-align: center">
+    <h1 class="mt-3">Edit Book</h1>
+</div>
+<div class="add-form mt-5 col-sm-11">
+    <form asp-controller="Product" asp-action="Create" method="post" id="pro_form">
+        <div class="mb-4">
+            <label for="pro_title" class="form-label">Title</label>
+            <input type="text" asp-for="title" class="form-control" id="pro_title" placeholder="Book title" style="display: inline-block">
+            <span asp-validation-for="title" class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
+            <label for="pro_author" class="form-label">Author</label>
+            <input type="text" asp-for="author" class="form-control" id="pro_author" placeholder="author" style="display: inline-block">
+            <span asp-validation-for="author" class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
+            <label for="pro_cate" class="form-label">Category</label>
+            <select class="form-control" asp-for="category" id="pro_cate" style="display: inline-block">
+                <option value="">Choose category</option>
+                @for (int i = 0; i < 10; i++)
+                {
+                    <option value="@i">cate @i </option>
+                }
+            </select>
+            <span asp-validation-for="category" class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
+            <label for="pro_sup" class="form-label">Supplier</label>
+            <select class="form-control" asp-for="supplier" id="pro_sup" style="display: inline-block">
+                <option value="">Choose supplier</option>
+                @for (int i = 0; i < 10; i++)
+                {
+                    <option value="@i">sup @i </option>
+                }
+            </select>
+            <span asp-validation-for="supplier" class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
+            <label for="pro_des" class="form-label">Description</label>
+            <input type="text" asp-for="des" class="form-control" id="pro_des" placeholder="author" style="display: inline-block">
+            <span asp-validation-for="des" class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
+            <label for="pro_price" class="form-label">Price</label>
+            <input type="number" asp-for="price" class="form-control" id="pro_price" placeholder="price" style="display: inline-block">
+            <span asp-validation-for="price" class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
+            <label for="pro_quantity" class="form-label">Inventory</label>
+            <input type="number" class="form-control" id="pro_quantity" placeholder="quantity" style="display: inline-block">
+            <span class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
+            <label for="img_preview" class="form-label">Image</label>
+            <div style="display: block">
+                <img src="/images/decoration/image-product.png" alt="..." class="img-thumbnail" id="img_preview" style="width: 13rem;">
+            </div>
+            <input type="file" name="proImage" id="pro_img" hidden>
+            <button type="button" class="btn btn-primary mt-3" id="btn_open_dialog_image">Choose image</button>
+            <span id="empty_img" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none; position: absolute; margin-left: 1rem"></span>
+        </div>
+        <div style="text-align: end">
+            <input type="submit" class="btn btn-success" id="btn_submit_product" value="Add">
+            <a href="/product"><input type="button" class="btn btn-warning" value="cancel"></a>
+        </div>
+    </form>
+</div>
+@section Script{
+    <partial name="_ValidationScriptsPartial" />
+}

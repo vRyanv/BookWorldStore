@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Store</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="~/css/client/_homeShareLayout.css" rel="stylesheet" type="text/css" />
+    @await RenderSectionAsync("Style", required:false)
+</head>
+<body>
+
+
+<div id="templatemo_container">
+     <!-- Navbar -->
+    <div id="templatemo_menu">
+        <ul>
+            <li><a href="index.html" class="current">Home</a></li>
+                <li><a href="subpage.html">Profile</a></li>
+                <li><a href="subpage.html">Cart</a></li>
+            <li><a href="subpage.html">Manager</a></li>
+            <li style="float:right"><a href="#">Login</a></li>
+        </ul>
+    </div> 
+    <!-- end Navbar -->
+
+    <!-- banner -->
+    <div id="templatemo_header">
+        <div id="templatemo_special_offers">
+            <p>
+                <span>25%</span> discounts for
+                purchase over $80
+            </p>
+        </div>
+
+                <div id="templatemo_new_books">
+            <ul>
+                <li>Suspen disse</li>
+                <li>Maece nas metus</li>
+                <li>In sed risus ac feli</li>
+            </ul>
+        </div>
+    </div> 
+    <!-- end banner -->
+    
+
+   @RenderBody()
+
+    <!--footer -->
+    <div id="templatemo_footer">
+        <a href="subpage.html">Home</a> | <a href="subpage.html">Search</a> | <a href="subpage.html">Books</a> | <a href="#">New Releases</a> | <a href="#">FAQs</a> | <a href="#">Contact Us</a><br />
+        Copyright © 2024 <a href="#"><strong>Your Company Name</strong></a>
+    </div>
+    <!-- end of footer -->
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+@await RenderSectionAsync("Script", required:false)
+</html>
