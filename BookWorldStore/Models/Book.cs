@@ -14,6 +14,8 @@ namespace BookWorldStore.Models
 
         [ForeignKey("sup_id")]
         public Supplier supplier { get; set; }
+        public int inventory_num { get; set; }
+        public string image { get; set; }
         public string title { get; set; }
         public string des { get; set; }
         public string author { get; set; }
