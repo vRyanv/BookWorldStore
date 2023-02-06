@@ -11,7 +11,7 @@ namespace BookWorldStore.Models
 
         [Required(ErrorMessage ="Category name is required")]
         [StringLength(20, ErrorMessage ="Category name can't over 20 character")]
-        public int name { get; set; }
+        public string name { get; set; }
         public int status { get; set; }
 
         public List<Book> books { get; set; }

@@ -10,7 +10,7 @@ namespace BookWorldStore.Models
         public int sup_id { get; set; }
 
         [Required(ErrorMessage = "Supplier name is required")]
-        public int name { get; set; }
+        public string name { get; set; }
         
         public virtual ICollection<Book> books { get; set; }
     }
