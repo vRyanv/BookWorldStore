@@ -24,14 +24,12 @@ namespace BookWorldStore.Controllers
         }
         public IActionResult test()
         {
-           BookViewModel bookViewModel = new BookViewModel();
-            List<BookViewModel> books =bookViewModel.Showall(dbContext);
-            foreach (BookViewModel book in books)
-            {
-                Console.WriteLine(book.book_id);
-                Console.WriteLine(book.title);
-               
+           BookViewModel bookViewModel = new BookViewModel(dbContext);
+            List<BookViewModel> books =bookViewModel.Showall();
+            foreach (var b in books) {
+                Console.WriteLine($"{b.title} {b.cate_name} {b.sup_name}");
             }
+        
            return Redirect("index");
            
         }
