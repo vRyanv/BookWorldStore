@@ -16,5 +16,6 @@
         public float price { get; set; }
 
         public BookViewModel() { }
+        //something
     }
 }
