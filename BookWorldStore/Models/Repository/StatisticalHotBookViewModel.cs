@@ -33,7 +33,7 @@ namespace BookWorldStore.Models.Repository
                           {
                               Id=g.Key,
                               quantity=g.Sum(x=>x.od.quantity)
-                          }).ToList();
+                          }).ToList().OrderByDescending(x=>x.quantity).Take(5);
             foreach (var hotbook in result)
             {
                 hotBooks.Add(new StatisticalHotBookViewModel(db, hotbook.Id, getTitle(hotbook.Id),hotbook.quantity));
