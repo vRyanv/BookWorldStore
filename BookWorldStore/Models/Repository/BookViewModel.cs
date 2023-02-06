@@ -53,19 +53,6 @@ namespace BookWorldStore.Models.Repository
                     result.author, result.inventory_num, result.image, result.publishing_year, result.price,
                     result.category.cate_id, result.category.name, result.supplier.sup_id, result.supplier.name));
             }
-            //var result = (from b in db.books
-            //              join c in db.categories
-            //              on b.category.cate_id equals c.cate_id
-            //              join s in db.suppliers
-            //              on b.supplier.sup_id equals s.sup_id
-            //              select new
-            //              {
-            //                  book = new BookViewModel(db, b.book_id, b.title, b.des,
-            //              b.author, b.inventory_num,b.image,b.publishing_year,
-            //              b.price, c.cate_id, c.name, s.sup_id,s.name)
-            //              }
-            //             ).ToList();
-
             return books;
         }
       
