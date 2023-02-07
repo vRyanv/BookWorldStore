@@ -1,11 +1,12 @@
 ﻿const chartApp = {
     variables: {
-        canvasID: "",
-        canvasChart: $(canvasID)[0].getContext('2d'),
+        canvasChart: null,
         revenueProductChart: null
     },
-    createBlankChart : function(canvasID) {
-        chartApp.variables.canvasID = canvasID
+    setUp: function(canvasID){
+        chartApp.variables.canvasChart = $(canvasID)[0].getContext('2d')
+    },
+    createBlankChart : function() {
         chartApp.variables.revenueProductChart = new Chart(
             chartApp.variables.canvasChart
             , {
