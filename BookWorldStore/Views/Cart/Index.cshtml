@@ -4,10 +4,61 @@
 }
 
 @section Style{
-    <link href="~/css/client/profile.css" rel="stylesheet" type="text/css" />
-}
 
+}
+<div class="" style="background-color: rgb(102, 95, 170); text-align: center;margin-top:1rem;margin:.5rem">
+    <button type="button" class="yellow-button" id="btn_get_order" style="margin-top: .5rem; float: right; background: green">
+        Payment
+    </button>
+    <button type="button" id="btn_open_order_tab" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="margin-top: .5rem; float: right" hidden>
+    </button>
+    <a href="/Cart/OldOrder">
+        <button type="button" class="yellow-button" style="margin-top: .5rem; float: right; margin-right: 1rem; background: rgb(151, 127, 34)">
+            Old order
+        </button>
+    </a>
+</div>
+
+<div id="cart_content">
+    <table class="table pt-10" style="color:white; font-size:12px">
+        <thead>
+            <tr style="text-align: center">
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total price</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center;">
+            @for (int i = 0; i < 10; i++)
+            {
+                <tr>
+                    <th scope="row">@(i+1) </th>
+                    <th scope="row">
+                        <img style="width: 5rem; height: 7rem" src="~/img/decoration/templatemo_image_02.jpg" alt="">
+                    </th>
+                    <td>name @i</td>
+                    <td>1$</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary btn-reduce" data-pro-id="@i" data-order-detail-id="@i">-</button>
+                            <input id="quantity_pro_@i" type="text" style="text-align: center; vertical-align: middle; width: 3rem; border: none" value="@i" readonly>
+                            <button type="button" class="btn btn-info btn-increase" data-pro-id="<%= cartList[i].pro_id %>" data-order-detail-id="@i">+</button>
+                        </div>
+                    </td>
+                    <td id="total_price_@i">@i</td>
+                    <td>
+                        <button type="button" class="yellow-button" data-order-detail-id="@i">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Script{
-    <script src="~/js/client/searchBox.js"></script>
+
 }

@@ -1,0 +1,52 @@
+﻿<!-- Change information model -->
+<div class="modal fade" id="change_infor_model" tabindex="-1" aria-labelledby="change_infor_model" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content color-popup-model">
+            <form id="change_infor_form">
+                <div class="modal-header">
+                    <h1 class="modal-title title-model-custom" id="exampleModalLabel">Change Information</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body body-model-custome">
+                    <label for="user_phone" class="form-label">Phone</label>
+                    <input type="text" id="user_phone" class="form-control" style="margin-bottom:1rem"/>
+                    <label for="user_address" class="form-label">Address</label>
+                    <input type="text" id="user_address" class="form-control" style="margin-bottom:1rem"/>
+                    <label for="user_gender" class="form-label">Gender</label>
+                    <input type="radio" name="user_gender" value="male" style="cursor:pointer; margin-left:2rem;" /> <span style="color:white">Male</span>
+                    <input type="radio" name="user_gender" value="female" style="cursor:pointer; margin-left:2rem;" /> <span style="color:white">Female</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="black-button" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btn_ok_change_infor" class="yellow-button">OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Change password model -->
+<div class="modal fade" id="change_pass_model" tabindex="-1" aria-labelledby="change_pass_model" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content color-popup-model">
+            <form id="change_infor_form">
+                <div class="modal-header">
+                    <h1 class="modal-title title-model-custom">Change password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body body-model-custome">
+                    <label for="user_current_pass" class="form-label">Current password</label>
+                    <input type="password" style="margin-bottom:1rem" id="user_current_pass" class="form-control" />
+                    <label for="user_new_pass" class="form-label">New password</label>
+                    <input type="password" style="margin-bottom:1rem" id="user_new_pass" class="form-control" />
+                    <label for="user_confirm_pass" class="form-label">Confirm password</label>
+                    <input type="password" id="user_confirm_pass" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="black-button" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="yellow-button" id="btn_ok_change_pass">OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

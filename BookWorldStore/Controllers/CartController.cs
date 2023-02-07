@@ -15,5 +15,10 @@ namespace BookWorldStore.Controllers
         {
             return View();
         }
+
+        public IActionResult OldOrder()
+        {
+            return View();
+        }
     }
 }
