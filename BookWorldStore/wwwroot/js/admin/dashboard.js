@@ -1,24 +1,12 @@
-﻿$(document).ready(function () {
-    const controller = $('.controller-in-dashboard')
-    const dashboard = {
-        listenerEvent: function (){
-            // select controller
-            controller.click(function (e){
-                let name = $(this).data('page-name')
-                if(name !== dashboard.getCurrentURL())
-                {
-                    location.href = '/' + name
-                }
-            })
+﻿$(document).ready(function(){
+    const dashboardApp = {
+        renderBlankChart: function (){
+            chartApp.createBlankChart("#product_statistic_chart")
         },
-        getCurrentURL: function (){
-            var locationCurrent = $(location).attr("href");
-            var indexSubstring = locationCurrent.lastIndexOf('/');
-            return url = locationCurrent.substring(indexSubstring + 1);
-        },
-        run: function (){
-            this.listenerEvent()
+        run: function() {
+            dashboardApp.renderBlankChart();
         }
     }
-    dashboard.run()
+
+    dashboardApp.run()
 })

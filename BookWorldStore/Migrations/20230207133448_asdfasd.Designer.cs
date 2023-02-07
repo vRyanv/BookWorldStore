@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookWorldStore.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20230203151404_5thMigration")]
-    partial class _5thMigration
+    [Migration("20230207133448_asdfasd")]
+    partial class asdfasd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,13 @@ namespace BookWorldStore.Migrations
                     b.Property<string>("des")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("inventory_num")
+                        .HasColumnType("int");
 
                     b.Property<float>("price")
                         .HasColumnType("real");
@@ -73,9 +80,10 @@ namespace BookWorldStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cate_id"), 1L, 1);
 
-                    b.Property<int>("name")
+                    b.Property<string>("name")
+                        .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -83,6 +91,85 @@ namespace BookWorldStore.Migrations
                     b.HasKey("cate_id");
 
                     b.ToTable("categories");
+                });
+
+            modelBuilder.Entity("BookWorldStore.Models.Order", b =>
+                {
+                    b.Property<int>("order_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("order_id"), 1L, 1);
+
+                    b.Property<DateTime>("delivery_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("order_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("total")
+                        .HasColumnType("real");
+
+                    b.Property<int>("user_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("order_id");
+
+                    b.HasIndex("user_id");
+
+                    b.ToTable("orders");
+                });
+
+            modelBuilder.Entity("BookWorldStore.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("order_detail_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("order_detail_id"), 1L, 1);
+
+                    b.Property<int>("book_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("order_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("order_detail_id");
+
+                    b.HasIndex("book_id");
+
+                    b.HasIndex("order_id");
+
+                    b.ToTable("orderDetails");
+                });
+
+            modelBuilder.Entity("BookWorldStore.Models.Requirement", b =>
+                {
+                    b.Property<int>("req_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("req_id"), 1L, 1);
+
+                    b.Property<int>("cate_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("req_id");
+
+                    b.HasIndex("cate_id");
+
+                    b.ToTable("requirements");
                 });
 
             modelBuilder.Entity("BookWorldStore.Models.Supplier", b =>
@@ -93,8 +180,9 @@ namespace BookWorldStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("sup_id"), 1L, 1);
 
-                    b.Property<int>("name")
-                        .HasColumnType("int");
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("sup_id");
 
@@ -161,6 +249,47 @@ namespace BookWorldStore.Migrations
                     b.Navigation("category");
 
                     b.Navigation("supplier");
+                });
+
+            modelBuilder.Entity("BookWorldStore.Models.Order", b =>
+                {
+                    b.HasOne("BookWorldStore.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("user_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("BookWorldStore.Models.OrderDetail", b =>
+                {
+                    b.HasOne("BookWorldStore.Models.Book", "book")
+                        .WithMany()
+                        .HasForeignKey("book_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookWorldStore.Models.Order", "order")
+                        .WithMany()
+                        .HasForeignKey("order_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("book");
+
+                    b.Navigation("order");
+                });
+
+            modelBuilder.Entity("BookWorldStore.Models.Requirement", b =>
+                {
+                    b.HasOne("BookWorldStore.Models.Category", "category")
+                        .WithMany()
+                        .HasForeignKey("cate_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("category");
                 });
 
             modelBuilder.Entity("BookWorldStore.Models.Category", b =>
