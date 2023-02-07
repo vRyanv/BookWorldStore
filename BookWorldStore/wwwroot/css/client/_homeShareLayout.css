@@ -6,6 +6,34 @@ CSS Credit: http://www.templatemo.com/
 Book Store Template 
 http://www.templatemo.com/preview/templatemo_086_book_store 
 */
+
+.yellow-button {
+    text-align: center;
+    display: block;
+    width: fit-content;
+    padding: 4px 10px 5px 9px;
+    background: url(../../img/decoration/templatemo_btn_02.jpg) no-repeat;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-decoration: none;
+    background-size: cover;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.black-button {
+    clear: both;
+    text-align: center;
+    display: block;
+    width: 100px;
+    padding: 4px 0 5px 0;
+    margin-bottom: 10px;
+    background: url(../../img/decoration/templatemo_btn_01.jpg) no-repeat;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -306,7 +334,7 @@ img {
 }
 
 .product_info p {
-    margin-bottom: 15px;
+    margin-bottom: 7px;
 }
 
 /* end of content */

@@ -7,21 +7,18 @@ namespace BookWorldStore.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
         private readonly AppDBContext dbContext;
         public HomeController(AppDBContext dbContext)
         {
             this.dbContext = dbContext;
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+
         public IActionResult test()
         {
             //List<BookViewModel> books = new BookViewModel(dbContext).Showall();
@@ -34,7 +31,12 @@ namespace BookWorldStore.Controllers
                 Console.WriteLine($"{hotbook.title}-{hotbook.quantity}");
             }
            return Redirect("index");
-           
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

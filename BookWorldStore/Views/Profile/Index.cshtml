@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.title = "Profile";
+    Layout = "_CLientLayout";
+}
+
+@section Style{
+    <link href="~/css/client/profile.css" rel="stylesheet" type="text/css" />
+}
+
+
+<div id="body_profile">
+    <div id="gradient"></div>
+    <div id="card">
+        <img src="~/img/decoration/avatar_user.png" />
+        <h2 style="margin-bottom: 1rem">Profile</h2>
+        <p>Email: something@gmail.com</p>
+        <p>Gende: female</p>
+        <p>Phone: 0123456789</p>
+        <p>Address: Can tho</p>
+        <span class="left bottom yellow-button">Change information</span>
+        <span class="right bottom yellow-button">Change password</span>
+    </div>
+</div>
+@section Script{
+    <script src="~/js/client/searchBox.js"></script>
+}
