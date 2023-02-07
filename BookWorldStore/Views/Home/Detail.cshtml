@@ -7,7 +7,6 @@
     <link href="~/css/client/searchBox.css" rel="stylesheet" type="text/css" />
 }
 
-
 <div id="templatemo_content">
 <div id="templatemo_content_left">
     <div class="templatemo_content_left_section">
@@ -43,7 +42,7 @@
     <!-- content right -->
     <div id="templatemo_content_right">
 
-    <div style="position:relative; height:3rem">
+        <div style="position:relative; height:3rem">
             <p style="font-size: 12px;color: rgb(203, 199, 80);font-weight: bold;">
                 Search
             </p>
@@ -54,44 +53,41 @@
                 </div>
                 <span class="close" onclick="searchToggle(this, event);"></span>
             </div>
-    </div>
+        </div>
 
-        @for (int i = 0; i < 10; i++)
-        {
-        
-            <div class="templatemo_product_box" style="padding:1rem">
+            <div class="templatemo_product_box" style="padding:1rem; height: 27rem">
                 <h1>Photography  <span>(by Best Author)</span></h1>
-                <img src="~/img/decoration/templatemo_image_01.jpg" alt="image" style="height:9rem;width:6rem"/>
+                <img src="~/img/decoration/templatemo_image_01.jpg" alt="image" style="height:9rem;width:6rem" />
                 <div class="product_info">
-                <p style="overflow: hidden; text-overflow: ellipsis; height: 8.9rem; font-size:larger">
-                        Someone, somebody, something, somewhere are indefinite pronouns. They function in a similar way to some. We use them in affirmative clauses and in questions expecting a particular answer. We can use them to refer to both general and specific people or things.
-                </p>
-                    <h3 style="margin:0;color:forestgreen">$<p style="margin:0;color:rgb(203, 199, 80);display:inline-block">55</p> </h3>
+
+                    <h3 style="margin:0;font-size:small">Author: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">Ryan</p> </h3>
                     <h3 style="font-size:small;margin:0;">Category: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">something</p> </h3>
+                    <h3 style="font-size:small;margin:0;">Supplier: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">something</p> </h3>
+                    <h3 style="font-size:small;margin:0;"> Publishing: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">11/11/2202</p> </h3>
+                    <h3 style="margin:0;color:forestgreen">$<p style="margin:0;color:rgb(203, 199, 80);display:inline-block">55</p> </h3>
                     <h3 style="font-size:small">Available: <p style="color:rgb(203, 199, 80);display:inline-block">1</p> </h3>
+                    <p style="overflow: hidden; text-overflow: ellipsis; height: 8.9rem; font-size:larger">
+                        Someone, somebody, something, somewhere are indefinite pronouns. They function in a similar way to some. We use them in affirmative clauses and in questions expecting a particular answer. We can use them to refer to both general and specific people or things.
+                    </p>
                 </div>
                 <div style="float:left">
-                <div class="buy_now_button" style="margin:0">
-                    <a asp-controller="Cart" asp-action="Add">Add to cart</a>
-                </div>
-                <div class="detail_button" style="margin:0"><a asp-controller="Home" asp-action="Detail" asp-route-id="1">Detail</a></div>
+                    <div class="buy_now_button" style="margin:0">
+                        <a asp-controller="Cart" asp-action="Add">Add to cart</a>
+                    </div>
                 </div>
             </div>
             <div class="cleaner_with_height">&nbsp;</div>
-        }
 
-
-            <div class="cleaner_with_height">&nbsp;</div>
-        </div> 
-        <!-- end content right -->
 
         <div class="cleaner_with_height">&nbsp;</div>
     </div>
-    <!-- end of content -->
+    <!-- end content right -->
 
-    @section Script{
-        <script src="~/js/client/searchBox.js"></script>
-    }
+    <div class="cleaner_with_height">&nbsp;</div>
+</div> <!-- end of content -->
+@section Script{
+    <script src="~/js/client/searchBox.js"></script>
+}
 
 
 
