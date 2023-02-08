@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "_adminLayout";
+    ViewBag.title = "Order";
+}
+
+<div style="padding-top: 5rem">
+    <table class="table table-hover pt-10">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">Order date</th>
+                <th scope="col">Delivery date</th>
+                <th scope="col">Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < 10; i++)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>name @i</td>
+                    <td>phone @i</td>
+                    <td>address @i</td>
+                    <td>order date @i</td>
+                    <td>delivertydate @i</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary btn-view-detail" data-order-id="<%= orderList[i].order_id %>">view</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<button data-bs-toggle="modal" id="btn_open_detail_model" data-bs-target="#order_detail_model" style="width: 8rem;margin-left: 2rem" hidden></button>
+<!-- Modal -->
+<div class="modal fade" id="order_detail_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog  modal-dialog-centered " style="max-width: 68rem;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Order detail</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover pt-10">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-order-detail-table">
+                        <!-- render in js-->
+                        @for (int i = 0; i < 10; i++)
+                        {
+                            <tr>
+                                <th scope="row">@i</th>
+                                <td>name @i</td>
+                                <th scope="row">
+                                    <img style="width: 5rem; height: 5rem" src="~/img/decoration/templatemo_image_01.jpg">
+                                </th>
+                                <td> 123</td>
+                                <td>  @i </td>
+                                <td> 321 </td>
+                            </tr>
+                        }
+                        <!-- render in js-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <p id="total_price_order_detail" style="text-align: center; color: mediumpurple; font-weight: bold"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

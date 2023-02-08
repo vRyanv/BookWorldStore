@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>@ViewData["title"]</title>
+    <title>@ViewBag.title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">*@
     <partial name="_ShareLibCss" />
@@ -72,6 +72,6 @@
     </div>
 </body>
 <partial name="_ShareLibJS" />
-<script src="~/js/admin/dashboardRemote.js"></script>
+<script src="~/js/admin/dashboardRemote.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Script", required:false)
 </html>

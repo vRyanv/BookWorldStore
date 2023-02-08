@@ -1,7 +1,8 @@
 ﻿$(document).ready(function(){
     const dashboardApp = {
         renderBlankChart: function (){
-            chartApp.createBlankChart("#product_statistic_chart")
+            chartApp.setUp("#product_statistic_chart")
+            chartApp.createBlankChart()
         },
         run: function() {
             dashboardApp.renderBlankChart();

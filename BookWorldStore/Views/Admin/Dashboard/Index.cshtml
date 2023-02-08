@@ -4,12 +4,28 @@
 }
 
 @section Style{
-
+    <link src="~/lib/bootstrap/dist/css/bootstrap-icons.css" asp-append-version="true" rel="stylesheet" type="text/css"></link>
 }
 
-<canvas id="product_statistic_chart" style="max-width: 95%; max-height: 88%"></canvas>
+<div style="width: 100%;height: 4rem;background-color: white; position: fixed; z-index: 1; box-shadow: 0 2px 5px gray">
+    <nav class="navbar">
+        <div class="" style="padding-left: 3rem;padding-top: 0.3rem;">
+            Date:
+            <input type="text" value="@DateTime.Now.ToShortDateString()" id="txt_from_date" placeholder="yyyy/mm/dd"> to
+            <input type="text" value="@DateTime.Now.ToShortDateString()" id="txt_to_date" placeholder="yyyy/mm/dd">
+            <button title="Filter" class="btn btn-primary" id="btn_search_revenue_by_date" style="vertical-align: bottom">
+                <i class="bi-search"></i>
+                </button>
+        </div>
+    </nav>
+</div>
+<div id="type-statistical" style="padding-top: 6rem">
+    <div id="total_revenue">Total revenue:</div>
+    <canvas id="product_statistic_chart" style="max-width: 95%; max-height: 88%"></canvas>
+</div>
 
 @section Script{
-@*    <script src="~/js/admin/chart.js"></script>
-    <script src="~/js/admin/dashboard.js"></script>*@
+    <script src="~/lib/chart/chart.js" asp-append-version="true"></script>
+    <script src="~/js/admin/mychart.js" asp-append-version="true"></script>
+    <script src="~/js/admin/dashboard.js" asp-append-version="true"></script>
 }

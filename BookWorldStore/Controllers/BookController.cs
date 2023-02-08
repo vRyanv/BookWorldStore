@@ -13,13 +13,6 @@ namespace BookWorldStore.Controllers
         }
         public IActionResult Index()
         {
-            List<BookViewModel> bookViewModel = new BookViewModel(dbContext).Showall();
-
-            foreach (var hotbook in bookViewModel)
-            {
-                Console.WriteLine($"a{hotbook.title}-{hotbook.sup_id}");
-            }
-
             return View("~/Views/Admin/Book/Index.cshtml");
         }
 

@@ -39,11 +39,11 @@
     padding: 1rem;
     padding-left: 2rem;
     transition: padding-left .5s;
+    font-weight: bold;
 }
 
     .controller-in-dashboard:hover {
         cursor: pointer;
-        font-weight: bold;
         color: rgb(102, 95, 170);
         padding-left: 5rem;
     }
