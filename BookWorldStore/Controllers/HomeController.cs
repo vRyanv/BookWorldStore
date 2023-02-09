@@ -23,8 +23,18 @@ namespace BookWorldStore.Controllers
             return View();
         }
 
+		public IActionResult Login()
+		{
+			return View("~/Views/Service/Login.cshtml");
+		}
 
-        public IActionResult test()
+		public IActionResult Register()
+		{
+			return View("~/Views/Service/Register.cshtml");
+		}
+
+
+		public IActionResult test()
         {
             //List<BookViewModel> books = new BookViewModel(dbContext).Showall();
             //foreach (var b in books) {

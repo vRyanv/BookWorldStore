@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="assets/images/decoration/icon-web.png">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/client/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="screen" style="height: 727px">
+            <div class="screen__content">
+                <div class="login" style="padding-top: 4rem">
+                    <div class="login__field">
+                        <i class="login__icon bi-person"></i>
+                        <input type="text" class="login__input" id="txt_username" placeholder="Email">
+                        <span id="empty_username" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
+                        <span class="validate-error bi-exclamation-lg" id="error_username"></span>
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon bi-lock"></i>
+                        <input type="password" id="txt_pass" class="login__input" placeholder="Password">
+                        <span id="empty_pass" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
+                        <span class="validate-error bi-exclamation-lg" id="error_pass"></span>
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon bi-lock"></i>
+                        <input type="password" id="txt_confirm_pass" class="login__input" placeholder="Confirm password">
+                        <span id="empty_confirm_pass" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
+                        <span class="validate-error bi-exclamation-lg" id="error_confirm_pass">Confirm password not match</span>
+                    </div>
+                    <div class="login__field">
+                        <i class="bi-yelp" style="color:#7875B5"></i>
+                        <input type="radio" name="gender" id="" class="" style="margin-left:1rem;cursor:pointer"> Male
+                        <input type="radio" name="gender" id="" class="" style="margin-left:2rem;cursor:pointer"> Female
+                        <span id="empty_full_name" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
+                        <span class="validate-error bi-exclamation-lg" id="error_full_name"></span>
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon bi-telephone"></i>
+                        <input type="text" id="txt_phone" class="login__input" placeholder="Phone">
+                        <span id="empty_phone" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
+                        <span class="validate-error bi-exclamation-lg" id="error_phone"></span>
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon bi-geo-alt"></i>
+                        <input type="text" id="txt_address" class="login__input" placeholder="Address">
+                        <span id="empty_address" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
+                        <span class="validate-error bi-exclamation-lg" id="error_address"></span>
+                    </div>
+                    <button class="button login__submit" id="register_submit">
+                        <span class="button__text">Register</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>
+                    <div id="mess_error_login" style="margin-top: 1rem; color: red;   text-shadow: 1px 1px white; display: none">
+                        password or username wrong
+                    </div>
+                </div>
+                <div class="social-login" style="bottom: -100px;">
+                    <a asp-controller="Home" asp-action="Login" style="color: white; text-decoration: none; font-size: smaller"><h3>Already account ?</h3></a>
+                </div>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+        <div class="boxes">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+    </div>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+</body>
+</html>
