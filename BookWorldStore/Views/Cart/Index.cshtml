@@ -10,13 +10,9 @@
     <button type="button" class="yellow-button" id="btn_get_order" style="margin-top: .5rem; float: right; background: green">
         Payment
     </button>
-    <button type="button" id="btn_open_order_tab" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="margin-top: .5rem; float: right" hidden>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#history_model" class="yellow-button" style="margin-top: .5rem; float: right; margin-right: 1rem; background: rgb(151, 127, 34)">
+        Old order
     </button>
-    <a href="/Cart/OldOrder">
-        <button type="button" class="yellow-button" style="margin-top: .5rem; float: right; margin-right: 1rem; background: rgb(151, 127, 34)">
-            Old order
-        </button>
-    </a>
 </div>
 
 <div id="cart_content">
@@ -58,6 +54,22 @@
         </tbody>
     </table>
 </div>
+
+<!-- Change password model -->
+<div class="modal fade" id="history_model" tabindex="-1" aria-labelledby="history_model" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content color-popup-model">
+                <div class="modal-header">
+                    <h1 class="modal-title title-model-custom">History</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body body-model-custome">
+                <partial name="OldOrderPartial" />
+                </div>
+        </div>
+    </div>
+</div>
+
 
 @section Script{
 
