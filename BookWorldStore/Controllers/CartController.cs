@@ -1,4 +1,5 @@
 ﻿using BookWorldStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookWorldStore.Controllers
@@ -11,11 +12,13 @@ namespace BookWorldStore.Controllers
             this.dbContext = dbContext;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public IActionResult OldOrder()
         {
             return View();

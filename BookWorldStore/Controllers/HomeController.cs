@@ -1,5 +1,6 @@
 ﻿using BookWorldStore.Models;
-using BookWorldStore.Repository;
+using BookWorldStore.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
