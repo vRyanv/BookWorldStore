@@ -13,8 +13,7 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.RequireHttpsMetadata = false;
-        options.SaveToken = true;
+
         options.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
@@ -28,7 +27,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             OnMessageReceived = context =>
             {
-                if (context.Request.Cookies.TryGetValue("Token", out string token))
+                if (context.Request.Cookies.TryGetValue("__UserToken", out string token))
                 {
                     context.Token = token;
                 }
@@ -36,14 +35,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             },
             OnChallenge = context =>
             {
-                context.Response.StatusCode = 401;
-                context.HandleResponse();
-                context.Response.Redirect("/Home/Login");
+                //if(context.Response.StatusCode == 401 || context.Response.StatusCode == 403)
+                //{
+                    context.Response.StatusCode = 302;
+                    context.Response.Redirect("/Home/Login");
+                    context.HandleResponse();
+                //}
+
                 return Task.CompletedTask;
             }
         };
 
     });
+
 
 
 builder.Services.AddDistributedMemoryCache();
@@ -59,13 +63,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",

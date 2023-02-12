@@ -1,16 +1,18 @@
 ﻿using APIService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Xml.Linq;
 
 namespace APIService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class TokenController : Controller
+    [Route("api/[Controller]/[Action]")]
+    public class TokenController : ControllerBase
     {
         private readonly APIContext _APIContext;
         private readonly IConfiguration configuration;
@@ -21,20 +23,20 @@ namespace APIService.Controllers
         }
 
         [HttpPost]
+        [Consumes("application/json")]
         public async Task<IActionResult> Login(UserViewModel _user)
         {
             _user = await AuthenUser(_user);
-            
-            if(_user.role != "")
+            if (_user.role != "")
             {
                 string tokenStr = GenerateJSONWebToken(_user);
                 Response.Cookies.Append("__UserToken", tokenStr);
-                return Ok(Json("login success"));
+                return Ok(new { role = _user.role, token=tokenStr });
             }
             return Unauthorized();
         }
 
-        public async Task<UserViewModel> AuthenUser(UserViewModel _user)
+        private async Task<UserViewModel> AuthenUser(UserViewModel _user)
         {
            var result = await _APIContext.users.Where(u => u.email.Equals(_user.email)&& u.password.Equals(_user.password)).ToListAsync();
 
@@ -45,14 +47,13 @@ namespace APIService.Controllers
             return _user;
         }
 
-        public string GenerateJSONWebToken(UserViewModel user)
+        private string GenerateJSONWebToken(UserViewModel user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var claims = new[] {
-                                new Claim(ClaimTypes.Email, user.email),
-                                new Claim(ClaimTypes.Role, user.role),
+                                new Claim("email", user.email),
+                                new Claim("role", user.role),
                                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
 
@@ -64,6 +65,7 @@ namespace APIService.Controllers
                     expires: DateTime.Now.AddMinutes(120),
                     signingCredentials: signIn
                 );
+
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodetoken;
         }
@@ -71,7 +73,14 @@ namespace APIService.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return Json("API is running");
+            return Ok("API is running");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "client")]
+        public IActionResult Get()
+        {
+            return Ok("asd");
         }
     }
 }
