@@ -1,0 +1,28 @@
+@startuml
+class Program{}
+class BookController{
+    - dbContext : AppDBContext
+    + BookController(dbContext:AppDBContext)
+    + Index() : IActionResult
+    + Create() : IActionResult
+    + Create(book: Book) : Task<IActionResult>
+    + Edit(id : int) : Task<IActionResult>
+    + Edit(id : int, book : Book) : Task<IActionResult> 
+    + Delete(id : int) : Task<IActionResult> 
+    + Search(title : string) : Task<IActionResult> 
+}
+
+class BookViewModel{
+    - dbContext : AppDBContext
+    + BookViewModel(dbContext:AppDBContext)
+    + Index() : IActionResult
+    + Create() : IActionResult
+    + Create(book: Book) : Task<IActionResult>
+    + Edit(id : int) : Task<IActionResult>
+    + Edit(id : int, book : Book) : Task<IActionResult> 
+    + Delete(id : int) : Task<IActionResult> 
+    + Search(title : string) : Task<IActionResult> 
+}
+
+
+@enduml

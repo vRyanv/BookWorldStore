@@ -1,4 +1,5 @@
 ﻿using BookWorldStore.Models;
+using BookWorldStore.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,8 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claim = identity.Claims.ToList();
-            var userEmail = claim[1].Value;
-            ViewBag.userId = userEmail;
+            User user = UserUtils.Instance.GetUser(HttpContext);
+            ViewBag.user_mail = user.email;
             return View();
         }
 

@@ -11,6 +11,7 @@ namespace BookWorldStore.Models
 
         [Required(ErrorMessage = "Supplier name is required")]
         public string name { get; set; }
+        public string address { get; set; }
         
         public virtual ICollection<Book> books { get; set; }
     }

@@ -21,7 +21,5 @@ namespace BookWorldStore.Models
         public string image { get; set; }
         public DateTime publishing_year { get; set; }
         public float price { get; set; }
-        //something
-
     }
 }

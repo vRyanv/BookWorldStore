@@ -14,8 +14,7 @@ namespace BookWorldStore.Models
         public string name { get; set; }
         public int status { get; set; }
 
-        public List<Book> books { get; set; }
-        //something
+        public virtual ICollection<Book> books { get; set; }
 
     }
 }

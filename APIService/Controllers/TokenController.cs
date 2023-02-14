@@ -52,6 +52,7 @@ namespace APIService.Controllers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var claims = new[] {
+                                new Claim("id", user.user_id + ""),
                                 new Claim("email", user.email),
                                 new Claim("role", user.role),
                                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

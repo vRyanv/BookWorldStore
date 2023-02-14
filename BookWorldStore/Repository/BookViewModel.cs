@@ -22,37 +22,16 @@ namespace BookWorldStore.Models.Repository
         {
             this.db = db;
         }
-        public BookViewModel(AppDBContext appDBContext, int book_id, string title, string des,
-            string author, int inventory_num, string image, DateTime publishing_year, 
-            float price, int cate_id,string cate_name, int sup_id, string sup_name)
-        {
-            db = appDBContext;
-            this.book_id= book_id;
-            this.title= title;
-            this.des= des;
-            this.author= author;
-            this.inventory_num = inventory_num;
-            this.image = image;
-            this.publishing_year= publishing_year;
-            this.price = price;
-            this.cate_id= cate_id;
-            this.cate_name= cate_name;
-            this.sup_id = sup_id;
-            this.sup_name = sup_name;
-
-        }
-        
-     
         public List<BookViewModel> Showall()
         {
-            
-            List<BookViewModel> books= new List<BookViewModel>();
-            var results= db.books.Include(c=>c.category).Include(s=>s.supplier).ToList();
-            foreach (var result in results) {
-                     books.Add(new BookViewModel(db, result.book_id, result.title, result.des, 
-                    result.author, result.inventory_num, result.image, result.publishing_year, result.price,
-                    result.category.cate_id, result.category.name, result.supplier.sup_id, result.supplier.name));
-            }
+
+            List<BookViewModel> books = new List<BookViewModel>();
+            //var results= db.books.Include(c=>c.category).Include(s=>s.supplier).ToList();
+            //foreach (var result in results) {
+            //         books.Add(new BookViewModel(db, result.book_id, result.title, result.des, 
+            //        result.author, result.inventory_num, result.image, result.publishing_year, result.price,
+            //        result.category.cate_id, result.category.name, result.supplier.sup_id, result.supplier.name));
+            //}
             return books;
         }
       

@@ -16,11 +16,11 @@ namespace BookWorldStore.Models.Repository
         List<Category> categories { get; set; }
         List<Supplier> suppliers { get; set; }
         public AppDBContext db { get; set; }
-        public EditBookViewModel(AppDBContext _db,int Id)
+        public EditBookViewModel(AppDBContext _db,int id)
         {
             db = _db;
-            this.book_id= Id;
-            GetInfor(Id);
+            this.book_id= id;
+            GetInfor(id);
         }
 
         public List<Category> GetCategory()
