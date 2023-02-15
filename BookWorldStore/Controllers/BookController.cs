@@ -1,4 +1,5 @@
-﻿using BookWorldStore.Models;
+﻿using BookWorldStore.Helper;
+using BookWorldStore.Models;
 using BookWorldStore.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,5 +34,31 @@ namespace BookWorldStore.Controllers
         {
             return View("~/Views/Admin/Book/Edit.cshtml");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AddBookTest()
+        {
+            return View("~/Views/Admin/Book/TestAddBook.cshtml");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddBookTest(BookTest book, IFormFile imageFile)
+        {
+            if (ModelState.IsValid)
+            {
+                string directory = "img/book";
+                string[] result = await FileHelper.Instance.SaveFileAsync(imageFile, directory);
+
+                book.imageFile = $"fileName: {result[0]} - filePath: {result[1]}";
+                return Ok(book);
+            }
+
+            return NotFound();
+        }
+
+
+
+
     }
 }

@@ -10,7 +10,7 @@ namespace BookWorldStore.Models
         public int user_id { get; set; }
         
         [Required(ErrorMessage = "Email is required")]
-        [RegularExpression(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$", ErrorMessage = "Invalid email")]
+        [EmailAddress(ErrorMessage = "Invalid email")]
         public string email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
