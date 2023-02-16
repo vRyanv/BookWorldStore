@@ -14,8 +14,10 @@
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ email: email, password: password, role: "" }),
-                success: function (data){
+                success: function (data) {
+                    data = JSON.parse(data)
                     console.log(data)
+                    console.log(data.email)
                     document.cookie = '__UserToken=' + data.token + ';path=/'
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

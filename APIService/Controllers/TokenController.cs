@@ -7,6 +7,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Xml.Linq;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace APIService.Controllers
 {
@@ -31,9 +33,19 @@ namespace APIService.Controllers
             {
                 string tokenStr = GenerateJSONWebToken(_user);
                 Response.Cookies.Append("__UserToken", tokenStr);
-                return Ok(new { role = _user.role, token=tokenStr });
+                List<UserViewModel> list = new List<UserViewModel>();
+                for (int i = 0; i < 10; i++)
+                {
+                    UserViewModel userViewModel = new UserViewModel();
+                    userViewModel.user_id = i;
+                    userViewModel.email = "email" + i;
+                    list.Add(userViewModel);
+                }
+
+                return Ok(JsonSerializer.Serialize(list));
             }
-            return Unauthorized();
+            string s = JsonSerializer.Serialize(_user);
+            return Content(s);
         }
 
         private async Task<UserViewModel> AuthenUser(UserViewModel _user)

@@ -48,13 +48,25 @@ namespace BookWorldStore.Controllers
             if (ModelState.IsValid)
             {
                 string directory = "img/book";
-                string[] result = await FileHelper.Instance.SaveFileAsync(imageFile, directory);
+                string fileName = await FileHelper.Instance.SaveFileAsync(imageFile, directory);
 
-                book.imageFile = $"fileName: {result[0]} - filePath: {result[1]}";
+                book.imageFile = $"fileName: {fileName}";
                 return Ok(book);
             }
 
             return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteFile(string path)
+        {
+
+            if (FileHelper.Instance.DeleteFileAsync(path))
+            {
+              return Ok("success delete");
+            }
+            return BadRequest();
+           
         }
 
 
