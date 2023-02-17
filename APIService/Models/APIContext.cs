@@ -6,6 +6,6 @@ namespace APIService.Models
     public class APIContext : DbContext
     {
         public APIContext(DbContextOptions<APIContext> options) : base(options) { }
-        public DbSet<UserViewModel> users { get; set; }
+        public DbSet<User> users { get; set; }
     }
 }

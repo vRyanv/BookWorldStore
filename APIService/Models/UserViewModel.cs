@@ -3,7 +3,7 @@
 namespace APIService.Models
 {
     [Keyless]
-    public class UserViewModel
+    public class User
     {
         public int user_id { get; set; }
         public string email { get; set; }

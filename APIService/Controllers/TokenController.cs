@@ -24,7 +24,7 @@ namespace APIService.Controllers
 
         [HttpPost]
         [Consumes("application/json")]
-        public async Task<IActionResult> Login(UserViewModel _user)
+        public async Task<IActionResult> Login(User _user)
         {
             _user = await AuthenUser(_user);
             if (_user.role != "")
@@ -36,7 +36,7 @@ namespace APIService.Controllers
             return Unauthorized();
         }
 
-        private async Task<UserViewModel> AuthenUser(UserViewModel _user)
+        private async Task<User> AuthenUser(User _user)
         {
            var result = await _APIContext.users.Where(u => u.email.Equals(_user.email)&& u.password.Equals(_user.password)).ToListAsync();
 
@@ -47,7 +47,7 @@ namespace APIService.Controllers
             return _user;
         }
 
-        private string GenerateJSONWebToken(UserViewModel user)
+        private string GenerateJSONWebToken(User user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
