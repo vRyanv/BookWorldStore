@@ -33,10 +33,10 @@ namespace APIService.Controllers
             {
                 string tokenStr = GenerateJSONWebToken(_user);
                 Response.Cookies.Append("__UserToken", tokenStr);
-                List<UserViewModel> list = new List<UserViewModel>();
+                List<User> list = new List<User>();
                 for (int i = 0; i < 10; i++)
                 {
-                    UserViewModel userViewModel = new UserViewModel();
+                    User userViewModel = new User();
                     userViewModel.user_id = i;
                     userViewModel.email = "email" + i;
                     list.Add(userViewModel);
