@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,32 +10,37 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/client/login.css">
+    <partial name="_ShareLibCss" />
 </head>
 <body>
+    <partial name="_AnimationLoading"/>
     <div class="container">
         <div class="screen">
             <div class="screen__content">
                 <div class="login">
-                    <div class="login__field">
-                        <i class="login__icon bi-person"></i>
-                        <input type="text" class="login__input" id="txt_email" placeholder="User name / Email">
-                        <span id="empty_username" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
+                        <div class="login__field">
+                            <i class="login__icon bi-person"></i>
+                            <input type="email" class="login__input" id="txt_email" placeholder="Email">
+                            <span id="error_email_mess" class="bi-x-circle-fill validate-error-icon" style="vertical-align: -webkit-baseline-middle; color: red;"></span>
+                        </div>
+                        <div class="login__field">
+                            <i class="login__icon bi-lock"></i>
+                            <input type="password" id="txt_pass" class="login__input"class="login__input" placeholder="Password">
+                            <span id="error_pass_mess" class="bi-x-circle-fill validate-error-icon" style="vertical-align: -webkit-baseline-middle; color: red;"></span>
+                        </div>
+                        <button class="button login__submit">
+                            <span class="button__text">Log In Now</span>
+                            <i class="button__icon fas fa-chevron-right"></i>
+                        </button>
+                    <div id="btn_forget_pass" style="float: right;margin-top: 1rem;color:white;cursor:pointer">
+                        forget password?
                     </div>
-                    <div class="login__field">
-                        <i class="login__icon bi-lock"></i>
-                        <input type="password" id="txt_pass" class="login__input" placeholder="Password">
-                        <span id="empty_pass" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none"></span>
-                    </div>
-                    <button class="button login__submit">
-                        <span class="button__text">Log In Now</span>
-                        <i class="button__icon fas fa-chevron-right"></i>
-                    </button>
                     <div id="mess_error_login" style="margin-top: 1rem; color: red;   text-shadow: 1px 1px white; display: none">
                         password or username wrong
                     </div>
                 </div>
                 <div class="social-login">
-                    <a asp-controller="Home" asp-action="Register" style="font-size: smaller; color: whitesmoke; text-decoration: none"><h3>Create account</h3></a>
+                    <a asp-controller="Home" asp-action="Register" style="font-size: smaller; color: whitesmoke; text-decoration: none; font-weight:bold">Create account</a>
                 </div>
             </div>
             <div class="screen__background">
@@ -56,7 +62,26 @@
             <div class="box"></div>
         </div>
     </div>
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <button type="button" id="btn_open_forget_pass_modal" data-bs-toggle="modal" data-bs-target="#forget_pass_modal" hidden>
+    </button>
+    <div class="modal fade" id="forget_pass_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Forget password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="txt_email_reset_pass" type="email" placeholder="enter email" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_send_request_reset_pass" type="button" class="btn btn-primary">Reset password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="_ShareLibJS"/>
+    <partial name="_ValidationScriptsPartial" />
     <script src="/js/client/login.js"></script>
 </body>
 </html>

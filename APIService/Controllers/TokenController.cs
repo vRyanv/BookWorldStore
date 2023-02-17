@@ -24,6 +24,12 @@ namespace APIService.Controllers
             this.configuration = configuration;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> test()
+        {
+            return Content("asd");
+        }
+
         [HttpPost]
         [Consumes("application/json")]
         public async Task<IActionResult> Login(User _user)
@@ -32,7 +38,6 @@ namespace APIService.Controllers
             if (_user.role != "")
             {
                 string tokenStr = GenerateJSONWebToken(_user);
-                Response.Cookies.Append("__UserToken", tokenStr);
                 List<User> list = new List<User>();
                 for (int i = 0; i < 10; i++)
                 {

@@ -1,5 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
+.validate-error-icon{
+    display: none
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -156,7 +160,7 @@ body {
 
 .social-login {
     position: absolute;
-    height: 140px;
+    height: 19%;
     width: 160px;
     text-align: center;
     bottom: 0px;
