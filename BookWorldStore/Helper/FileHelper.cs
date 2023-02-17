@@ -20,9 +20,8 @@ namespace BookWorldStore.Helper
         }
         private FileHelper() { }
 
-        public async Task<string[]> SaveFileAsync(IFormFile file, string folder)
-        {
-            string[] result = new string[2];
+        public async Task<string> SaveFileAsync(IFormFile file, string folder)
+        { 
             try
             {
                 if (file != null && file.Length > 0)
@@ -34,21 +33,16 @@ namespace BookWorldStore.Helper
                     {
                         await file.CopyToAsync(fileStream);
                     }
-                    string pathForWeb = $"~/{folder}/{fileName}";
-                    result[0] = fileName;
-                    result[1] = pathForWeb;
-                    return result;
+                    return fileName;
                 }
                 else
                 {
-                    result[0] = "Can't save because file is null";
-                    return result;
+                    return "null";
                 }
             }
-            catch (IOException io)
+            catch (Exception)
             {
-                result[0] = io.Message;
-                return result;
+                return "null";
             }
         }
 
@@ -75,3 +69,4 @@ namespace BookWorldStore.Helper
 
     }
 }
+
