@@ -40,19 +40,25 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id,Supplier supplier)
+        public IActionResult Edit(int id,Supplier Model)
         {
-            supplier.sup_id = id;
-            dbContext.Update(supplier);
-            dbContext.SaveChanges();
+            var supplier=dbContext.suppliers.Find(id);
+            if (supplier != null)
+            {
+                supplier.name= Model.name;
+                supplier.address= Model.address;
+                dbContext.Update(supplier);
+                dbContext.SaveChanges();
+            }
             return RedirectToAction("Index");
+
         }
 
-        [HttpDelete]
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             Supplier supplier=dbContext.suppliers.Find(id);
-           dbContext.Remove(supplier);
+             dbContext.Remove(supplier);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -40,12 +40,16 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Category category)
-        { 
-            category.cate_id = id;
-            dbContext.categories.Update(category);
-            dbContext.SaveChanges();
-            return RedirectToAction("Index", category);
+        public IActionResult Edit(int id, Category Model)
+        {
+            var category = dbContext.categories.Find(id);
+            if (category != null)
+            {
+                category.name = Model.name;
+                dbContext.categories.Update(category);
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpDelete]
