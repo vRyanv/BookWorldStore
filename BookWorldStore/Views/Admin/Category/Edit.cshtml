@@ -1,18 +1,21 @@
-﻿@{
+﻿@model IEnumerable<Category>
+@{
     Layout = "_AdminLayout";
     ViewBag.title = "Category";
 }
+<form asp-controller="Category" asp-action="Edit">
 <div style="text-align: center">
     <h1 class="mt-3">Update Category</h1>
 </div>
 <div class="add-form mt-5 col-sm-11">
     <div class="mb-3">
         <label for="pro_name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="cate_name" placeholder="Category name" value="<%= category[0].cate_name %>">
-        <input type="hidden" class="form-control" id="cate_id" placeholder="Category name" value="<%= category[0].cate_id %>">
+        <input type="text" class="form-control" id="cate_name" placeholder="Category name" value="@Model.First().name">
+        <input type="hidden" class="form-control" id="cate_id" placeholder="Category name" value="<@Model.First().cate_id">
     </div>
     <div style="text-align: end">
-        <input type="button" class="btn btn-success" id="btn_submit_update_cate" value="Update">
+        <input type="submit" class="btn btn-success" id="btn_submit_update_cate" value="Update">
         <input type="button" class="btn btn-warning" value="cancel">
     </div>
 </div>
+</form>

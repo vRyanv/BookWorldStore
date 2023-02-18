@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Category>
+@{
     Layout = "_AdminLayout";
     ViewBag.title = "Category";
 }
@@ -21,15 +22,15 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i=0; i < 10; i++)
+            @foreach(var cate in Model)
             {
                 <tr>
-                    <th scope="row">@i</th>
-                    <td> cate @i </td>
+                    <th scope="row">@cate.cate_id</th>
+                    <td> @cate.name </td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a href="/category/edit/@i"><button type="button" class="btn btn-primary">Edit</button></a>
-                            <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="<%= cateList[i].cate_id %>">Delete</button>
+                            <a href="/category/edit/@cate.cate_id"><button type="button" class="btn btn-primary">Edit</button></a>
+                            <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="@cate.cate_id">Delete</button>
                         </div>
                     </td>
                 </tr>

@@ -1,13 +1,20 @@
 ﻿using BookWorldStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookWorldStore.Controllers
 {
     public class CategoryController : Controller
     {
-        public IActionResult Index()
+        private readonly AppDBContext dbContext;
+        public CategoryController(AppDBContext dbContext)
         {
-            return View("~/Views/Admin/Category/Index.cshtml");
+            this.dbContext = dbContext;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var result = await dbContext.categories.ToListAsync();
+            return View("~/Views/Admin/Category/Index.cshtml",result);
         }
 
         [HttpGet]
@@ -19,19 +26,29 @@ namespace BookWorldStore.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
+            dbContext.categories.Add(category);
+            dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int id)
         {
-            return View("~/Views/Admin/Category/Edit.cshtml");
+            
+            var result = await dbContext.categories.Where(cate=>cate.cate_id==id).ToListAsync();
+            return View("~/Views/Admin/Category/Edit.cshtml",result);
         }
 
         [HttpPut]
         public IActionResult Edit(Category category)
         {
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                dbContext.categories.Update(category);
+                dbContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View("Index");
         }
 
         [HttpDelete]
