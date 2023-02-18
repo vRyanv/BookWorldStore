@@ -11,7 +11,7 @@ namespace BookWorldStore.Models.Repository
         public string author { get; set; }
         public int inventory_num { get; set; }
         public string image { get; set; }
-        public DateTime publishing_year { get; set; }
+        public string publishing_year { get; set; }
         public float price { get; set; }
         List<Category> categories { get; set; }
         List<Supplier> suppliers { get; set; }

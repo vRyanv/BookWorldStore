@@ -1,4 +1,5 @@
-﻿using BookWorldStore.Utils;
+﻿using BookWorldStore.Models;
+using BookWorldStore.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
@@ -46,13 +47,15 @@ namespace BookWorldStore.Helper
             }
         }
 
-        public bool DeleteFileAsync(string path)
+        public bool DeleteFileAsync(string folder, string fileName)
         {
             try
             {
-                if (File.Exists(path))
+                string currentDirectory = Directory.GetCurrentDirectory();
+                string filePath = Path.Combine(currentDirectory, "wwwroot", folder, fileName);
+                if (File.Exists(filePath))
                 {
-                    File.Delete(path);
+                    File.Delete(filePath);
                     return true;
                 }
                 else

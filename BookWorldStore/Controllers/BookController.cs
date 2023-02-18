@@ -20,15 +20,28 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
-        async public Task<IActionResult> Create()
+        public async Task<IActionResult> Create()
         {
+            var cateList = await dbContext.categories.ToListAsync();
+            var supList = await dbContext.suppliers.ToListAsync();
+            ViewData["cateList"] = cateList;
+            ViewData["supList"] = supList;
             return View("~/Views/Admin/Book/Create.cshtml");
         }
 
         [HttpPost]
-        public IActionResult Create(Book book)
+        public async Task<IActionResult> Create(Book book, IFormFile imageFile)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                string folder = "img/book";
+                //string fileName = await FileHelper.Instance.SaveFileAsync(imageFile, folder);
+
+                //book.image = $"fileName: {fileName}";
+                return RedirectToAction("Index");
+            }
+
+            return View("~/Views/Admin/Book/Create.cshtml");
         }
 
         [HttpGet]
@@ -38,32 +51,10 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddBookTest()
+        public async Task<IActionResult> DeleteFile(string fileName)
         {
-            return View("~/Views/Admin/Book/TestAddBook.cshtml");
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> AddBookTest(BookTest book, IFormFile imageFile)
-        {
-            if (ModelState.IsValid)
-            {
-                string directory = "img/book";
-                string fileName = await FileHelper.Instance.SaveFileAsync(imageFile, directory);
-
-                book.imageFile = $"fileName: {fileName}";
-                return Ok(book);
-            }
-
-            return NotFound();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteFile(string path)
-        {
-
-            if (FileHelper.Instance.DeleteFileAsync(path))
+            string folder = "img/book";
+            if (FileHelper.Instance.DeleteFileAsync(folder, fileName))
             {
               return Ok("success delete");
             }

@@ -4,6 +4,10 @@
 }
 
 @model Book
+
+@section Styles{
+    <link href="/css/admin/book.css" rel="stylesheet"/>
+}
 <div style="text-align: center">
     <h1 class="mt-3">Add new Book</h1>
 </div>
@@ -11,59 +15,66 @@
     <form asp-controller="Product" asp-action="Create" method="post" id="pro_form">
         <div class="mb-4">
             <label for="pro_title" class="form-label">Title</label>
-            <input type="text" asp-for="title" class="form-control" id="pro_title" placeholder="Book title" style="display: inline-block">
+            <input type="text" asp-for="title" class="form-control" id="pro_title" placeholder="Book title" style="display: inline-block" required>
             <span asp-validation-for="title" class="validate-mess"></span>
         </div>
         <div class="mb-4">
+            <label for="pro_title" class="form-label">Publishing year</label>
+            <input type="text" asp-for="publishing_year" class="form-control" id="pro_title" placeholder="Book title" style="display: inline-block" required>
+            <span asp-validation-for="publishing_year" class="validate-mess"></span>
+        </div>
+        <div class="mb-4">
             <label for="pro_author" class="form-label">Author</label>
-            <input type="text" asp-for="author" class="form-control" id="pro_author" placeholder="author" style="display: inline-block">
+            <input type="text" asp-for="author" class="form-control" id="pro_author" placeholder="author" style="display: inline-block" required>
             <span asp-validation-for="author" class="validate-mess"></span>
         </div>
         <div class="mb-4">
             <label for="pro_cate" class="form-label">Category</label>
-            <select class="form-control" asp-for="category" id="pro_cate" style="display: inline-block">
+            <select class="form-control" asp-for="category" id="pro_cate" style="display: inline-block" required>
                 <option value="">Choose category</option>
-                @for (int i = 0; i < 10; i++)
+                @foreach (var category in (List<Category>)ViewData["cateList"])
                 {
-                    <option value="@i">cate @i </option>
+                    <option value="@category.cate_id">@category.name</option>
                 }
             </select>
             <span asp-validation-for="category" class="validate-mess"></span>
         </div>
         <div class="mb-4">
             <label for="pro_sup" class="form-label">Supplier</label>
-            <select class="form-control" asp-for="supplier" id="pro_sup" style="display: inline-block">
+            <select class="form-control" asp-for="supplier" id="pro_sup" style="display: inline-block" required>
                 <option value="">Choose supplier</option>
-                @for (int i = 0; i < 10; i++)
+                @foreach (var sup in (List<Supplier>)ViewData["supList"])
                 {
-                    <option value="@i">sup @i </option>
+                    <option value="@sup.sup_id">@sup.name</option>
                 }
             </select>
             <span asp-validation-for="supplier" class="validate-mess"></span>
         </div>
         <div class="mb-4">
             <label for="pro_des" class="form-label">Description</label>
-            <input type="text" asp-for="des" class="form-control" id="pro_des" placeholder="author" style="display: inline-block">
+            <textarea asp-for="des" class="form-control" style="display: inline-block" required>
+
+            </textarea>
             <span asp-validation-for="des" class="validate-mess"></span>
         </div>
         <div class="mb-4">
             <label for="pro_price" class="form-label">Price</label>
-            <input type="number" asp-for="price" class="form-control" id="pro_price" placeholder="price" style="display: inline-block">
+            <input type="number" asp-for="price" class="form-control" id="pro_price" placeholder="price" style="display: inline-block" required>
             <span asp-validation-for="price" class="validate-mess"></span>
         </div>
         <div class="mb-4">
             <label for="pro_quantity" class="form-label">Inventory</label>
-            <input type="number"  class="form-control" id="pro_quantity" placeholder="quantity" style="display: inline-block">
-            <span class="validate-mess"></span>
+            <input asp-for="inventory_num" type="number" class="form-control" id="pro_quantity" placeholder="quantity" style="display: inline-block" required>
+            <span asp-validation-for="inventory_num" class="validate-mess"></span>
         </div>
         <div class="mb-4">
             <label for="img_preview" class="form-label">Image</label>
             <div style="display: block">
                 <img src="/images/decoration/image-product.png" alt="..." class="img-thumbnail" id="img_preview" style="width: 13rem;">
             </div>
-            <input type="file" name="proImage" id="pro_img" hidden>
+            <input asp-for="image" type="file" id="pro_img" hidden>
             <button type="button" class="btn btn-primary mt-3" id="btn_open_dialog_image">Choose image</button>
-            <span id="empty_img" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display: none; position: absolute; margin-left: 1rem"></span>
+            <span asp-validation-for="image" class="validate-mess"></span>
         </div>
         <div style="text-align: end">
             <input type="submit" class="btn btn-success" id="btn_submit_product" value="Add">
@@ -73,4 +84,16 @@
 </div>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function(){
+            $('#btn_open_dialog_image').click(function (){
+                $('#empty_img').hide()
+                $('#pro_img').click()
+            })
+
+            $('#pro_img').change(function () {
+                Utils.previewImage()
+            })
+        })
+    </script>
 }
