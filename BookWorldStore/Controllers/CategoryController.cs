@@ -32,28 +32,28 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
             
-            var result = await dbContext.categories.Where(cate=>cate.cate_id==id).ToListAsync();
+            var result = dbContext.categories.Find(id);
             return View("~/Views/Admin/Category/Edit.cshtml",result);
         }
 
-        [HttpPut]
-        public IActionResult Edit(Category category)
-        {
-            if (ModelState.IsValid)
-            {
-                dbContext.categories.Update(category);
-                dbContext.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View("Index");
+        [HttpPost]
+        public IActionResult Edit(int id, Category category)
+        { 
+            category.cate_id = id;
+            dbContext.categories.Update(category);
+            dbContext.SaveChanges();
+            return RedirectToAction("Index", category);
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
+            Category category= dbContext.categories.Find(id);
+            dbContext.categories.Remove(category);
+            dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 

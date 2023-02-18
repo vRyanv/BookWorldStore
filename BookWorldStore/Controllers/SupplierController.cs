@@ -1,42 +1,59 @@
 ﻿using BookWorldStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookWorldStore.Controllers
 {
     public class SupplierController : Controller
     {
-        public IActionResult Index()
+        private readonly AppDBContext dbContext;
+        public SupplierController(AppDBContext dbContext)
         {
-            return View("~/Views/Admin/Supplier/Index.cshtml");
+            this.dbContext = dbContext;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var result = await dbContext.suppliers.ToListAsync();
+            return View("~/Views/Admin/Supplier/Index.cshtml", result);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+
             return View("~/Views/Admin/Supplier/Create.cshtml");
         }
 
         [HttpPost]
         public IActionResult Create(Supplier supplier)
         {
+            dbContext.suppliers.Add(supplier);
+            dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View("~/Views/Admin/Supplier/Index.cshtml");
+            var result = dbContext.suppliers.Find(id);
+            return View("~/Views/Admin/Supplier/Edit.cshtml",result);
         }
 
-        [HttpPut]
-        public IActionResult Edit(Supplier supplier)
+        [HttpPost]
+        public IActionResult Edit(int id,Supplier supplier)
         {
+            supplier.sup_id = id;
+            dbContext.Update(supplier);
+            dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
+            Supplier supplier=dbContext.suppliers.Find(id);
+           dbContext.Remove(supplier);
+            dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
     }

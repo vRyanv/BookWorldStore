@@ -2,6 +2,7 @@
     Layout = "_AdminLayout";
     ViewBag.title = "Supplier";
 }
+@model IEnumerable<Supplier>
 <div style="width: 100%;height: 4rem;background-color: white; position: fixed; z-index: 1; box-shadow: 0 2px 5px gray">
     <nav class="navbar">
         <div class="container-fluid">
@@ -21,15 +22,15 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < 10; i++)
+            @foreach (var sup in Model)
             {
                 <tr>
-                    <th scope="row">@i</th>
-                    <td>name @i</td>
+                    <th scope="row">@sup.sup_id</th>
+                    <td>@sup.name</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a href="/supplier/edit/<%= supList[i].sup_id %>"><button type="button" class="btn btn-primary">Edit</button></a>
-                            <button type="button" class="btn btn-danger btn-delete-sup" data-sup-id="<%= supList[i].sup_id %>">Delete</button>
+                            <a href="/supplier/edit/@sup.sup_id"><button type="button" class="btn btn-primary">Edit</button></a>
+                            <button type="button" class="btn btn-danger btn-delete-sup" data-sup-id="@sup.sup_id">Delete</button>
                         </div>
                     </td>
                 </tr>

@@ -30,7 +30,7 @@
                     <td>
                         <div class="btn-group" role="group">
                             <a href="/category/edit/@cate.cate_id"><button type="button" class="btn btn-primary">Edit</button></a>
-                            <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="@cate.cate_id">Delete</button>
+                            <button type="button" onclick="return confirm('are you sure?');" asp-controller="Category" asp-action="Delete" asp-route-id="@cate.cate_id" >Delete</button>
                         </div>
                     </td>
                 </tr>
