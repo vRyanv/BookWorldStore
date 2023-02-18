@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="/css/share/notFound.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="face">
+	<div class="band">
+		<div class="red"></div>
+		<div class="white"></div>
+		<div class="blue"></div>
+	</div>
+	<div class="eyes"></div>
+	<div class="dimples"></div>
+	<div class="mouth"></div>
+</div>
+
+<h1>Oops! Something went wrong!</h1>
+<div class="btn btn-return" >Return to Home</div>
+</body>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.btn-return').click(function(){
+			if (history.length > 1) {
+				history.back();
+			} else {
+				window.location = "/";
+			}
+		})
+	})
+</script>
+</html>

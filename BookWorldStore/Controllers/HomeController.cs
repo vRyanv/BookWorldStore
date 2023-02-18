@@ -28,6 +28,11 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Detail(int id)
         {
+            User user = Utils.UserUtils.Instance.GetUser(HttpContext);
+            if (user != null)
+            {
+                ViewBag.loggedIn = true;
+            }
             return View();
         }
 
@@ -54,6 +59,11 @@ namespace BookWorldStore.Controllers
                 return RedirectToAction("Login");
             }
             return View("~/Views/Service/Register.cshtml");
+        }
+
+        public IActionResult NotFoundPage()
+        {
+            return View("_Page404");
         }
 
 

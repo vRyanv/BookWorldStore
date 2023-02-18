@@ -1,3 +1,4 @@
+using BookWorldStore.Middleware;
 using BookWorldStore.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -35,16 +36,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             },
             OnChallenge = context =>
             {
-                if (context.Response.StatusCode == 403)
-                {
-                    context.Response.Redirect("/Home/Login");
-                    context.HandleResponse();
-                } else
-                {
-                    context.Response.Redirect("/Home/Login");
-                    context.HandleResponse();
-                }
-
+                context.Response.Redirect("/Home/Login");
+                context.HandleResponse();
                 return Task.CompletedTask;
             }
         };
@@ -71,15 +64,18 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseMiddleware<AuthenFailMiddleware>();
+app.UseMiddleware<NotFoundMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 
 app.Run();
