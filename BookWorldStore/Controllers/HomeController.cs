@@ -2,6 +2,7 @@
 using BookWorldStore.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -15,25 +16,31 @@ namespace BookWorldStore.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             User user = Utils.UserUtils.Instance.GetUser(HttpContext);
             if(user != null)
             {
                 ViewBag.loggedIn = true;
             }
-            return View();
+
+            ICollection<Book> bookList = await dbContext.books.Where(b => b.status == 1).Include(c => c.category).Include(s => s.supplier).ToListAsync();
+
+            return View(bookList);
         }
 
-        [Authorize(Roles = "admin")]
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
             User user = Utils.UserUtils.Instance.GetUser(HttpContext);
             if (user != null)
             {
                 ViewBag.loggedIn = true;
             }
-            return View();
+
+            ICollection<Book> bookList = await dbContext.books.Where(b => b.status == 1 && b.book_id == id)
+                                    .Include(c => c.category).Include(s => s.supplier)
+                                    .ToListAsync();
+            return View(bookList);
         }
 
 		public IActionResult Login()
@@ -64,27 +71,6 @@ namespace BookWorldStore.Controllers
         public IActionResult NotFoundPage()
         {
             return View("_Page404");
-        }
-
-
-        public IActionResult test()
-        {
-            //List<BookViewModel> books = new BookViewModel(dbContext).Showall();
-            //foreach (var b in books) {
-            //    Console.WriteLine($"{b.title} {b.cate_name} {b.sup_name}");
-            //}
-            List<StatisticalHotBookViewModel>hotbooks=new StatisticalHotBookViewModel(dbContext).showHistory();
-            foreach (var hotbook in hotbooks)
-            {
-                Console.WriteLine($"{hotbook.title}-{hotbook.quantity}");
-            }
-           return Redirect("index");
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

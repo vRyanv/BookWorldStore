@@ -3,6 +3,8 @@
     Layout = "_CLientLayout";
 }
 
+@model IEnumerable<Book>
+
 @section Style{
     <link href="~/css/client/searchBox.css" rel="stylesheet" type="text/css" asp-append-version="true" />
 }
@@ -54,28 +56,31 @@
                 <span class="close" onclick="searchToggle(this, event);"></span>
             </div>
         </div>
-
+        @foreach (var book in Model)
+        {
             <div class="templatemo_product_box" style="padding:1rem; height: 27rem">
-                <h1>Photography  <span>(by Best Author)</span></h1>
-                <img src="~/img/decoration/templatemo_image_01.jpg" alt="image" style="height:9rem;width:6rem" />
+                <h1>@book.title</h1>
+                <img src="~/img/book/@book.image" alt="image" style="height:9rem;width:6rem" />
                 <div class="product_info">
 
-                    <h3 style="margin:0;font-size:small">Author: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">Ryan</p> </h3>
-                    <h3 style="font-size:small;margin:0;">Category: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">something</p> </h3>
-                    <h3 style="font-size:small;margin:0;">Supplier: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">something</p> </h3>
-                    <h3 style="font-size:small;margin:0;"> Publishing: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">11/11/2202</p> </h3>
-                    <h3 style="margin:0;color:forestgreen">$<p style="margin:0;color:rgb(203, 199, 80);display:inline-block">55</p> </h3>
-                    <h3 style="font-size:small">Available: <p style="color:rgb(203, 199, 80);display:inline-block">1</p> </h3>
+                    <h3 style="margin:0;font-size:small">Author: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.author</p> </h3>
+                    <h3 style="font-size:small;margin:0;">Category: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.category.name</p> </h3>
+                    <h3 style="font-size:small;margin:0;">Supplier: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.supplier.name</p> </h3>
+                    <h3 style="font-size:small;margin:0;"> Publishing: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.publishing_year</p> </h3>
+                    <h3 style="margin:0;color:forestgreen">$<p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.price</p> </h3>
+                    <h3 style="font-size:small">Available: <p style="color:rgb(203, 199, 80);display:inline-block">@book.inventory_num</p> </h3>
                     <p style="overflow: hidden; text-overflow: ellipsis; height: 8.9rem; font-size:larger">
-                        Someone, somebody, something, somewhere are indefinite pronouns. They function in a similar way to some. We use them in affirmative clauses and in questions expecting a particular answer. We can use them to refer to both general and specific people or things.
+                      @book.des
                     </p>
                 </div>
                 <div style="float:left">
-                    <div class="buy_now_button" style="margin:0">
-                        <a asp-controller="Cart" asp-action="Add">Add to cart</a>
+                    <div class="buy_now_button" style="margin:0;cursor:pointer" data-book-id="@book.book_id">
+                        <a>Add to cart</a>
                     </div>
                 </div>
             </div>
+        }
+           
             <div class="cleaner_with_height">&nbsp;</div>
 
 

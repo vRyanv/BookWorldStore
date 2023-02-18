@@ -37,5 +37,7 @@ namespace BookWorldStore.Models
 
         [Required(ErrorMessage = "Price is required")]
         public float price { get; set; }
+
+        public int? status { get; set; }
     }
 }

@@ -15,15 +15,15 @@ namespace BookWorldStore.Controllers
             this.dbContext = dbContext;
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "client,owner, admin")]
         public IActionResult Index()
         {
             User user = UserUtils.Instance.GetUser(HttpContext);
-            ViewBag.user_mail = user.email;
+            
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "client,owner, admin")]
         public IActionResult OldOrder()
         {
             return View();

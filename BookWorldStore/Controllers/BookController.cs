@@ -37,6 +37,7 @@ namespace BookWorldStore.Controllers
                 string folder = "img/book";
                 string fileName = await FileHelper.Instance.SaveFileAsync(image, folder);
                 book.image = fileName;
+                book.status = 1;
 
                 dbContext.Add(book);
                 dbContext.SaveChanges();
@@ -64,9 +65,6 @@ namespace BookWorldStore.Controllers
             return BadRequest();
            
         }
-
-
-
 
     }
 }
