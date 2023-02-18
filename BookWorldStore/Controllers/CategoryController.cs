@@ -52,7 +52,7 @@ namespace BookWorldStore.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             Category category= dbContext.categories.Find(id);

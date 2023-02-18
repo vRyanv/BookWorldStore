@@ -30,7 +30,7 @@
                     <td>
                         <div class="btn-group" role="group">
                             <a href="/supplier/edit/@sup.sup_id"><button type="button" class="btn btn-primary">Edit</button></a>
-                            <button type="button" class="btn btn-danger btn-delete-sup" data-sup-id="@sup.sup_id">Delete</button>
+                            <button type="button" class="btn btn-danger btn-delete-sup" data-sup-id="@sup.sup_id" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal">Delete</button>
                         </div>
                     </td>
                 </tr>
@@ -39,3 +39,48 @@
         </tbody>
     </table>
 </div>
+<div class="modal fade" id="confirm_delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>Delete this supplier?</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-ok-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var deleteId = ""
+            $('.btn-delete-sup').click(function () {
+                deleteId = $(this).data('sup-id')
+            })
+
+            $('.btn-ok-delete').click(function () {
+                var form = $("<form>");
+                form.attr({
+                    method: "POST",
+                    action: "/Supplier/Delete"
+                });
+
+                var IdInput = $("<input>");
+                IdInput.attr({
+                    type: "text",
+                    name: "id",
+                    value: deleteId
+                });
+                form.hide()
+                form.append(IdInput);
+                form.appendTo("body");
+                form.submit();
+            })
+        })
+    </script>
+}
