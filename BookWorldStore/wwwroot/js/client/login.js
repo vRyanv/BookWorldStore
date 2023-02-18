@@ -48,7 +48,7 @@
                 beforeSend: Utils.animation(),
                 success: function (data) {
                     if (data.status == 200) {
-                        document.cookie = '__Usertoken=' + data.token + ';path=/'
+                        document.cookie = '__UserToken=' + data.token + ';path=/'
                         if (data.role == "onwner") {
                             location.href = "/dashboard";
                         } else if (data.role == "admin") {
@@ -62,7 +62,7 @@
                     Utils.animation()
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.error(xhr.status);
+                    alert("Server error!")
                     Utils.animation()
                 }
             })
