@@ -35,22 +35,17 @@ namespace APIService.Controllers
         public async Task<IActionResult> Login(User _user)
         {
             _user = await AuthenUser(_user);
-            if (_user.role != "")
+            if (_user.role != null)
             {
                 string tokenStr = GenerateJSONWebToken(_user);
-                List<User> list = new List<User>();
-                for (int i = 0; i < 10; i++)
-                {
-                    User userViewModel = new User();
-                    userViewModel.user_id = i;
-                    userViewModel.email = "email" + i;
-                    list.Add(userViewModel);
-                }
-
-                return Ok(JsonSerializer.Serialize(list));
+                var data  = new { status = 200, role = _user.role,token = tokenStr };
+                return Content(JsonSerializer.Serialize(data));
             }
-            string s = JsonSerializer.Serialize(_user);
-            return Content(s);
+            else
+            {
+                var data = new { status = 400, message = "authentication fail" };
+                return Content(JsonSerializer.Serialize(data));
+            }
         }
 
         private async Task<User> AuthenUser(User _user)
@@ -69,7 +64,6 @@ namespace APIService.Controllers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var claims = new[] {
-                                new Claim("id", user.user_id + ""),
                                 new Claim("email", user.email),
                                 new Claim("role", user.role),
                                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

@@ -43,19 +43,26 @@
                 url:'https://localhost:44378/api/token/login',
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ email: email, password: password, role: "", token_reset_pass: ""}),
+                data: JSON.stringify({ email: email, password: password}),
                 dataType: 'json',
                 beforeSend: Utils.animation(),
                 success: function (data) {
-   /*                 data = JSON.parse(data)*/
-                    console.log(data)
-                    console.log(data.email)
-                    document.cookie = '__UserToken=' + data.token + ';path=/'
+                    if (data.status == 200) {
+                        document.cookie = '__Usertoken=' + data.token + ';path=/'
+                        if (data.role == "onwner") {
+                            location.href = "/dashboard";
+                        } else if (data.role == "admin") {
+                            location.href = "/supperAdmin";
+                        } else {
+                            location.href = "/home";
+                        }
+                    } else {
+                        $('#error_login').html('password or username wrong')
+                    }
                     Utils.animation()
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.error(xhr.status);
-                    console.error(thrownError);
                     Utils.animation()
                 }
             })
@@ -86,10 +93,10 @@
                 })
             }
         },
-        run: function(){
+        Run: function(){
             AppLogin.SetupButton()
             AppLogin.SetupHideErrorMess()
         }
     }
-    AppLogin.run()
+    AppLogin.Run()
 })

@@ -24,11 +24,14 @@ namespace BookWorldStore.Utils
         {
             var identity = context.User.Identity as ClaimsIdentity;
             IList<Claim> claim = identity.Claims.ToList();
-            User user = new User();
-            user.user_id = int.Parse(claim[0].Value);
-            user.email = claim[1].Value;
-            user.role = claim[2].Value;
-            return user;
+            if(claim.Count > 0)
+            {
+                User user = new User();
+                user.email = claim[0].Value;
+                user.role = claim[1].Value;
+                return user;
+            }
+            return null;
         }
     }
 }

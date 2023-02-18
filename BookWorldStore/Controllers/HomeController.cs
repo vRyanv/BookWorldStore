@@ -17,6 +17,11 @@ namespace BookWorldStore.Controllers
 
         public IActionResult Index()
         {
+            User user = Utils.UserUtils.Instance.GetUser(HttpContext);
+            if(user != null)
+            {
+                ViewBag.loggedIn = true;
+            }
             return View();
         }
 
@@ -30,7 +35,7 @@ namespace BookWorldStore.Controllers
 			return View("~/Views/Service/Login.cshtml");
 		}
 
-		public IActionResult Register()
+        public IActionResult Register()
 		{
 			return View("~/Views/Service/Register.cshtml");
 		}

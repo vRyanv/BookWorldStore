@@ -33,7 +33,12 @@
             <li><a asp-controller="Home" asp-action="Index" class="@ActivePage("Home")">Home</a></li>
                 <li><a asp-controller="Profile" asp-action="Index" class="@ActivePage("Profile")">Profile</a></li>
                 <li><a asp-controller="Cart" asp-action="Index" class="@ActivePage("Cart")">Cart</a></li>
-            <li style="float:right"><a asp-controller="Home" asp-action="Login">Login</a></li>
+                @if (ViewBag.loggedIn == true)
+                {
+                    <li style="float:right; cursor:pointer" id="btn_logout"><a>Logout</a></li>
+                } else {
+                    <li style="float:right"><a asp-controller="Home" asp-action="Login">Login</a></li>
+                }
             <li style="float:right"><a asp-controller="Home" asp-action="Register">Register</a></li>
         </ul>
     </div> 
