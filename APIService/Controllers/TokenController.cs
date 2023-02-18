@@ -54,6 +54,7 @@ namespace APIService.Controllers
 
             if(result.Count > 0)
             {
+                _user.user_id = result[0].user_id;
                 _user.role = result[0].role;
             }
             return _user;
@@ -64,6 +65,7 @@ namespace APIService.Controllers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var claims = new[] {
+                                new Claim("id", user.user_id.ToString()),
                                 new Claim("email", user.email),
                                 new Claim("role", user.role),
                                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

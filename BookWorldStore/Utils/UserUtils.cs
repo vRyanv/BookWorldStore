@@ -27,8 +27,9 @@ namespace BookWorldStore.Utils
             if(claim.Count > 0)
             {
                 User user = new User();
-                user.email = claim[0].Value;
-                user.role = claim[1].Value;
+                user.user_id = int.Parse(claim[0].Value);
+                user.email = claim[1].Value;
+                user.role = claim[2].Value;
                 return user;
             }
             return null;
