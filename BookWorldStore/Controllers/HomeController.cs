@@ -25,6 +25,7 @@ namespace BookWorldStore.Controllers
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Detail(int id)
         {
             return View();

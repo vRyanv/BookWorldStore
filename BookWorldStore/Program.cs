@@ -35,12 +35,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             },
             OnChallenge = context =>
             {
-                //if(context.Response.StatusCode == 401 || context.Response.StatusCode == 403)
-                //{
-                    context.Response.StatusCode = 302;
+                if (context.Response.StatusCode == 403)
+                {
                     context.Response.Redirect("/Home/Login");
                     context.HandleResponse();
-                //}
+                } else
+                {
+                    context.Response.Redirect("/Home/Login");
+                    context.HandleResponse();
+                }
 
                 return Task.CompletedTask;
             }
