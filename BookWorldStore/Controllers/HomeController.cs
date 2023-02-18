@@ -38,9 +38,13 @@ namespace BookWorldStore.Controllers
         [HttpPost]
         public IActionResult Register(User user)
         {
-            Console.WriteLine(JsonSerializer.Serialize(user));
             if (ModelState.IsValid)
             {
+                user.status = "";
+                user.role = "client";
+                user.token_reset_pass = "";
+                dbContext.Add(user);
+                dbContext.SaveChanges();
                 return RedirectToAction("Login");
             }
             return View("~/Views/Service/Register.cshtml");

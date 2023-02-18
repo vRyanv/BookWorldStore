@@ -28,8 +28,8 @@ namespace BookWorldStore.Models
 
         [Required(ErrorMessage = "Address is required")]
         public string address { get; set; }
-        public string status { get; set; }
-        public string token_reset_pass { get; set; }
-        public virtual ICollection<Order> orders { get; set; }
+        public string? status { get; set; }
+        public string? token_reset_pass { get; set; }
+        public virtual ICollection<Order>? orders { get; set; }
     }
 }

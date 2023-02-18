@@ -16,7 +16,7 @@
         <div class="screen" style="height: 727px">
             <div class="screen__content">
                 <div class="login" style="padding-top: 4rem">
-                    <form asp-controller="Home" asp-action="Register" method="post">
+                    <form asp-controller="Home" asp-action="Register" method="post" id="register_form">
                     <div class="login__field">
                         <i class="login__icon bi-person"></i>
                             <input asp-for="email" type="text" class="login__input" placeholder="Email" required>
@@ -24,13 +24,13 @@
                     </div>
                     <div class="login__field">
                         <i class="login__icon bi-lock"></i>
-                            <input asp-for ="password" type="password" class="login__input" placeholder="Password" required>
+                            <input id="txt_pass" asp-for ="password" type="password" class="login__input" placeholder="Password" required>
                             <span asp-validation-for="password" style="vertical-align: -webkit-baseline-middle; color: red; display: block"></span>
                     </div>
                     <div class="login__field">
                         <i class="login__icon bi-lock"></i>
-                        <input type="password" id="txt_confirm_pass" class="login__input" placeholder="Confirm password">
-                        <span id="empty_confirm_pass"  style="vertical-align: -webkit-baseline-middle; color: red; display: block"></span>
+                            <input id="txt_confirm_pass"  type="password" id="txt_confirm_pass" class="login__input" placeholder="Confirm password">
+                        <span id="error_confirm_pass"  style="vertical-align: -webkit-baseline-middle; color: red; display: block"></span>
 
                     </div>
                     <div class="login__field">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="login__field">
                         <i class="login__icon bi-telephone"></i>
-                            <input asp-for="phone" type="text" id="txt_phone" class="login__input" placeholder="Phone" required>
+                            <input asp-for="phone" type="number" id="txt_phone" class="login__input" placeholder="Phone" required>
                         <span asp-validation-for="phone"  style="vertical-align: -webkit-baseline-middle; color: red; display: block"></span>
                     </div>
                     <div class="login__field">
@@ -82,5 +82,6 @@
         </div>
     </div>
     <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/js/client/register.js"></script>
 </body>
 </html>
