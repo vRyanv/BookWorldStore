@@ -18,40 +18,23 @@
     </nav>
 </div>
 <div style="padding-top: 3rem; padding-bottom: 1rem" id="container_pro_list">
-@*    @foreach (Book book in ViewBag.books)
-    {
-        <div class="card" style="width: 18rem; margin-right: 1.5rem; margin-top: 2rem;display: inline-block">
-            <img src="~/img/product/1667916784405asdfas.jpg" class="card-img-top" alt="..." style="height: 18rem">
-            <div class="card-body">
-                <h5 class="card-title" style="color: rgb(102, 95, 170); font-size: 1.7rem;"> @book.title </h5>
-                <h5 class="card-title">Price: @book.price </h5>
-                <h5 class="card-title">Inventory: @book.inventory </h5>
-                <h5 class="card-title">Category: @book.category.name </h5>
-                <h5 class="card-title">Supplier: @book.supplier.name </h5>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="/Book/edit/@book.book_id"><button type="button" class="btn btn-primary">Update</button></a>
-                    <button type="button" class="btn btn-danger btn-delete-product" data-pro-id="@book.book_id">Delete</button>
-                </div>
-            </div>
-        </div>
-    }*@
 
     @foreach (var book in Model)
     {
         <div class="card" style="width: 18rem; margin-right: 1.5rem; margin-top: 2rem;display: inline-block">
-            <img src="~/img/decoration/@book.image" class="card-img-top" alt="..." style="height: 18rem">
+            <img src="~/img/book/@book.image" class="card-img-top" alt="..." style="height: 18rem">
             <div class="card-body">
                 <h5 class="card-title" style="color: rgb(102, 95, 170); font-size: 1.7rem;"> title @book.title </h5>
-                <h5 class="card-title">Price: @book.price$</h5>
-                <h5 class="card-title">Inventory: @book.inventory_num </h5>
                 <h5 class="card-title">Category: cateName @book.category.name </h5>
                 <h5 class="card-title">Supplier: suppName @book.supplier.name </h5>
+                <h5 class="card-title">Price: @book.price$</h5>
+                <h5 class="card-title">Inventory: @book.inventory_num </h5>
+                <div>@book.des</div>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="/Book/edit/@book.book_id"><button type="button" class="btn btn-primary">Update</button></a>
+                    <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.book_id"><button type="button" class="btn btn-primary">Update</button></a>
                     <button type="button" class="btn btn-danger btn-delete-product" data-pro-id="@book.book_id">Delete</button>
                 </div>
             </div>
         </div>
     }
-
 </div>
