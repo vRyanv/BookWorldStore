@@ -2,6 +2,7 @@
 using BookWorldStore.Models;
 using BookWorldStore.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookWorldStore.Controllers
 {
@@ -14,7 +15,8 @@ namespace BookWorldStore.Controllers
         }
         public IActionResult Index()
         {
-            return View("~/Views/Admin/Book/Index.cshtml");
+            var book = dbContext.books.Include("category").Include("supplier").ToList();
+            return View("~/Views/Admin/Book/Index.cshtml",book);
         }
 
         [HttpGet]
