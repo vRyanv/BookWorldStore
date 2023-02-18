@@ -3,6 +3,7 @@ using BookWorldStore.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace BookWorldStore.Controllers
 {
@@ -34,8 +35,19 @@ namespace BookWorldStore.Controllers
 			return View("~/Views/Service/Register.cshtml");
 		}
 
+        [HttpPost]
+        public IActionResult Register(User user)
+        {
+            Console.WriteLine(JsonSerializer.Serialize(user));
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Login");
+            }
+            return View("~/Views/Service/Register.cshtml");
+        }
 
-		public IActionResult test()
+
+        public IActionResult test()
         {
             //List<BookViewModel> books = new BookViewModel(dbContext).Showall();
             //foreach (var b in books) {

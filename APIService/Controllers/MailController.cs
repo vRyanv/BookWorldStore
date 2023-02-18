@@ -18,10 +18,13 @@ namespace APIService.Controllers
         [HttpPost]
         public async Task<IActionResult> RequestResetPass([FromBody]string email)
         {
-            string linkAcceptResetPass = "https://localhost:44378/api/Mail/HandleResetPass";
-            await MailHelper.Instance.SendEmail(email, "request reset pasword", linkAcceptResetPass);
-            var data = new { status = 200, message = $"Request reset pass for email: {email} is success" };
-            return Content(JsonSerializer.Serialize(data));
+            string tokenResetPass = Guid.NewGuid().ToString();
+            var user = _APIContext.users.Where(u => u.email == email);
+
+            string linkAcceptResetPass = $"https://localhost:44378/api/Mail/HandleResetPass?email={email}&token={tokenResetPass}";
+            //await MailHelper.Instance.SendEmail(email, "request reset pasword", linkAcceptResetPass);
+            //var data = new { status = 200, message = $"Request reset pass for email: {email} is success" };
+            return Content(JsonSerializer.Serialize(user));
         }
     }
 }
