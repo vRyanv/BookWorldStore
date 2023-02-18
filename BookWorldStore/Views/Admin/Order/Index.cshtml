@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Order>
+@{
     Layout = "_AdminLayout";
     ViewBag.title = "Order";
 }
@@ -17,18 +18,18 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < 10; i++)
+            @foreach (var order in Model)
             {
                 <tr>
-                    <th scope="row">@i</th>
-                    <td>name @i</td>
-                    <td>phone @i</td>
-                    <td>address @i</td>
-                    <td>order date @i</td>
-                    <td>delivertydate @i</td>
+                    <th scope="row">@order.order_id</th>
+                    <td>@order.user.email</td>
+                    <td>@order.user.phone</td>
+                    <td>@order.user.address</td>
+                    <td>@order.order_date</td>
+                    <td>@order.delivery_date</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary btn-view-detail" data-order-id="<%= orderList[i].order_id %>">view</button>
+                            <button type="button" class="btn btn-primary btn-view-detail" data-order-id="@order.order_id">view</button>
                         </div>
                     </td>
                 </tr>
