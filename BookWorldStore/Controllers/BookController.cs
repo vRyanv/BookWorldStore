@@ -30,22 +30,25 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Book book, IFormFile imageFile)
+        public async Task<IActionResult> Create([FromForm] Book book, IFormFile image)
         {
             if (ModelState.IsValid)
             {
                 string folder = "img/book";
-                //string fileName = await FileHelper.Instance.SaveFileAsync(imageFile, folder);
+                string fileName = await FileHelper.Instance.SaveFileAsync(image, folder);
+                book.image = fileName;
 
-                //book.image = $"fileName: {fileName}";
+                dbContext.Add(book);
+                dbContext.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            return View("~/Views/Admin/Book/Create.cshtml");
+            return RedirectToAction("Create");
         }
 
         [HttpGet]
-        async public Task<IActionResult> Edit()
+        async public Task<IActionResult> Edit(int id)
         {
             return View("~/Views/Admin/Book/Edit.cshtml");
         }

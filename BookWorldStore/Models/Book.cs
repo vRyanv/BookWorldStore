@@ -9,13 +9,15 @@ namespace BookWorldStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int book_id { get; set; }
 
-        [ForeignKey("cate_id")]
         [Required(ErrorMessage = "Category is required")]
-        public Category category { get; set; }
+        public int cate_id { get; set; }
+        [ForeignKey("cate_id")]
+        public Category? category { get; set; }
 
-        [ForeignKey("sup_id")]
         [Required(ErrorMessage = "Supplier is required")]
-        public Supplier supplier { get; set; }
+        public int sup_id { get; set; }
+        [ForeignKey("sup_id")]
+        public Supplier? supplier { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         public string title { get; set; }
@@ -28,8 +30,7 @@ namespace BookWorldStore.Models
         [Required(ErrorMessage = "quantity is required")]
         public int inventory_num { get; set; }
 
-        [Required(ErrorMessage = "Image is required")]
-        public string image { get; set; }
+        public string? image { get; set; }
 
         [Required(ErrorMessage = "Publishing year is required")]
         public string publishing_year { get; set; }
