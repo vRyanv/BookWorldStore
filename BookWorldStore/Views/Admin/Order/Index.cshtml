@@ -14,6 +14,7 @@
                 <th scope="col">Address</th>
                 <th scope="col">Order date</th>
                 <th scope="col">Delivery date</th>
+                <th scope="col">Total</th>
                 <th scope="col">Detail</th>
             </tr>
         </thead>
@@ -26,10 +27,11 @@
                     <td>@order.user.phone</td>
                     <td>@order.user.address</td>
                     <td>@order.order_date</td>
+                    <td>@order.total</td>
                     <td>@order.delivery_date</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary btn-view-detail" data-order-id="@order.order_id">view</button>
+                            <a href="/order/orderdetail/@order.order_id"><button type="button" class="btn btn-primary btn-view-detail" data-order-id="@order.order_id">view</button></a>
                         </div>
                     </td>
                 </tr>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<OrderDetail>
+@{
+    Layout = "_AdminLayout";
+    ViewBag.title = "OrderDetail";
+}
+
+}
+<table class="table table-hover pt-10">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total price</th>
+        </tr>
+    </thead>
+    <tbody id="body-order-detail-table">
+        <!-- render in js-->
+        @foreach (var orderD in Model)
+        {
+            <tr>
+                <th scope="row">@orderD.order_detail_id</th>
+                <td>@orderD.book.title</td>
+                <th scope="row">
+                    <img style="width: 5rem; height: 5rem" src="~/img/decoration/@orderD.book.image">
+                </th>
+                <td> @orderD.quantity</td>
+                <td>  @orderD.book.price </td>
+            </tr>
+        }
+        <!-- render in js-->
+    </tbody>
+</table>
