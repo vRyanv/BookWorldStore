@@ -1,6 +1,8 @@
-﻿using BookWorldStore.Models;
+﻿using BookWorldStore.Helper;
+using BookWorldStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Text.Json;
 
 namespace BookWorldStore.Controllers
@@ -12,21 +14,21 @@ namespace BookWorldStore.Controllers
         {
             this.dbContext = dbContext;
         }
-        public IActionResult Index()
+        public IActionResult CategoryRequest()
         {
-            return View("~/Views/Admin/SupperAdmin/Index.cshtml");
+            return View("~/Views/Admin/SupperAdmin/CategoryRequest.cshtml");
         }
 
         [HttpPost]
-        public async Task<IActionResult> RequestResetPass([FromBody] string email)
+        public async Task<IActionResult> RequestResetPass([FromBody] string receiverMail)
         {
             string tokenResetPass = Guid.NewGuid().ToString();
-            var user = dbContext.users.Where(u => u.email == email);
+            var user = dbContext.users.Where(u => u.email == receiverMail);
 
-            string linkAcceptResetPass = $"https://localhost:44378/api/Mail/HandleResetPass?email={email}&token={tokenResetPass}";
-            //await MailHelper.Instance.SendEmail(email, "request reset pasword", linkAcceptResetPass);
-            //var data = new { status = 200, message = $"Request reset pass for email: {email} is success" };
-            return Content(JsonSerializer.Serialize(user));
+            string linkAcceptResetPass = $"<a href='https://localhost:44378/api/Mail/HandleResetPass?email={receiverMail}&token={tokenResetPass}' style='color:red'></a>";
+            string subject = "request reset pasword";
+            await MailHelper.Instance.SendEmail(receiverMail, subject, linkAcceptResetPass);
+            return RedirectToAction("CategoryRequest");
         }
     }
 }
