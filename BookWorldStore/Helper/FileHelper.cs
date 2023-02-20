@@ -47,7 +47,7 @@ namespace BookWorldStore.Helper
             }
         }
 
-        public bool DeleteFileAsync(string folder, string fileName)
+        public bool DeleteFileAsync(string fileName, string folder)
         {
             try
             {

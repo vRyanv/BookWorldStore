@@ -3,6 +3,7 @@ using BookWorldStore.Models;
 using BookWorldStore.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace BookWorldStore.Controllers
 {
@@ -60,7 +61,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Book book, IFormFile image)
+        public async Task<IActionResult> Edit([FromForm] Book book, IFormFile? image)
         {
             if (ModelState.IsValid)
             {
@@ -77,6 +78,21 @@ namespace BookWorldStore.Controllers
                     updateBook[0].sup_id = book.sup_id;
                     updateBook[0].inventory_num = book.inventory_num;
                     updateBook[0].publishing_year = book.publishing_year;
+
+                    if(image != null)
+                    {
+                        string oldImg = updateBook[0].image;
+                        string folder = "img/book";
+                        bool result = FileHelper.Instance.DeleteFileAsync(oldImg, folder);
+                        if (result)
+                        {
+                            string fileName = await FileHelper.Instance.SaveFileAsync(image, folder);
+                            if(fileName != "")
+                            {
+                                updateBook[0].image = fileName;
+                            }
+                        }
+                    }
 
                     dbContext.Update(updateBook[0]);
                     dbContext.SaveChanges();
