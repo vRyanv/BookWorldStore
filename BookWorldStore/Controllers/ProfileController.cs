@@ -1,5 +1,8 @@
 ﻿using BookWorldStore.Models;
+using BookWorldStore.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace BookWorldStore.Controllers
 {
@@ -10,8 +13,11 @@ namespace BookWorldStore.Controllers
         {
             this.dbContext = dbContext;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+
+            var user = UserUtils.Instance.GetUser(this.HttpContext);
+            var result = await dbContext.users.Where(u => u.email == user.email).FirstAsync();
             return View();
         }
 

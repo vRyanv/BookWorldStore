@@ -13,7 +13,7 @@ namespace BookWorldStore.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var result = await dbContext.suppliers.ToListAsync();
+            var result = await dbContext.suppliers.Where(s=>s.status==1).ToListAsync();
             return View("~/Views/Admin/Supplier/Index.cshtml", result);
         }
 
@@ -58,7 +58,7 @@ namespace BookWorldStore.Controllers
         public IActionResult Delete(int id)
         {
             Supplier supplier=dbContext.suppliers.Find(id);
-             dbContext.Remove(supplier);
+            dbContext.Remove(supplier);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
