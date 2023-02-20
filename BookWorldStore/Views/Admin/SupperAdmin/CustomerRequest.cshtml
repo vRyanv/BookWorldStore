@@ -3,26 +3,8 @@
     ViewBag.title = "Customer Request";
 }
 
-<!-- confirm delete model -->
-<button type="button" id="btn_show_confirm_delete" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden>
-</button>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Refuse</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="content_confirm_delete">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="btn_ok_delete" class="btn btn-primary">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- confirm delete model -->
+@model IEnumerable<User>
+
 <div class="container-fluid" style="height: 100%">
     <div class="row h-100">
         <div class="col-2" id="block_dashboard" style="position: fixed">
@@ -49,15 +31,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < 10; i++)
+                            @foreach (User user in Model)
                             {
                                 <tr>
-                                    <th scope="row">@i</th>
-                                    <td> cate @i </td>
+                                    <th scope="row">@user.user_id</th>
+                                    <td>@user.email</td>
+                                    <td>@user.phone</td>
+                                    <td>@user.address</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a asp-controller="SupperAdmin" asp-action="AgreeResetPass"><button type="button" class="btn btn-primary">Agree</button></a>
-                                            <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="">refuse</button>
+                                            <a asp-controller="SupperAdmin" asp-action="AgreeResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-primary">Agree</button></a>
+                                            <a asp-controller="SupperAdmin" asp-action="RefuseResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="">refuse</button></a>
                                         </div>
                                     </td>
                                 </tr>

@@ -23,7 +23,7 @@ namespace BookWorldStore.Helper
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("FPTBook", "khangok1610@gmail.com"));
+            emailMessage.From.Add(new MailboxAddress("FPTBook", "khangak1999@gmail.com"));
             emailMessage.To.Add(new MailboxAddress("", to));
             emailMessage.Subject = subject;
 
@@ -35,7 +35,7 @@ namespace BookWorldStore.Helper
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("khangok1610@gmail.com", "tnosirzivqxactdm");
+                client.Authenticate("khangak1999@gmail.com", "nmdpdbaenvufwrxm");
                 client.Send(emailMessage);
                 client.Disconnect(true);
             }

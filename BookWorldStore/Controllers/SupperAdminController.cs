@@ -22,9 +22,10 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult CustomerRequest()
+        public async Task<IActionResult> CustomerRequest()
         {
-            return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+            List<User> user = await dbContext.users.Where(u => u.status == 1 && u.role == "client").ToListAsync();
+            return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml", user);
         }
 
         [HttpGet]
@@ -34,39 +35,77 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult AgreeResetPass([FromQuery] string receiverMail)
+        public async Task<IActionResult> AgreeResetPass([FromQuery(Name = "email")] string email)
         {
-            User user = dbContext.users.Where(u => u.email == receiverMail).First();
+            User user = await dbContext.users.Where(u => u.email == email).FirstOrDefaultAsync();
             if(user != null)
             {
-                string subject = "Response to password reset request";
-                string message = "<a href='http://localhost:7048/SupperAdmin/ResetPass' >Click<>";
-                MailHelper.Instance.SendEmail(receiverMail, subject, message);
+                string tokenResetPass = Guid.NewGuid().ToString();
+                user.token_reset_pass = tokenResetPass;
                 user.status = 0;
                 dbContext.SaveChanges();
+                string subject = "Response to password reset request";
+                string message = $"<a href='http://localhost:7048/SupperAdmin/GetNewPass?email={email}&&token={tokenResetPass}'>Click here to get new password</a>";
+                await MailHelper.Instance.SendEmail(email, subject, message);
+
+
+                if (user.role == "client")
+                {
+                    return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+                }
+                else
+                {
+                    return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml");
+                }
             }
-            return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+
+            return NotFound();
+            
         }
 
         [HttpGet]
-        public IActionResult GetNewPass()
+        public async Task<IActionResult> RefuseResetPass([FromQuery(Name = "email")] string email)
         {
-            return View()
+            User user = await dbContext.users.Where(u => u.email == email).FirstOrDefaultAsync();
+            if (user != null)
+            {
+                user.status = 0;
+                dbContext.SaveChanges();
+                string subject = "Response to password reset request";
+                string message = "We refused your request to reset your password because you broke some laws";
+                await MailHelper.Instance.SendEmail(email, subject, message);
+
+                if (user.role == "client")
+                {
+                    return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+                }
+                else
+                {
+                    return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml");
+                }
+            }
+
+            return NotFound();
+
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> RequestResetPass([FromBody] string receiverMail)
+        [HttpGet]
+        public async Task<IActionResult> GetNewPass([FromQuery(Name = "email")] string email, [FromQuery(Name = "token")] string token)
         {
-            string tokenResetPass = Guid.NewGuid().ToString();
-            User user = dbContext.users.Where(u => u.email == receiverMail).First();
-            user.token_reset_pass = tokenResetPass;
-            dbContext.SaveChanges();
+            User user = dbContext.users.Where(u => u.email == email && u.token_reset_pass == token).FirstOrDefault();
+            if(user != null)
+            {
+                string newPass = "123";
+                user.password = newPass;
+                dbContext.SaveChanges();
+                string subject = "New password";
+                await MailHelper.Instance.SendEmail(email, subject, $"new pass: {newPass}");
+                return Json("view in mail");
+            }
 
-            string linkAcceptResetPass = $"<a href='https://localhost:44378/api/Mail/HandleResetPass?email={receiverMail}&token={tokenResetPass}' style='color:red'></a>";
-            string subject = "request reset pasword";
-            await MailHelper.Instance.SendEmail(receiverMail, subject, linkAcceptResetPass);
-            return RedirectToAction("CategoryRequest");
+            return NotFound();
+            
         }
+
     }
 }

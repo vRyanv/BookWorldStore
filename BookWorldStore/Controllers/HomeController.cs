@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.Json;
 
 namespace BookWorldStore.Controllers
@@ -54,25 +55,42 @@ namespace BookWorldStore.Controllers
 		}
 
         [HttpPost]
-        public IActionResult Register(User user)
+        public async Task<IActionResult> Register(User user)
         {
             if (ModelState.IsValid)
             {
-                user.status = 0;
-                user.role = "client";
-                user.token_reset_pass = "";
-                dbContext.Add(user);
-                dbContext.SaveChanges();
-                return RedirectToAction("Login");
+                User exisEmail = await dbContext.users.Where(e => e.email == user.email).FirstAsync();
+                if(exisEmail == null)
+                {
+                    user.status = 0;
+                    user.role = "client";
+                    user.token_reset_pass = "";
+                    dbContext.Add(user);
+                    dbContext.SaveChanges();
+                    return RedirectToAction("Login");
+                }
+                ViewBag.error = "Email is exist";
+                return View("~/Views/Service/Register.cshtml");
             }
+            ViewBag.error = "Some field is wrong";
             return View("~/Views/Service/Register.cshtml");
         }
 
         [HttpGet]
-        public IActionResult SendResetPassRequest([FromQuery(Name = "email")]string email)
+        public async Task<IActionResult> SendResetPassRequest([FromQuery(Name = "email")] string email)
         {
+            User user = await dbContext.users.Where(u => u.email == email).FirstOrDefaultAsync();
+        
+            if (user != null)
+            {
+                user.status = 1;
+                dbContext.SaveChanges();
+
+                ViewBag.email = user.email;
+                return View("ResullSuccess");
+            }
             ViewBag.email = email;
-            return View("ResullSuccess");
+            return View("ResultFail");
         }
 
         public IActionResult NotFoundPage()
