@@ -22,8 +22,8 @@ namespace BookWorldStore.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var cateList = await dbContext.categories.ToListAsync();
-            var supList = await dbContext.suppliers.ToListAsync();
+            var cateList = await dbContext.categories.Where(c => c.status == 1).ToListAsync();
+            var supList = await dbContext.suppliers.Where(s => s.status == 1).ToListAsync();
             ViewData["cateList"] = cateList;
             ViewData["supList"] = supList;
             return View("~/Views/Admin/Book/Create.cshtml");
@@ -49,9 +49,52 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
-        async public Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View("~/Views/Admin/Book/Edit.cshtml");
+            Book book = await dbContext.books.FindAsync(id);
+            var cateList = await dbContext.categories.Where(c => c.status == 1).ToListAsync();
+            var supList = await dbContext.suppliers.Where(s => s.status == 1).ToListAsync();
+            ViewData["cateList"] = cateList;
+            ViewData["supList"] = supList;
+            return View("~/Views/Admin/Book/Edit.cshtml", book);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Book book, IFormFile image)
+        {
+            if (ModelState.IsValid)
+            {
+                List<Book> updateBook = await dbContext.books
+                                           .Where(b => b.status == 1 && b.book_id == book.book_id)
+                                           .ToListAsync();
+                if (updateBook.Count != 0)
+                {
+                    updateBook[0].title = book.title;
+                    updateBook[0].author = book.author;
+                    updateBook[0].des = book.des;
+                    updateBook[0].price = book.price;
+                    updateBook[0].cate_id = book.cate_id;
+                    updateBook[0].sup_id = book.sup_id;
+                    updateBook[0].inventory_num = book.inventory_num;
+                    updateBook[0].publishing_year = book.publishing_year;
+
+                    dbContext.Update(updateBook[0]);
+                    dbContext.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.error = "Error - Not found book";
+            }
+            else
+            {
+                ViewBag.error = "Error - Some field is invalid ";
+            }
+
+            var cateList = await dbContext.categories.Where(c => c.status == 1).ToListAsync();
+            var supList = await dbContext.suppliers.Where(s => s.status == 1).ToListAsync();
+            ViewData["cateList"] = cateList;
+            ViewData["supList"] = supList;
+            return View("~/Views/Admin/Book/Edit.cshtml", book);
         }
 
         [HttpGet]

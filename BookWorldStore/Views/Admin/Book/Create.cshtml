@@ -29,7 +29,7 @@
         </div>
         <div class="mb-4">
             <label for="pro_cate" class="form-label">Category</label>
-            <select class="form-control" asp-for="cate_id" id="pro_cate" style="display: inline-block" required>
+            <select class="form-control" asp-for="cate_id" style="display: inline-block" required>
                 <option value="">Choose category</option>
                 @foreach (var category in (List<Category>)ViewData["cateList"])
                 {
