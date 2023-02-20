@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <partial name="_ShareLibCss" />
+    <link rel="stylesheet" href="~/css/admin/dashboardRemote.css" asp-append-version="true">
+</head>
+<body>
+    @RenderBody()
+</body>
+<partial name="_ShareLibJS" />
+<script src="~/js/admin/dashboardRemote.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required:false)
+</html>

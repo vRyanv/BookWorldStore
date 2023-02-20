@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "_SupperAdminLayput";
+    ViewBag.title = "Customer Request";
+}
+
+<!-- confirm delete model -->
+<button type="button" id="btn_show_confirm_delete" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden>
+</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Refuse</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="content_confirm_delete">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="btn_ok_delete" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm delete model -->
+<div class="container-fluid" style="height: 100%">
+    <div class="row h-100">
+        <div class="col-2" id="block_dashboard" style="position: fixed">
+            <div id="header_dashboard">
+                <div id="title_dashboard">ADMIN</div>
+            </div>
+            <div id="body_dashboard">
+                <div class="controller-in-dashboard active" data-page-name="Category"><i class="bi-tags"></i> Category </div>
+                <div class="controller-in-dashboard" data-page-name="Home"><i class="bi-box-seam"></i> Website </div>
+                <a asp-controller="Home" asp-action="Logout" style="text-decoration: none; color: black"><div class="controller-in-dashboard"><i class="bi-power"></i> Logout</div></a>
+            </div>
+        </div>
+        <div class="col" style="margin-left: 17rem;">
+            <div id="root_body">
+                <div style="padding-top: 5rem">
+                    <table class="table table-hover pt-10">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < 10; i++)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td> cate @i </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="/category/edit/@i"><button type="button" class="btn btn-primary">Agree</button></a>
+                                            <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="<%= cateList[i].cate_id %>">refuse</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
