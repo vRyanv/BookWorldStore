@@ -113,16 +113,31 @@ namespace BookWorldStore.Controllers
             return View("~/Views/Admin/Book/Edit.cshtml", book);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DeleteFile(string fileName)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
-            string folder = "img/book";
-            if (FileHelper.Instance.DeleteFileAsync(folder, fileName))
+            List<Book> deleteBook = await dbContext.books
+                           .Where(b => b.status == 1 && b.book_id == id)
+                           .ToListAsync();
+            if(deleteBook.Count > 0)
             {
-              return Ok("success delete");
+                string fileName = deleteBook[0].image;
+                string folder = "img/book";
+                bool result =  FileHelper.Instance.DeleteFileAsync(fileName, folder);
+                if (result)
+                {
+                    deleteBook[0].status = 0;
+                    dbContext.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return NotFound();
+        
             }
-            return BadRequest();
-           
+            else
+            {
+                return NotFound();
+            }
+
         }
 
     }
