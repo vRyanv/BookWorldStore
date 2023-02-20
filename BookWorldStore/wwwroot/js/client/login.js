@@ -40,9 +40,9 @@
             var email = $("#txt_email").val()
             var password = $("#txt_pass").val()
             $.ajax({
-                url:'https://localhost:44378/api/token/login',
+                url:'http://localhost:44378/api/token/login',
                 type: 'POST',
-                contentType: "application/json; charset=utf-8",
+                contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ email: email, password: password}),
                 dataType: 'json',
                 beforeSend: Utils.animation(),
@@ -72,25 +72,8 @@
             if(email.trim() == ""){
                 alert("Enter email to reset password")
             }
-            else{
-                $.ajax({
-                    url:'https://localhost:44378/api/mail/RequestResetPass',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(email),
-                    processData: false,
-                    dataType: 'json',
-                    beforeSend: Utils.animation(),
-                    success: function (data) {
-                        console.log(data)
-                        Utils.animation()
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.error(xhr.status);
-                        console.error(thrownError);
-                        Utils.animation()
-                    }
-                })
+            else {
+                location.href = "/Home/SendResetPassRequest?email=" + email
             }
         },
         Run: function(){

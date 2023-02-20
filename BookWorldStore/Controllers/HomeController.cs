@@ -68,6 +68,13 @@ namespace BookWorldStore.Controllers
             return View("~/Views/Service/Register.cshtml");
         }
 
+        [HttpGet]
+        public IActionResult SendResetPassRequest([FromQuery(Name = "email")]string email)
+        {
+            ViewBag.email = email;
+            return View("ResullSuccess");
+        }
+
         public IActionResult NotFoundPage()
         {
             return View("_Page404");

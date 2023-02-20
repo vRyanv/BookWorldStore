@@ -2,6 +2,7 @@ using APIService.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<APIContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("connectString")));
 builder.Services.AddControllers();
-builder.Services.AddCors();
+//builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -61,13 +71,13 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseCors(builder => 
-        builder
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-   );
+app.UseCors();
+//app.UseCors(builder => 
+//        builder
+//        .AllowAnyOrigin()
+//        .AllowAnyMethod()
+//        .AllowAnyHeader()
+//   );
 
 
 app.MapControllerRoute(

@@ -14,16 +14,32 @@ namespace BookWorldStore.Controllers
         {
             this.dbContext = dbContext;
         }
+
+        [HttpGet]
         public IActionResult CategoryRequest()
         {
             return View("~/Views/Admin/SupperAdmin/CategoryRequest.cshtml");
+        }
+
+        [HttpGet]
+        public IActionResult CustomerRequest()
+        {
+            return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+        }
+
+        [HttpGet]
+        public IActionResult OwnerRequest()
+        {
+            return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml");
         }
 
         [HttpPost]
         public async Task<IActionResult> RequestResetPass([FromBody] string receiverMail)
         {
             string tokenResetPass = Guid.NewGuid().ToString();
-            var user = dbContext.users.Where(u => u.email == receiverMail);
+            User user = dbContext.users.Where(u => u.email == receiverMail).First();
+            user.token_reset_pass = tokenResetPass;
+            dbContext.SaveChanges();
 
             string linkAcceptResetPass = $"<a href='https://localhost:44378/api/Mail/HandleResetPass?email={receiverMail}&token={tokenResetPass}' style='color:red'></a>";
             string subject = "request reset pasword";
