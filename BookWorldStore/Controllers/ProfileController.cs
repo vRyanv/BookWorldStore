@@ -27,7 +27,21 @@ namespace BookWorldStore.Controllers
             }).Where(u=> user.email==u.email).FirstAsync();
             return View(result);
         }
+        public IActionResult ChangesImformation(ProfileViewModel profile) {
 
+            var user = UserUtils.Instance.GetUser(this.HttpContext);
+            User infor= dbContext.users.Where(u => user.email == u.email).First();
+            infor.phone = profile.phone;
+            infor.gender = profile.gender;
+            infor.address = profile.address;
+            dbContext.Update(infor);
+            dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
+        public IActionResult ChangesPassword()
+        {
+            return View();
+        }
     }
 }

@@ -1,35 +1,36 @@
-﻿<!-- Change information model -->
+﻿@using BookWorldStore.Repository;
+<!-- Change information model -->
+
 <div class="modal fade" id="change_infor_model" tabindex="-1" aria-labelledby="change_infor_model" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content color-popup-model">
-            <form id="change_infor_form">
+            <form id="change_infor_form" method="post" asp-controller="Profile" asp-action="ChangesImformation">
                 <div class="modal-header">
                     <h1 class="modal-title title-model-custom" id="exampleModalLabel">Change Information</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body body-model-custome">
                     <label for="user_phone" class="form-label">Phone</label>
-                    <input type="text" id="user_phone" class="form-control" style="margin-bottom:1rem"/>
+                    <input type="text" id="user_phone" class="form-control" style="margin-bottom:1rem" value="@Model.phone" />
                     <label for="user_address" class="form-label">Address</label>
-                    <input type="text" id="user_address" class="form-control" style="margin-bottom:1rem"/>
+                    <input type="text" id="user_address" class="form-control" style="margin-bottom:1rem" value="@Model.address" />
                     <label for="user_gender" class="form-label">Gender</label>
-                    <input type="radio" name="user_gender" value="male" style="cursor:pointer; margin-left:2rem;" /> <span style="color:white">Male</span>
-                    <input type="radio" name="user_gender" value="female" style="cursor:pointer; margin-left:2rem;" /> <span style="color:white">Female</span>
+                    <input type="radio" name="user_gender" value="male" style="cursor:pointer; margin-left:2rem;" @(Model.gender == "male" ? "checked" : "") /> <span style="color:white">Male</span>
+                    <input type="radio" name="user_gender" value="female" style="cursor:pointer; margin-left:2rem; @(Model.gender == "female" ? "checked" : "") /> <span style="color:white">Female</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="black-button" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="btn_ok_change_infor" class="yellow-button">OK</button>
+                    <button type="submit" id="btn_ok_change_infor" class="yellow-button" formtarget="change_infor_model">OK</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 <!-- Change password model -->
 <div class="modal fade" id="change_pass_model" tabindex="-1" aria-labelledby="change_pass_model" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content color-popup-model">
-            <form id="change_infor_form">
+            <form id="change_password_form" asp-controller="Profile" asp-action="ChangesPassword">
                 <div class="modal-header">
                     <h1 class="modal-title title-model-custom">Change password</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -44,7 +45,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="black-button" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="yellow-button" id="btn_ok_change_pass">OK</button>
+                    <button type="submit" class="yellow-button" id="btn_ok_change_pass" formtarget="change_password_form">OK</button>
                 </div>
             </form>
         </div>

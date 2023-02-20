@@ -18,7 +18,7 @@
         <p>Gender: @Model.gender</p>
         <p>Phone: @Model.phone</p>
         <p>Address: @Model.address</p>
-        <button class="left bottom yellow-button" data-bs-toggle="modal" data-bs-target="#change_infor_model">Change information</button>
+        <button class="left bottom yellow-button" data-bs-toggle="modal" data-bs-target="#change_infor_model" asp-action="ChangesImformation" asp-controller="Profile">Change information</button>
         <button class="right bottom yellow-button" data-bs-toggle="modal" data-bs-target="#change_pass_model">Change password</button>
     </div>
 </div>
