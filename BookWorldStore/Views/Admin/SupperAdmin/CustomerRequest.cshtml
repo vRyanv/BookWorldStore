@@ -42,7 +42,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Address</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -54,8 +56,8 @@
                                     <td> cate @i </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="/category/edit/@i"><button type="button" class="btn btn-primary">Agree</button></a>
-                                            <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="<%= cateList[i].cate_id %>">refuse</button>
+                                            <a asp-controller="SupperAdmin" asp-action="AgreeResetPass"><button type="button" class="btn btn-primary">Agree</button></a>
+                                            <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="">refuse</button>
                                         </div>
                                     </td>
                                 </tr>

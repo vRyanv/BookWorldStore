@@ -58,7 +58,7 @@ namespace BookWorldStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.status = "";
+                user.status = 0;
                 user.role = "client";
                 user.token_reset_pass = "";
                 dbContext.Add(user);

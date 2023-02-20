@@ -33,6 +33,28 @@ namespace BookWorldStore.Controllers
             return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml");
         }
 
+        [HttpGet]
+        public IActionResult AgreeResetPass([FromQuery] string receiverMail)
+        {
+            User user = dbContext.users.Where(u => u.email == receiverMail).First();
+            if(user != null)
+            {
+                string subject = "Response to password reset request";
+                string message = "<a href='http://localhost:7048/SupperAdmin/ResetPass' >Click<>";
+                MailHelper.Instance.SendEmail(receiverMail, subject, message);
+                user.status = 0;
+                dbContext.SaveChanges();
+            }
+            return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+        }
+
+        [HttpGet]
+        public IActionResult GetNewPass()
+        {
+            return View()
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> RequestResetPass([FromBody] string receiverMail)
         {

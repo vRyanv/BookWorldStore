@@ -52,7 +52,7 @@
                         if (data.role == "onwner") {
                             location.href = "/dashboard";
                         } else if (data.role == "admin") {
-                            location.href = "/supperAdmin";
+                            location.href = "/supperadmin/categoryrequest";
                         } else {
                             location.href = "/home";
                         }
