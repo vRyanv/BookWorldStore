@@ -1,4 +1,5 @@
 ﻿using BookWorldStore.Models;
+using BookWorldStore.Repository;
 using BookWorldStore.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +18,14 @@ namespace BookWorldStore.Controllers
         {
 
             var user = UserUtils.Instance.GetUser(this.HttpContext);
-            var result = await dbContext.users.Where(u => u.email == user.email).FirstAsync();
-            return View();
+            ProfileViewModel result = await dbContext.users.Select(p=>new ProfileViewModel
+            {
+                email=p.email,
+                address=p.address,
+                phone=p.phone,
+                gender=p.gender,
+            }).Where(u=> user.email==u.email).FirstAsync();
+            return View(result);
         }
 
 
