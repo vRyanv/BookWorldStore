@@ -27,6 +27,7 @@ namespace BookWorldStore.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
+            category.status = 2;
             dbContext.categories.Add(category);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
@@ -43,7 +44,7 @@ namespace BookWorldStore.Controllers
         [HttpPost]
         public IActionResult Edit(int id, Category Model)
         {
-            var category = dbContext.categories.Find(id);
+            var category = dbContext.categories.Where(c=>c.cate_id==id && c.status==1).FirstOrDefault();
             if (category != null)
             {
                 category.name = Model.name;
@@ -54,10 +55,11 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Category category= dbContext.categories.Find(id);
-            dbContext.categories.Remove(category);
+
+            Category category= await dbContext.categories.Where(c=>c.cate_id==id && c.status==1).FirstAsync();
+            category.status = 0;
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -26,7 +26,7 @@ namespace BookWorldStore.Controllers
 
         [HttpPost]
         public IActionResult Create(Supplier supplier)
-        {
+        {   supplier.status = 1;
             dbContext.suppliers.Add(supplier);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
@@ -35,14 +35,14 @@ namespace BookWorldStore.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var result = dbContext.suppliers.Find(id);
+            var result = dbContext.suppliers.Where(s => s.status == 1 && s.sup_id == id).FirstOrDefault();
             return View("~/Views/Admin/Supplier/Edit.cshtml",result);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id,Supplier Model)
+        public async Task<IActionResult> Edit(int id,Supplier Model)
         {
-            var supplier=dbContext.suppliers.Find(id);
+            var supplier= await dbContext.suppliers.Where(s=>s.status==1 && s.sup_id==id).FirstAsync();
             if (supplier != null)
             {
                 supplier.name= Model.name;
@@ -55,10 +55,10 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Supplier supplier=dbContext.suppliers.Find(id);
-            dbContext.Remove(supplier);
+            Supplier supplier= await dbContext.suppliers.Where(s=>s.status==1&& s.sup_id==id).FirstAsync();
+            supplier.status = 1;
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
