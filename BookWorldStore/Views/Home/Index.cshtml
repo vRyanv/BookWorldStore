@@ -15,28 +15,20 @@
     <div class="templatemo_content_left_section">
         <h1>Categories</h1>
         <ul>
-            <li><a href="subpage.html">Donec accumsan urna</a></li>
-            <li><a href="subpage.html">Proin vulputate justo</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">Aliquam tristique dolor</a></li>
-            <li><a href="#">Maece nas metus</a></li>
-            <li><a href="#">Sed pellentesque placerat</a></li>
-            <li><a href="#">Suspen disse</a></li>
-            <li><a href="#">Maece nas metus</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
+                @foreach (Category cate in (List<Category>) ViewData["cateList"])
+                {
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-id="@cate.cate_id">@cate.name</a></li>
+                }
+            
         </ul>
     </div>
     <div class="templatemo_content_left_section">
         <h1>Bestsellers</h1>
         <ul>
-            <li><a href="#">Vestibulum ullamcorper</a></li>
-            <li><a href="#">Maece nas metus</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="http://www.photovaco.com" target="_parent">Free Photos</a></li>
+                @foreach (Category cate in (List<Category>)ViewData["cateList"])
+                {
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-id="@cate.cate_id">@cate.name</a></li>
+                }
         </ul>
     </div>
 </div>

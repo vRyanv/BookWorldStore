@@ -17,7 +17,7 @@ namespace BookWorldStore.Controllers
             this.dbContext = dbContext;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
             User user = Utils.UserUtils.Instance.GetUser(HttpContext);
             if(user != null)
@@ -25,8 +25,18 @@ namespace BookWorldStore.Controllers
                 ViewBag.loggedIn = true;
             }
 
-            ICollection<Book> bookList = await dbContext.books.Where(b => b.status == 1).Include(c => c.category).Include(s => s.supplier).ToListAsync();
+            var cateList = await dbContext.categories.Where(c => c.status == 1).ToListAsync();
+            ICollection<Book> bookList = new List<Book>();
+            if (id != null)
+            {
+                bookList = await dbContext.books.Where(b => b.status == 1 && b.cate_id == id).Include(c => c.category).Include(s => s.supplier).ToListAsync();
+            }
+            else
+            {
+                bookList = await dbContext.books.Where(b => b.status == 1).Include(c => c.category).Include(s => s.supplier).ToListAsync();
+            }
 
+            ViewData["cateList"] = cateList;
             return View(bookList);
         }
 
