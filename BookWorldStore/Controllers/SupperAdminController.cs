@@ -55,11 +55,11 @@ namespace BookWorldStore.Controllers
 
                 if (user.role == "client")
                 {
-                    return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+                    return RedirectToAction("CustomerRequest");
                 }
                 else
                 {
-                    return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml");
+                    return RedirectToAction("OwnerRequest");
                 }
             }
 
@@ -79,13 +79,14 @@ namespace BookWorldStore.Controllers
                 string message = "We refused your request to reset your password because you broke some laws";
                 await MailHelper.Instance.SendEmail(email, subject, message);
 
+
                 if (user.role == "client")
                 {
-                    return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml");
+                    return RedirectToAction("CustomerRequest");
                 }
                 else
                 {
-                    return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml");
+                    return RedirectToAction("OwnerRequest");
                 }
             }
 
