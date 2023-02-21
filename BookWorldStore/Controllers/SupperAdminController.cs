@@ -16,9 +16,36 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult CategoryRequest()
+        public async Task<IActionResult> CategoryRequest()
         {
-            return View("~/Views/Admin/SupperAdmin/CategoryRequest.cshtml");
+            List<Category> cateList = await dbContext.categories.Where(c => c.status == 2).ToListAsync();
+            return View("~/Views/Admin/SupperAdmin/CategoryRequest.cshtml", cateList);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AgreeCate(int id)
+        {
+            Category cate = await dbContext.categories.Where(c => c.cate_id == id).FirstOrDefaultAsync();
+            if(cate != null)
+            {
+                cate.status = 1;
+                dbContext.SaveChanges();
+                return RedirectToAction("CategoryRequest");
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RefuseCate(int id)
+        {
+            Category cate = await dbContext.categories.Where(c => c.cate_id == id).FirstOrDefaultAsync();
+            if (cate != null)
+            {
+                dbContext.Remove(cate);
+                dbContext.SaveChanges();
+                return RedirectToAction("CategoryRequest");
+            }
+            return NotFound();
         }
 
         [HttpGet]

@@ -28,10 +28,18 @@
                     <th scope="row">@cate.cate_id</th>
                     <td> @cate.name </td>
                     <td>
-                        <div class="btn-group" role="group">
-                            <a href="/category/edit/@cate.cate_id"><button type="button" class="btn btn-primary">Edit</button></a>
-                            <button data-bs-toggle="modal" data-bs-target="#confirm_delete_modal"  type="button" class="btn btn-danger btn-delete-cate" data-cate-id="@cate.cate_id">Delete</button>
-                        </div>
+                        @if(cate.status == 2)
+                        {
+                            <div>Processing</div>
+                        }
+                        else
+                        {
+                            <div class="btn-group" role="group">
+                                <a href="/category/edit/@cate.cate_id"><button type="button" class="btn btn-primary">Edit</button></a>
+                                <button data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" type="button" class="btn btn-danger btn-delete-cate" data-cate-id="@cate.cate_id">Delete</button>
+                            </div>
+                        }
+
                     </td>
                 </tr>
             }

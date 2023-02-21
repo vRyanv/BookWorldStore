@@ -3,6 +3,8 @@
     ViewBag.title = "Category Request";
 }
 
+@model IEnumerable<Category>
+
 <!-- confirm refuse model -->
 <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -34,15 +36,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < 10; i++)
+                    @foreach (Category cate in Model)
                     {
                         <tr>
-                            <th scope="row">@i</th>
-                            <td> cate @i </td>
+                            <th scope="row">@cate.cate_id</th>
+                            <td>@cate.name</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="/category/edit/@i"><button type="button" class="btn btn-primary">Agree</button></a>
-                                    <button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="@i" data-bs-toggle="modal" data-bs-target="#exampleModal">refuse</button>
+                                    <a asp-controller="SupperAdmin" asp-action="AgreeCate" asp-route-id="@cate.cate_id">
+                                        <button type="button" class="btn btn-primary">Agree</button>
+                                        </a>
+                                    <a asp-controller="SupperAdmin" asp-action="RefuseCate" asp-route-id="@cate.cate_id">
+                                        <button type="button" class="btn btn-danger">refuse</button>
+                                     </a>
+                               
                                 </div>
                             </td>
                         </tr>

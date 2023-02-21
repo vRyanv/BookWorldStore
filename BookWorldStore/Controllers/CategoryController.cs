@@ -14,7 +14,7 @@ namespace BookWorldStore.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var result = await dbContext.categories.Where(c=>c.status==1).ToListAsync();
+            var result = await dbContext.categories.Where(c=>c.status==1 || c.status == 2).ToListAsync();
             return View("~/Views/Admin/Category/Index.cshtml",result);
         }
 
