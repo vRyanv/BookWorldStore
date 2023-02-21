@@ -37,6 +37,7 @@ namespace BookWorldStore.Controllers
                     price = od.book.price,
                     quantity = od.quantity,
                     total = od.book.price * od.quantity,
+                    orderid=o.order_id,
                     date = o.delivery_date,
                     status = o.status,
                     user_id = o.user_id,
@@ -53,6 +54,7 @@ namespace BookWorldStore.Controllers
                     price = od.book.price,
                     quantity = od.quantity,
                     total = od.book.price * od.quantity,
+                    orderid=o.order_id,
                     date = o.delivery_date,
                     status = o.status,
                     user_id = o.user_id,
@@ -124,6 +126,12 @@ namespace BookWorldStore.Controllers
 
             return RedirectToAction("Index");
         }
-
+        public async Task<IActionResult> Delete(int id)
+        {
+            OrderDetail orderDetail=dbContext.orderDetails.Find(id);
+            dbContext.Remove(orderDetail);
+            dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -12,6 +12,7 @@
 
         public int status { get; set; }
 
+        public int? orderid { get; set; }
         
         public int user_id { get; set; }
     }
