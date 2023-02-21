@@ -1,6 +1,8 @@
 ﻿using BookWorldStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace BookWorldStore.Controllers
 {
@@ -11,6 +13,8 @@ namespace BookWorldStore.Controllers
         {
             this.dbContext = dbContext;
         }
+
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Index()
         {
             var result = await dbContext.suppliers.Where(s=>s.status==1).ToListAsync();
@@ -18,6 +22,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Create()
         {
 
@@ -25,6 +30,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Create(Supplier supplier)
         {   supplier.status = 1;
             dbContext.suppliers.Add(supplier);
@@ -33,6 +39,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Edit(int id)
         {
             var result = dbContext.suppliers.Where(s => s.status == 1 && s.sup_id == id).FirstOrDefault();
@@ -40,6 +47,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Edit(int id,Supplier Model)
         {
             var supplier= await dbContext.suppliers.Where(s=>s.status==1 && s.sup_id==id).FirstAsync();
@@ -55,6 +63,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Delete(int id)
         {
             Supplier supplier= await dbContext.suppliers.Where(s=>s.status==1&& s.sup_id==id).FirstAsync();

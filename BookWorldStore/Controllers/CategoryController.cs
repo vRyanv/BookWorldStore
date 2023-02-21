@@ -1,6 +1,8 @@
 ﻿using BookWorldStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace BookWorldStore.Controllers
 {
@@ -11,6 +13,8 @@ namespace BookWorldStore.Controllers
         {
             this.dbContext = dbContext;
         }
+
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Index()
         {
 
@@ -19,12 +23,14 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Create()
         {
             return View("~/Views/Admin/Category/Create.cshtml");
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Create(Category category)
         {
             category.status = 2;
@@ -34,6 +40,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Edit(int id)
         {
             
@@ -42,6 +49,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Edit(int id, Category Model)
         {
             var category = dbContext.categories.Where(c=>c.cate_id==id && c.status==1).FirstOrDefault();
@@ -55,6 +63,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Delete(int id)
         {
 

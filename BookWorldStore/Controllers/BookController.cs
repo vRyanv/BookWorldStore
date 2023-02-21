@@ -1,8 +1,10 @@
 ﻿using BookWorldStore.Helper;
 using BookWorldStore.Models;
 using BookWorldStore.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Xml.Linq;
 
 namespace BookWorldStore.Controllers
@@ -10,10 +12,13 @@ namespace BookWorldStore.Controllers
     public class BookController : Controller
     {
         private readonly AppDBContext dbContext;
+
         public BookController(AppDBContext dbContext)
         {
             this.dbContext = dbContext;
         }
+
+        [Authorize(Roles = "owner, admin")]
         public IActionResult Index()
         {
             var book = dbContext.books.Include("category").Include("supplier").ToList();
@@ -21,6 +26,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Create()
         {
             var cateList = await dbContext.categories.Where(c => c.status == 1).ToListAsync();
@@ -31,6 +37,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Create([FromForm] Book book, IFormFile image)
         {
             if (ModelState.IsValid)
@@ -50,6 +57,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Edit(int id)
         {
             Book book = await dbContext.books.FindAsync(id);
@@ -61,6 +69,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Edit([FromForm] Book book, IFormFile? image)
         {
             if (ModelState.IsValid)
@@ -114,6 +123,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Delete(int id)
         {
             List<Book> deleteBook = await dbContext.books

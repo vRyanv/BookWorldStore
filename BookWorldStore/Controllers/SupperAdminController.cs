@@ -1,8 +1,10 @@
 ﻿using BookWorldStore.Helper;
 using BookWorldStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Ocsp;
+using System.Data;
 using System.Text.Json;
 
 namespace BookWorldStore.Controllers
@@ -16,6 +18,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CategoryRequest()
         {
             List<Category> cateList = await dbContext.categories.Where(c => c.status == 2).ToListAsync();
@@ -23,6 +26,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AgreeCate(int id)
         {
             Category cate = await dbContext.categories.Where(c => c.cate_id == id).FirstOrDefaultAsync();
@@ -36,6 +40,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> RefuseCate(int id)
         {
             Category cate = await dbContext.categories.Where(c => c.cate_id == id).FirstOrDefaultAsync();
@@ -49,6 +54,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CustomerRequest()
         {
             List<User> user = await dbContext.users.Where(u => u.status == 1 && u.role == "client").ToListAsync();
@@ -58,6 +64,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> OwnerRequest()
         {
             List<User> user = await dbContext.users.Where(u => u.status == 1 && u.role == "owner").ToListAsync();
@@ -66,6 +73,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AgreeResetPass([FromQuery(Name = "email")] string email)
         {
             User user = await dbContext.users.Where(u => u.email == email).FirstOrDefaultAsync();
@@ -95,6 +103,7 @@ namespace BookWorldStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> RefuseResetPass([FromQuery(Name = "email")] string email)
         {
             User user = await dbContext.users.Where(u => u.email == email).FirstOrDefaultAsync();

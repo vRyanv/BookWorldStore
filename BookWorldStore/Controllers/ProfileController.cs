@@ -1,8 +1,10 @@
 ﻿using BookWorldStore.Models;
 using BookWorldStore.Repository;
 using BookWorldStore.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Reflection;
 
 namespace BookWorldStore.Controllers
@@ -14,6 +16,8 @@ namespace BookWorldStore.Controllers
         {
             this.dbContext = dbContext;
         }
+
+        [Authorize(Roles = "client, owner, admin")]
         public async Task<IActionResult> Index()
         {
 
@@ -25,8 +29,11 @@ namespace BookWorldStore.Controllers
                 phone=p.phone,
                 gender=p.gender,
             }).Where(u=> user.email==u.email).FirstAsync();
+
+            ViewBag.loggedIn = true;
             return View(result);
         }
+        [Authorize(Roles = "client, owner, admin")]
         public IActionResult ChangesImformation(ProfileViewModel profile) {
 
             var user = UserUtils.Instance.GetUser(this.HttpContext);
@@ -39,6 +46,7 @@ namespace BookWorldStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "client, owner, admin")]
         public IActionResult ChangesPassword()
         {
             return View();

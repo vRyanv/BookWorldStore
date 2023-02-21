@@ -35,6 +35,8 @@ namespace BookWorldStore.Controllers
             {
                 orderList = await dbContext.orderDetails.Where(o => o.order_id == order.order_id).ToListAsync();
             }
+
+            ViewBag.loggedIn = true;
             return View(orderList);
         }
         
