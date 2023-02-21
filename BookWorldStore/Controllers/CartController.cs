@@ -126,12 +126,35 @@ namespace BookWorldStore.Controllers
 
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Remove(int id)
         {
             OrderDetail orderDetail=dbContext.orderDetails.Find(id);
             dbContext.Remove(orderDetail);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Increase(int id)
+        {
+            OrderDetail orderDetail = dbContext.orderDetails.Find(id);
+            orderDetail.quantity++;
+            dbContext.Update(orderDetail);
+            dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Decrease(int id)
+        {
+            OrderDetail orderDetail = dbContext.orderDetails.Find(id);
+            if(orderDetail.quantity > 0)
+            {
+                orderDetail.quantity--;
+                dbContext.Update(orderDetail);
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction("Index");
+            
+            
         }
     }
 }

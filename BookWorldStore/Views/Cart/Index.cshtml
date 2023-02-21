@@ -38,18 +38,18 @@
                     </th>
                     <td>@od.title </td>
                     <td>@od.price</td>
-                    <td>@od.quantity</td>
-                    <td>@od.total</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary btn-reduce" data-pro-id="" data-order-detail-id="">-</button>
-                            <input  type="text" style="text-align: center; vertical-align: middle; width: 3rem; border: none" value="" readonly>
-                            <button type="button" class="btn btn-info btn-increase" data-pro-id="@od.id" data-order-detail-id="" >+</button>
+                            <button type="button" class="btn btn-secondary btn-reduce" data-pro-id="" data-order-detail-id=""><a asp-controller="Cart" asp-route-id="@od.id" asp-action="Decrease">-</a></button>
+                            <input  type="text" style="text-align: center; vertical-align: middle; width: 3rem; border: none" value="@od.quantity" readonly>
+                            <button type="button" class="btn btn-info btn-increase" data-pro-id="@od.id" data-order-detail-id=""><a asp-controller ="Cart" asp-route-id="@od.id" asp-action="Increase">+</a></button>
                         </div>
                     </td>
+                    <td>@od.total</td>
+                    
                     <td id="total_price_"></td>
                     <td>
-						<button type="button" class="yellow-button" data-order-detail-id=""><a asp-controller="Cart" asp-route-id="@od.id" asp-action="Delete">Delete</a></button>
+						<button type="button" class="yellow-button" data-order-detail-id=""><a asp-controller="Cart" asp-route-id="@od.id" asp-action="Remove">Delete</a></button>
                     </td>
                 </tr>
             }
