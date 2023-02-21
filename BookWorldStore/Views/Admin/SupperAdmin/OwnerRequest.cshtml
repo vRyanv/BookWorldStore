@@ -1,4 +1,40 @@
 ﻿@{
     Layout = "_SupperAdminLayout";
-    ViewBag.title = "Owner Request";
 }
+
+@model IEnumerable<User>
+
+<div class="col" style="margin-left: 17rem;">
+    <div id="root_body">
+        <div style="padding-top: 5rem">
+            <table class="table table-hover pt-10">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (User user in Model)
+                    {
+                        <tr>
+                            <th scope="row">@user.user_id</th>
+                            <td>@user.email</td>
+                            <td>@user.phone</td>
+                            <td>@user.address</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-controller="SupperAdmin" asp-action="AgreeResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-primary">Agree</button></a>
+                                    <a asp-controller="SupperAdmin" asp-action="RefuseResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="">refuse</button></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -86,7 +86,8 @@ namespace BookWorldStore.Controllers
                 user.status = 1;
                 dbContext.SaveChanges();
 
-                ViewBag.email = user.email;
+                ViewBag.email = email;
+                ViewBag.notification = "<p>Your request has been sent <br/> We will respond to your request via email: ";
                 return View("ResullSuccess");
             }
             ViewBag.email = email;

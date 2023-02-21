@@ -1,22 +1,9 @@
 ﻿@{
     Layout = "_SupperAdminLayout";
-    ViewBag.title = "Customer Request";
 }
 
 @model IEnumerable<User>
 
-<div class="container-fluid" style="height: 100%">
-    <div class="row h-100">
-        <div class="col-2" id="block_dashboard" style="position: fixed">
-            <div id="header_dashboard">
-                <div id="title_dashboard">ADMIN</div>
-            </div>
-            <div id="body_dashboard">
-                <div class="controller-in-dashboard active" data-page-name="Category"><i class="bi-tags"></i> Category </div>
-                <div class="controller-in-dashboard" data-page-name="Home"><i class="bi-box-seam"></i> Website </div>
-                <a asp-controller="Home" asp-action="Logout" style="text-decoration: none; color: black"><div class="controller-in-dashboard"><i class="bi-power"></i> Logout</div></a>
-            </div>
-        </div>
         <div class="col" style="margin-left: 17rem;">
             <div id="root_body">
                 <div style="padding-top: 5rem">
@@ -31,25 +18,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (User user in Model)
-                            {
-                                <tr>
-                                    <th scope="row">@user.user_id</th>
-                                    <td>@user.email</td>
-                                    <td>@user.phone</td>
-                                    <td>@user.address</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <a asp-controller="SupperAdmin" asp-action="AgreeResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-primary">Agree</button></a>
-                                            <a asp-controller="SupperAdmin" asp-action="RefuseResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="">refuse</button></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
+                    @try
+                    {
+                        @foreach (User user in Model)
+                        {
+                            <tr>
+                                <th scope="row">@user.user_id</th>
+                                <td>@user.email</td>
+                                <td>@user.phone</td>
+                                <td>@user.address</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a asp-controller="SupperAdmin" asp-action="AgreeResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-primary">Agree</button></a>
+                                        <a asp-controller="SupperAdmin" asp-action="RefuseResetPass" asp-route-email="@user.email"><button type="button" class="btn btn-danger btn_delete_cate" data-cate-id="">refuse</button></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
-</div>

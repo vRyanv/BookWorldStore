@@ -25,13 +25,17 @@ namespace BookWorldStore.Controllers
         public async Task<IActionResult> CustomerRequest()
         {
             List<User> user = await dbContext.users.Where(u => u.status == 1 && u.role == "client").ToListAsync();
+
+            ViewBag.title = "Customer Request";
             return View("~/Views/Admin/SupperAdmin/CustomerRequest.cshtml", user);
         }
 
         [HttpGet]
-        public IActionResult OwnerRequest()
+        public async Task<IActionResult> OwnerRequest()
         {
-            return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml");
+            List<User> user = await dbContext.users.Where(u => u.status == 1 && u.role == "owner").ToListAsync();
+            ViewBag.title = "Owner Request";
+            return View("~/Views/Admin/SupperAdmin/OwnerRequest.cshtml", user);
         }
 
         [HttpGet]
@@ -45,7 +49,7 @@ namespace BookWorldStore.Controllers
                 user.status = 0;
                 dbContext.SaveChanges();
                 string subject = "Response to password reset request";
-                string message = $"<a href='http://localhost:7048/SupperAdmin/GetNewPass?email={email}&&token={tokenResetPass}'>Click here to get new password</a>";
+                string message = $"<h3>Your reset request has been accepted</h3><br/><a href='http://book.fpt.com:8080/SupperAdmin/GetNewPass?email={email}&&token={tokenResetPass}'>Click here to get new password</a>";
                 await MailHelper.Instance.SendEmail(email, subject, message);
 
 
@@ -95,12 +99,16 @@ namespace BookWorldStore.Controllers
             User user = dbContext.users.Where(u => u.email == email && u.token_reset_pass == token).FirstOrDefault();
             if(user != null)
             {
-                string newPass = "123";
+                string newPass = Guid.NewGuid().ToString().Substring(0,8);
                 user.password = newPass;
+                user.token_reset_pass = "";
                 dbContext.SaveChanges();
                 string subject = "New password";
-                await MailHelper.Instance.SendEmail(email, subject, $"new pass: {newPass}");
-                return Json("view in mail");
+                await MailHelper.Instance.SendEmail(email, subject, $"This is new pass: {newPass}");
+
+                ViewBag.email = email;
+                ViewBag.notification = "<p>Check in your mail<br/>The password was reseted for";
+                return View("~/Views/Home/ResullSuccess.cshtml");
             }
 
             return NotFound();
