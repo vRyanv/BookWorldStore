@@ -40,6 +40,23 @@ namespace BookWorldStore.Controllers
             return View(bookList);
         }
 
+        public async Task<IActionResult> SearchBook([FromQuery(Name = "title")]string title)
+        {
+            User user = Utils.UserUtils.Instance.GetUser(HttpContext);
+            if (user != null)
+            {
+                ViewBag.loggedIn = true;
+            }
+
+            var cateList = await dbContext.categories.Where(c => c.status == 1).ToListAsync();
+            ICollection<Book> bookList = bookList = await dbContext.books.Where(b => b.status == 1 && b.title.Contains(title)).Include(c => c.category).Include(s => s.supplier).ToListAsync();
+            
+            ViewData["cateList"] = cateList;
+            return View("Index", bookList);
+        }
+
+
+
         public async Task<IActionResult> Detail(int id)
         {
             User user = Utils.UserUtils.Instance.GetUser(HttpContext);
