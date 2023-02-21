@@ -9,7 +9,9 @@ namespace BookWorldStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int order_id { get; set; }
         
+        public int user_id { get; set; }
         [ForeignKey("user_id")]
+
         public User user { get; set; }
 
         public DateTime order_date { get; set; }

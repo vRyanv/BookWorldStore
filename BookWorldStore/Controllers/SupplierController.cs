@@ -58,7 +58,7 @@ namespace BookWorldStore.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             Supplier supplier= await dbContext.suppliers.Where(s=>s.status==1&& s.sup_id==id).FirstAsync();
-            supplier.status = 1;
+            supplier.status = 0;
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

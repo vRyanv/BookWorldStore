@@ -15,7 +15,7 @@ namespace BookWorldStore.Controllers
             this.dbContext = dbContext;
         }
 
-        [Authorize(Roles = "client,owner, admin")]
+        [Authorize(Roles = "client, owner, admin")]
         public IActionResult Index()
         {
             User user = UserUtils.Instance.GetUser(HttpContext);
@@ -23,7 +23,16 @@ namespace BookWorldStore.Controllers
             return View();
         }
 
-        [Authorize(Roles = "client,owner, admin")]
+        [Authorize(Roles = "client, owner, admin")]
+        public IActionResult AddToCart(int id)
+        {
+            User user = UserUtils.Instance.GetUser(HttpContext);
+            Order order = new Order();
+            order.user_id = id;
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "client, owner, admin")]
         public IActionResult OldOrder()
         {
             return View();
