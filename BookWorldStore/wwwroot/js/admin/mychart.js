@@ -6,6 +6,11 @@
     setUp: function(canvasID){
         chartApp.variables.canvasChart = $(canvasID)[0].getContext('2d')
     },
+    renderDataChart: function (arrLabel, arrValue) {
+        chartApp.variables.revenueProductChart.config._config.data.labels = arrLabel
+        chartApp.variables.revenueProductChart.config._config.data.datasets[0].data = arrValue
+        chartApp.variables.revenueProductChart.update()
+    },
     createBlankChart : function() {
         chartApp.variables.revenueProductChart = new Chart(
             chartApp.variables.canvasChart

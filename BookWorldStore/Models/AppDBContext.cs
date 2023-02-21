@@ -11,7 +11,5 @@ namespace BookWorldStore.Models
         public DbSet<Book> books { get; set; }
         public DbSet<Order> orders { get; set; }
         public DbSet<OrderDetail> orderDetails { get; set; }
-        public DbSet<Requirement> requirements { get; set; }
-
     }
 }
