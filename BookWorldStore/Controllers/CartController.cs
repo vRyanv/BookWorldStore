@@ -1,4 +1,5 @@
 ﻿using BookWorldStore.Models;
+using BookWorldStore.Repository;
 using BookWorldStore.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -87,9 +88,25 @@ namespace BookWorldStore.Controllers
         }
 
         [Authorize(Roles = "client, owner, admin")]
-        public IActionResult OldOrder()
+        public async Task<IActionResult> OldOrder()
         {
-            return View();
+            int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
+            var history = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
+            {
+                id = od.order_detail_id,
+                image = od.book.image,
+                title = od.book.title,
+                price = od.book.price,
+                quantity = od.quantity,
+                total = od.book.price * od.quantity,
+                date = o.delivery_date,
+                status = o.status,
+                user_id = o.user_id,
+
+            }).Where(od => od.status == 1 && od.user_id == userId).ToListAsync();
+
+
+            return View("~/Views/Cart/OldOrderPartial.cshtml", history);
         }
     }
 }

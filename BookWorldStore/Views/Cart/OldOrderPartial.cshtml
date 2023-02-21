@@ -1,4 +1,6 @@
-﻿<div id="cart_content">
+﻿@using BookWorldStore.Repository;
+@model IEnumerable<OldOrderViewModel>
+<div id="cart_content">
     <table class="table pt-10" style="color:white; font-size:12px">
         <thead>
             <tr style="text-align: center">
@@ -12,23 +14,23 @@
             </tr>
         </thead>
         <tbody style="text-align: center;">
-            @for (int i = 0; i < 10; i++)
+            @foreach(OldOrderViewModel order in Model)
             {
                 <tr>
-                    <th scope="row">@(i + 1) </th>
+                    <th scope="row"> @order.id </th>
                     <th scope="row">
-                        <img style="width: 5rem; height: 7rem" src="~/img/decoration/templatemo_image_02.jpg" alt="">
+                        <img style="width: 5rem; height: 7rem" src="~/img/decoration/@order.image" alt="">
                     </th>
-                    <td>name @i</td>
-                    <td>1$</td>
+                    <td>@order.title</td>
+                    <td>@order.price $</td>
                     <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                @i
+                                @order.quantity
                             </div>
                     </td>
-                    <td>@i</td>
+                    <td>@order.total</td>
                     <td>
-                        12/12/2022
+                        @order.date
                     </td>
                 </tr>
             }
