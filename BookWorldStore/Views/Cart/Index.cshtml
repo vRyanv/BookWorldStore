@@ -1,9 +1,8 @@
-﻿@{
+﻿@using BookWorldStore.Repository;
+@{
     ViewBag.title = "Cart";
     Layout = "_CLientLayout";
 }
-@model IEnumerable<OrderDetail>
-
 @section Style{
 
 }
@@ -30,15 +29,17 @@
             </tr>
         </thead>
         <tbody style="text-align: center;">
-            @foreach (OrderDetail od in Model)
+            @foreach (OldOrderViewModel od in (List<OldOrderViewModel>) ViewData["list"])
             {
                 <tr>
-                    <th scope="row">@od.order_detail_id</th>
+                    <th scope="row">@od.id</th>
                     <th scope="row">
-                        <img style="width: 5rem; height: 7rem" src="~/img/decoration/templatemo_image_02.jpg" alt="">
+                        <img style="width: 5rem; height: 7rem" src="~/img/decoration/@od.image" alt="">
                     </th>
-                    <td></td>
-                    <td>1$</td>
+                    <td>@od.title </td>
+                    <td>@od.price</td>
+                    <td>@od.quantity</td>
+                    <td>@od.total</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-secondary btn-reduce" data-pro-id="" data-order-detail-id="">-</button>

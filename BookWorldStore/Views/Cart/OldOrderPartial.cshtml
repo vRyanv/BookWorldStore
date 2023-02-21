@@ -1,5 +1,4 @@
 ﻿@using BookWorldStore.Repository;
-@model IEnumerable<OldOrderViewModel>
 <div id="cart_content">
     <table class="table pt-10" style="color:white; font-size:12px">
         <thead>
@@ -14,7 +13,7 @@
             </tr>
         </thead>
         <tbody style="text-align: center;">
-            @foreach(OldOrderViewModel order in Model)
+            @foreach (OldOrderViewModel order in (List<OldOrderViewModel>) ViewData["history"])
             {
                 <tr>
                     <th scope="row"> @order.id </th>

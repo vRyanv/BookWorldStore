@@ -22,7 +22,6 @@ namespace BookWorldStore.Controllers
         {
             int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
             Order order = await dbContext.orders.Where(o => o.user_id == userId && o.status == 0).FirstOrDefaultAsync();
-            List<OrderDetail> orderList = null;
             if (order == null)
             {
                 Order newOrder = new Order();
@@ -30,15 +29,53 @@ namespace BookWorldStore.Controllers
                 newOrder.status = 0;
                 dbContext.Add(newOrder);
                 await dbContext.SaveChangesAsync();
-                orderList = await dbContext.orderDetails.Where(o => o.order_id == newOrder.order_id).ToListAsync();
+                ViewData["list"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
+                {
+                    id = od.order_detail_id,
+                    image = od.book.image,
+                    title = od.book.title,
+                    price = od.book.price,
+                    quantity = od.quantity,
+                    total = od.book.price * od.quantity,
+                    date = o.delivery_date,
+                    status = o.status,
+                    user_id = o.user_id,
+
+                }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
             }
             else
             {
-                orderList = await dbContext.orderDetails.Where(o => o.order_id == order.order_id).ToListAsync();
+                ViewData["list"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
+                {
+                    id = od.order_detail_id,
+                    image = od.book.image,
+                    title = od.book.title,
+                    price = od.book.price,
+                    quantity = od.quantity,
+                    total = od.book.price * od.quantity,
+                    date = o.delivery_date,
+                    status = o.status,
+                    user_id = o.user_id,
+
+                }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
             }
 
             ViewBag.loggedIn = true;
-            return View(orderList);
+            var result = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
+            {
+                id = od.order_detail_id,
+                image = od.book.image,
+                title = od.book.title,
+                price = od.book.price,
+                quantity = od.quantity,
+                total = od.book.price * od.quantity,
+                date = o.delivery_date,
+                status = o.status,
+                user_id = o.user_id,
+
+            }).Where(od => od.status == 1 && od.user_id == userId).ToListAsync();
+            ViewData["history"] = result;
+            return View();
         }
         
         [HttpGet]
@@ -84,29 +121,9 @@ namespace BookWorldStore.Controllers
                 await dbContext.SaveChangesAsync();
 
             }
+
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "client, owner, admin")]
-        public async Task<IActionResult> OldOrder()
-        {
-            int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
-            var history = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
-            {
-                id = od.order_detail_id,
-                image = od.book.image,
-                title = od.book.title,
-                price = od.book.price,
-                quantity = od.quantity,
-                total = od.book.price * od.quantity,
-                date = o.delivery_date,
-                status = o.status,
-                user_id = o.user_id,
-
-            }).Where(od => od.status == 1 && od.user_id == userId).ToListAsync();
-
-
-            return View("~/Views/Cart/OldOrderPartial.cshtml", history);
-        }
     }
 }

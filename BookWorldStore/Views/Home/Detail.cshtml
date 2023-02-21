@@ -75,7 +75,7 @@
                 </div>
                 <div style="float:left">
                     <div class="buy_now_button" style="margin:0;cursor:pointer" data-book-id="@book.book_id">
-                        <a>Add to cart</a>
+                        <a asp-controller="Cart" asp-route-id="@book.book_id" asp-action="AddToCart">Add to cart</a>
                     </div>
                 </div>
             </div>
