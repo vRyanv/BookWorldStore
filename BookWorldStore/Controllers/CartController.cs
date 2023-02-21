@@ -26,8 +26,10 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "client, owner, admin")]
         public IActionResult AddToCart(int id)
         {
-            User user = UserUtils.Instance.GetUser(HttpContext);
+            int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
+            var result = dbContext.orders.Where(o => o.user_id == userId && o.status == 0);
             Order order = new Order();
+            
             order.user_id = id;
             return RedirectToAction("Index");
         }

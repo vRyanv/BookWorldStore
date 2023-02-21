@@ -18,7 +18,7 @@ namespace BookWorldStore.Models
         public DateTime delivery_date { get; set; }
         public float total { get; set; }
 
-        public string status { get; set; }
+        public int status { get; set; }
 
         
     }
