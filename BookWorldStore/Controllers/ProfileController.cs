@@ -33,6 +33,7 @@ namespace BookWorldStore.Controllers
             ViewBag.loggedIn = true;
             return View(result);
         }
+
         [Authorize(Roles = "client, owner, admin")]
         public IActionResult ChangesImformation(ProfileViewModel profile) {
 
@@ -46,10 +47,33 @@ namespace BookWorldStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         [Authorize(Roles = "client, owner, admin")]
-        public IActionResult ChangesPassword()
+        public async Task<IActionResult> ChangesPassword([FromForm] string currentPass, [FromForm] string newPass, [FromForm] string confirmPass)
         {
-            return View();
+            string notification = "";
+            string email = UserUtils.Instance.GetUser(HttpContext).email;
+            User user = await dbContext.users.Where(u => u.email == email && u.password == currentPass).FirstOrDefaultAsync();
+            if(user != null)
+            {
+                if(newPass == confirmPass)
+                {
+                    user.password = newPass;
+                    await dbContext.SaveChangesAsync();
+                    notification = "Change password success";
+                }
+                else
+                {
+                    notification = "Confimr password not match";
+                }
+            }
+            else
+            {
+                notification = "Current password is wrong";
+            }
+
+            TempData["notification"] = notification;
+            return RedirectToAction("Index");
         }
     }
 }

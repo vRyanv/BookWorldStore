@@ -18,8 +18,8 @@
         <p>Gender: @Model.gender</p>
         <p>Phone: @Model.phone</p>
         <p>Address: @Model.address</p>
-        <button class="left bottom yellow-button" data-bs-toggle="modal" data-bs-target="#change_infor_model" asp-action="ChangesImformation" asp-controller="Profile">Change information</button>
-        <button class="right bottom yellow-button" data-bs-toggle="modal" data-bs-target="#change_pass_model">Change password</button>
+        <button class="left bottom yellow-button" data-bs-toggle="modal" data-bs-target="#change_infor_model">Change information</button>
+        <button class="right bottom yellow-button btn-open-change-pass" data-bs-toggle="modal" data-bs-target="#change_pass_model">Change password</button>
     </div>
 </div>
 
@@ -28,4 +28,28 @@
 
 @section Script{
         <script src="~/js/client/searchBox.js" asp-append-version="true"></script>
-}
+        <script>
+            $('#change_password_form').submit(function(e){
+                if ($('#user_new_pass').val().trim() !== $('#user_confirm_pass').val().trim()){
+                    e.preventDefault()
+                    $('#error_change_pass').html('Confirm password not match')
+                }
+            })
+        </script>
+        @if (TempData.ContainsKey("notification"))
+        {
+            <script>
+                $('#error_change_pass').html('@TempData["notification"]')
+
+                $('.btn-open-change-pass').click()
+            </script>
+            @if (@TempData["notification"].ToString() == "Change password success")
+            {
+                <script>
+                    $('#error_change_pass').css('color', 'lightgreen')
+                </script>
+            }
+        }
+
+
+ }
