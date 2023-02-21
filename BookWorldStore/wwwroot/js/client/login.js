@@ -49,7 +49,7 @@
                 success: function (data) {
                     if (data.status == 200) {
                         document.cookie = '__UserToken=' + data.token + ';path=/'
-                        if (data.role == "onwner") {
+                        if (data.role == "owner") {
                             location.href = "/dashboard";
                         } else if (data.role == "admin") {
                             location.href = "/supperadmin/categoryrequest";
