@@ -43,6 +43,8 @@ namespace BookWorldStore.Controllers
                     user_id = o.user_id,
 
                 }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
+                ViewData["order_id"] = newOrder.order_id;
+               
             }
             else
             {
@@ -60,6 +62,7 @@ namespace BookWorldStore.Controllers
                     user_id = o.user_id,
 
                 }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
+                ViewData["order_id"] = order.order_id;
             }
 
             ViewBag.loggedIn = true;
@@ -153,8 +156,25 @@ namespace BookWorldStore.Controllers
                 dbContext.SaveChanges();
             }
             return RedirectToAction("Index");
-            
-            
+             
+        }
+        public async Task<IActionResult> Payment(int id)
+        {
+            var order = await dbContext.orders.FindAsync(id);
+            var total = await dbContext.orderDetails.Where(od => od.order_id == id).Select(od => new
+            {
+                total = od.quantity * od.book.price
+            }).SumAsync(x => x.total);
+            if (order.status == 0)
+            {
+                order.order_date = DateTime.Today;
+                order.delivery_date = order.order_date.AddDays(5);
+                order.status = 1;
+                order.total = total;
+                dbContext.Update(order);
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

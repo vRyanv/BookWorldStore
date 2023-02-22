@@ -2,6 +2,7 @@
 {
     public class StatisticalViewModel
     {
+        public int Id { get; set; }
         public string title { get; set; }
         public float totalPrice { get; set; }
 

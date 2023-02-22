@@ -24,14 +24,15 @@ namespace APIService.Controllers
                 var result =(from od in _APIContext.ordersDetail
                     join b in _APIContext.books on od.book.book_id equals b.book_id
                     join o in _APIContext.orders on od.order_id equals o.order_id
-                    group new { od, b,o } by new { b.title, o.order_date, o.delivery_date,b.price } into g
+                    group new { od, b,o } by new { b.title, o.order_date, o.delivery_date,b.price,b.book_id } into g
                     select new StatisticalViewModel
                     {
+                        Id=g.Key.book_id,
                         title = g.Key.title,
                         start=g.Key.order_date,
                         end=g.Key.delivery_date,
-                        totalPrice = g.Sum(x => x.b.price)
-                    }).Where(od => start_date == od.start && end_time == od.end).ToList().OrderByDescending(x => x.totalPrice).Take(5);
+                        totalPrice = g.Sum(x => x.od.quantity)*g.Key.price,
+                    }).Where(od => start_date >= od.start && end_time<=od.end).ToList().OrderByDescending(x => x.totalPrice).Take(5);
             foreach(StatisticalViewModel item in result)
             {
                 statistical_.Add(item);
