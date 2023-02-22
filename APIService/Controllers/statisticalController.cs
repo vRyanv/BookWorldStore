@@ -2,6 +2,7 @@
 using APIService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace APIService.Controllers
 {
@@ -15,24 +16,27 @@ namespace APIService.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
-            return View();
+            return Ok(Statistical("2023-02-02", "2023-02-03"));
         }
-        public List<StatisticalViewModel> Statistical(DateTime start_date, DateTime end_time)
+        public List<StatisticalViewModel> Statistical(string start_date, string end_date)
         {
+            string format = "yyyy-MM-dd";
+            DateTime start = DateTime.ParseExact(start_date, format, CultureInfo.InvariantCulture);
+            DateTime end = DateTime.ParseExact(end_date, format, CultureInfo.InvariantCulture);
             List<StatisticalViewModel> statistical_= new List<StatisticalViewModel>();
-                var result =(from od in _APIContext.ordersDetail
+                var result =(from od in _APIContext.orderDetails
                     join b in _APIContext.books on od.book.book_id equals b.book_id
                     join o in _APIContext.orders on od.order_id equals o.order_id
-                    group new { od, b,o } by new { b.title, o.order_date, o.delivery_date,b.price,b.book_id } into g
+                    group new { od, b,o } by new { b.title, o.order_date, o.delivery_date,b.price,b.book_id,o.status } into g
                     select new StatisticalViewModel
                     {
                         Id=g.Key.book_id,
                         title = g.Key.title,
                         start=g.Key.order_date,
                         end=g.Key.delivery_date,
+                        status=g.Key.status,
                         totalPrice = g.Sum(x => x.od.quantity)*g.Key.price,
-                    }).Where(od => start_date >= od.start && end_time<=od.end).ToList().OrderByDescending(x => x.totalPrice).Take(5);
+                    }).Where(od => start >= od.start && end<=od.end && od.status==1).ToList().OrderByDescending(x => x.totalPrice).Take(5);
             foreach(StatisticalViewModel item in result)
             {
                 statistical_.Add(item);
