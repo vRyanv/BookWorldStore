@@ -9,13 +9,13 @@
         GetRevenue: function () {
             var fromDate = $('#txt_from_date').val()
             var toDate = $('#txt_to_date').val()
-            if (moment(fromDate, 'YYYY/MM/DD', true).isValid() && moment(toDate, 'YYYY/MM/DD', true).isValid()) {
+            if (moment(fromDate, 'YYYY-MM-DD', true).isValid() && moment(toDate, 'YYYY-MM-DD', true).isValid()) {
                 $.ajax({
                     url: 'https://localhost:44378/api/Statistical/GetStatistical',
                     //url: 'http://api.bookshop.com/api/Statistical/GetStatistical',
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',
-                    data: {start_date:fromDate,end_date:toDate},
+                    data: JSON.stringify({start_date:fromDate,end_date:toDate}),
                     dataType: 'json',
                     beforeSend: Utils.animation(),
                     success: function (data) {

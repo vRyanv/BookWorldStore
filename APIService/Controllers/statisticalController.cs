@@ -14,15 +14,21 @@ namespace APIService.Controllers
         public StatisticalController(APIContext apiContext)
         {
             _APIContext = apiContext;
-        } 
+        }
+
+        public class DateStati
+        {
+            public string start_date { get; set; }
+            public string end_date { get; set; }
+        }
 
         [HttpPost]
         [Consumes("application/json")]
-        public IActionResult GetStatistical(string start_date, string end_date)
+        public IActionResult GetStatistical(DateStati dateStati)
         {
             string format = "yyyy-MM-dd";
-            DateTime start = DateTime.ParseExact(start_date, format, CultureInfo.InvariantCulture);
-            DateTime end = DateTime.ParseExact(end_date, format, CultureInfo.InvariantCulture);
+            DateTime start = DateTime.ParseExact(dateStati.start_date, format, CultureInfo.InvariantCulture);
+            DateTime end = DateTime.ParseExact(dateStati.end_date, format, CultureInfo.InvariantCulture);
             List<StatisticalViewModel> statistical_= new List<StatisticalViewModel>();
                 var result = (from od in _APIContext.orderDetails
                     join b in _APIContext.books on od.book.book_id equals b.book_id
