@@ -30,12 +30,12 @@
             </tr>
         </thead>
         <tbody style="text-align: center;">
-            @foreach (OldOrderViewModel od in (List<OldOrderViewModel>) ViewData["list"])
+            @foreach (OldOrderViewModel od in (List<OldOrderViewModel>) ViewData["list_cart"])
             {
                 <tr>
                     <th scope="row">@od.id</th>
                     <th scope="row">
-                        <img style="width: 5rem; height: 7rem" src="~/img/decoration/@od.image" alt="">
+                        <img style="width: 5rem; height: 7rem" src="~/img/book/@od.image" alt="">
                     </th>
                     <td>@od.title </td>
                     <td>@od.price</td>
