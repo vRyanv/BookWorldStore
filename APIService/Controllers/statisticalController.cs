@@ -24,7 +24,7 @@ namespace APIService.Controllers
             DateTime start = DateTime.ParseExact(start_date, format, CultureInfo.InvariantCulture);
             DateTime end = DateTime.ParseExact(end_date, format, CultureInfo.InvariantCulture);
             List<StatisticalViewModel> statistical_= new List<StatisticalViewModel>();
-                var result =(from od in _APIContext.orderDetails
+                var result = (from od in _APIContext.orderDetails
                     join b in _APIContext.books on od.book.book_id equals b.book_id
                     join o in _APIContext.orders on od.order_id equals o.order_id
                     group new { od, b,o } by new { b.title, o.order_date, o.delivery_date,b.price,b.book_id,o.status } into g
@@ -36,10 +36,11 @@ namespace APIService.Controllers
                         end=g.Key.delivery_date,
                         status=g.Key.status,
                         totalPrice = g.Sum(x => x.od.quantity)*g.Key.price,
-                    }).Where(od => start >= od.start && end<=od.end && od.status==1).ToList().OrderByDescending(x => x.totalPrice).Take(5);
+                    }).Where(od => start >= od.start && end<=od.end && od.status==1).ToList().OrderByDescending(x=>x.totalPrice);
             foreach(StatisticalViewModel item in result)
             {
                 statistical_.Add(item);
+                
             }
             return statistical_;
         }
