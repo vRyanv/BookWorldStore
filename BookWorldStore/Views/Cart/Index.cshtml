@@ -2,6 +2,7 @@
 @{
     ViewBag.title = "Cart";
     Layout = "_CLientLayout";
+    float total = 0;
 }
 @section Style{
 
@@ -46,7 +47,7 @@
                         </div>
                     </td>
                     <td>@od.total</td>
-                    
+                     @(total=total+od.total)
                     <td id="total_price_"></td>
                     <td>
 						<button type="button" class="yellow-button" data-order-detail-id=""><a asp-controller="Cart" asp-route-id="@od.id" asp-action="Remove">Delete</a></button>
@@ -79,6 +80,29 @@
                 <h1 class="modal-title title-model-custom">Payment</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            @foreach (BillViewModel bill in (List<BillViewModel>)ViewData["bill"])
+            {
+                <div>
+                    @bill.email
+                </div>
+                <div>
+                    @bill.address
+                </div>
+                <div>
+                   @bill.phone
+                </div>
+                <div>
+                    @bill.order_date
+                </div>
+                 <div>
+                    @bill.order_delivery
+                </div>
+                  break;
+            }
+
+                <div>
+                    @total
+                </div>
             <span>@if (TempData.ContainsKey("message"))
                 {
                     <div  id="erorr_payment">@TempData["message"]</div>

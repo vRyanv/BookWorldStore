@@ -11,9 +11,7 @@ namespace BookWorldStore.Models
         
         public int user_id { get; set; }
         [ForeignKey("user_id")]
-
         public User user { get; set; }
-
         public DateTime order_date { get; set; }
         public DateTime delivery_date { get; set; }
         public float total { get; set; }

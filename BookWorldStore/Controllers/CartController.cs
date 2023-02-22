@@ -22,6 +22,7 @@ namespace BookWorldStore.Controllers
         {
             int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
             Order order = await dbContext.orders.Where(o => o.user_id == userId && o.status == 0).FirstOrDefaultAsync();
+            int order_id;
             if (order == null)
             {
                 Order newOrder = new Order();
@@ -29,43 +30,28 @@ namespace BookWorldStore.Controllers
                 newOrder.status = 0;
                 dbContext.Add(newOrder);
                 await dbContext.SaveChangesAsync();
-                ViewData["list"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
-                {
-                    id = od.order_detail_id,
-                    image = od.book.image,
-                    title = od.book.title,
-                    price = od.book.price,
-                    quantity = od.quantity,
-                    total = od.book.price * od.quantity,
-                    orderid=o.order_id,
-                    date = o.delivery_date,
-                    status = o.status,
-                    user_id = o.user_id,
-
-                }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
-                ViewData["order_id"] = newOrder.order_id;
-               
+                order_id= newOrder.order_id;
             }
             else
             {
-                ViewData["list"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
-                {
-                    id = od.order_detail_id,
-                    image = od.book.image,
-                    title = od.book.title,
-                    price = od.book.price,
-                    quantity = od.quantity,
-                    total = od.book.price * od.quantity,
-                    orderid = o.order_id,
-                    date = o.delivery_date,
-                    status = o.status,
-                    user_id = o.user_id,
-
-                }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
-                ViewData["order_id"] = order.order_id;
+                 order_id = order.order_id;
             }
+            ViewData["list"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
+            {
+                id = od.order_detail_id,
+                image = od.book.image,
+                title = od.book.title,
+                price = od.book.price,
+                quantity = od.quantity,
+                total = od.book.price * od.quantity,
+                orderid = o.order_id,
+                date = o.delivery_date,
+                status = o.status,
+                user_id = o.user_id,
 
+            }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
             ViewBag.loggedIn = true;
+
             var result = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
             {
                 id = od.order_detail_id,
@@ -77,9 +63,23 @@ namespace BookWorldStore.Controllers
                 date = o.delivery_date,
                 status = o.status,
                 user_id = o.user_id,
-
             }).Where(od => od.status == 1 && od.user_id == userId).ToListAsync();
             ViewData["history"] = result;
+            ViewData["order_id"]=order_id;
+
+            var bills= await dbContext.orders.Include("user")
+                .Where(bill => bill.order_id == order_id && bill.user_id == userId && bill.status == 0)
+                .Select(bill => new BillViewModel
+            {
+                email = bill.user.email,
+                address = bill.user.address,
+                phone = bill.user.phone,
+                order_id = bill.order_id,
+                order_date = bill.order_date,
+                order_delivery = bill.delivery_date,
+                status = bill.status,
+            }).ToListAsync();
+            ViewData["bill"] = bills;
             return View();
         }
         
@@ -176,8 +176,11 @@ namespace BookWorldStore.Controllers
             // create the field to save the total of money of order
             float total=0;
             // check have order or not
-            if (Payments != null)
+            if (Payments == null)
             {
+                return RedirectToAction("Index");
+            }
+            else { 
                 //check the inventory num in store
                 foreach (PaymentViewModel payment in Payments)
                 {
