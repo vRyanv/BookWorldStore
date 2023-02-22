@@ -56,7 +56,7 @@ namespace BookWorldStore.Controllers
                     price = od.book.price,
                     quantity = od.quantity,
                     total = od.book.price * od.quantity,
-                    orderid=o.order_id,
+                    orderid = o.order_id,
                     date = o.delivery_date,
                     status = o.status,
                     user_id = o.user_id,
@@ -161,20 +161,61 @@ namespace BookWorldStore.Controllers
         public async Task<IActionResult> Payment(int id)
         {
             var order = await dbContext.orders.FindAsync(id);
-            var total = await dbContext.orderDetails.Where(od => od.order_id == id).Select(od => new
+            int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
+            //get all order in cart
+            var Payments = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new PaymentViewModel
             {
-                total = od.quantity * od.book.price
-            }).SumAsync(x => x.total);
-            if (order.status == 0)
+                book_Id=od.book.book_id,
+                quantity = od.quantity,
+                total = od.book.price * od.quantity,
+                inventory_num=od.book.inventory_num,
+                user_id = o.user_id,
+                status  =o.status,
+
+            }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
+            // create the field to save the total of money of order
+            float total=0;
+            // check have order or not
+            if (Payments != null)
             {
-                order.order_date = DateTime.Today;
-                order.delivery_date = order.order_date.AddDays(5);
-                order.status = 1;
-                order.total = total;
-                dbContext.Update(order);
-                dbContext.SaveChanges();
+                //check the inventory num in store
+                foreach (PaymentViewModel payment in Payments)
+                {
+                    if (payment.inventory_num < payment.quantity)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                // check exist order
+                if (order.status == 0)
+                {
+                    // decrease the inventory num and sum total
+                    foreach (PaymentViewModel payment in Payments)
+                {
+                    check_inventory(payment.book_Id, payment.quantity);
+                        total = total + payment.total;
+                }    
+                    // save order
+                    order.order_date = DateTime.Today;
+                    order.delivery_date = order.order_date.AddDays(5);
+                    order.status = 1;
+                    order.total = total;
+                    dbContext.Update(order);
+                    dbContext.SaveChanges();
+                }
             }
             return RedirectToAction("Index");
+        }
+        public void check_inventory(int id, int quantity)
+        {
+            var book = dbContext.books.Find(id);
+            if (book!= null)
+            {
+                book.inventory_num -= quantity;
+                dbContext.Update(book);
+                dbContext.SaveChanges();
+            }
+
         }
     }
 }
