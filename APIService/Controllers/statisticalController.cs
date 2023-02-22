@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIService.Controllers
 {
-    public class statisticalController : Controller
+    public class StatisticalController : Controller
     {
         private readonly APIContext _APIContext;
-        public statisticalController(APIContext apiContext)
+        public StatisticalController(APIContext apiContext)
         {
             _APIContext = apiContext;
         }
