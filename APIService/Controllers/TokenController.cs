@@ -24,12 +24,6 @@ namespace APIService.Controllers
             this.configuration = configuration;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> test()
-        {
-            return Content("asd");
-        }
-
         [HttpPost]
         [Consumes("application/json")]
         public async Task<IActionResult> Login(User _user)

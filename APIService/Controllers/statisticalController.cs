@@ -6,19 +6,19 @@ using System.Globalization;
 
 namespace APIService.Controllers
 {
+    [ApiController]
+    [Route("api/[Controller]/[Action]")]
     public class StatisticalController : Controller
     {
         private readonly APIContext _APIContext;
         public StatisticalController(APIContext apiContext)
         {
             _APIContext = apiContext;
-        }
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return Ok(Statistical("2023-02-02", "2023-02-03"));
-        }
-        public List<StatisticalViewModel> Statistical(string start_date, string end_date)
+        } 
+
+        [HttpPost]
+        [Consumes("application/json")]
+        public IActionResult GetStatistical(string start_date, string end_date)
         {
             string format = "yyyy-MM-dd";
             DateTime start = DateTime.ParseExact(start_date, format, CultureInfo.InvariantCulture);
@@ -42,7 +42,7 @@ namespace APIService.Controllers
                 statistical_.Add(item);
                 
             }
-            return statistical_;
+            return Ok(statistical_);
         }
     }
 }

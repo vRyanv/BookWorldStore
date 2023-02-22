@@ -82,6 +82,6 @@ app.UseCors();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Token}/{action=Index}");
+    pattern: "{controller=Token}/{action=Index}/{id?}");
 
 app.Run();
