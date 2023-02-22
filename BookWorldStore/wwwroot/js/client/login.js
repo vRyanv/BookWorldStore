@@ -40,7 +40,7 @@
             var email = $("#txt_email").val()
             var password = $("#txt_pass").val()
             $.ajax({
-                url:'http://api.bookshop.com/api/token/login',
+                url:'http://api.bookshop.com:81/api/token/login',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ email: email, password: password}),

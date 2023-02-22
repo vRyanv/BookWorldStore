@@ -2,16 +2,15 @@
     const dashboardApp = {
         SetupButton: function () {
             $('#btn_search_revenue_by_date').click(function () {
-                dashboardApp.GetRevenue()
+                var fromDate = $('#txt_from_date').val()
+                var toDate = $('#txt_to_date').val()
+                dashboardApp.GetRevenue(fromDate, toDate)
             })
         },
-        GetRevenue: function () {
-            var fromDate = $('#txt_from_date').val()
-            var toDate = $('#txt_to_date').val()
+        GetRevenue: function (fromDate, toDate) {
             if (moment(fromDate, 'YYYY-MM-DD', true).isValid() && moment(toDate, 'YYYY-MM-DD', true).isValid()) {
                 $.ajax({
-                    url: 'https://localhost:44378/api/Statistical/GetStatistical',
-                    //url: 'http://api.bookshop.com/api/Statistical/GetStatistical',
+                    url: 'http://api.bookshop.com:81/api/Statistical/GetStatistical',
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify({start_date:fromDate,end_date:toDate}),
@@ -19,14 +18,10 @@
                     beforeSend: Utils.animation(),
                     success: function (data) {
                         console.log(data)
-                        if (data.status == 200) {
-                            dashboardApp.UpdateDateChart(data)
-                        } else {
-                            $('#error_login').html('password or username wrong')
-                        }
+                        dashboardApp.UpdateChart(data)
                         Utils.animation()
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function () {
                         alert("Server error!")
                         Utils.animation()
                     }
@@ -40,13 +35,32 @@
             chartApp.setUp("#product_statistic_chart")
             chartApp.createBlankChart()
         },
-        UpdateDateChart: function (data) {
-            var title = ['khang', 'Nhan', 'son', 'Lam']
-            var value = [100,200,50,150]
+        UpdateChart: function (data) {
+            var totalRevenue = 0
+            var title = []
+            var value = []
+            for(var i = 0; i < data.length; i++)
+            {
+                if(i < 5){
+                    title[i] = data[i].title
+                    value[i] = data[i].totalPrice
+                }
+                totalRevenue += data[i].totalPrice
+            }
+
+            $('#total_revenue').html('$'+totalRevenue)
             chartApp.renderDataChart(title, value)
+        },
+        GetRevenueToday: function(){
+            var date = moment();
+            var currentDate = date.format('YYYY-MM-D');
+            $('#txt_from_date').val(currentDate)
+            $('#txt_to_date').val(currentDate)
+            dashboardApp.GetRevenue(currentDate, currentDate)
         },
         run: function() {
             dashboardApp.renderBlankChart();
+            dashboardApp.GetRevenueToday();
             dashboardApp.SetupButton();
         }
     }
