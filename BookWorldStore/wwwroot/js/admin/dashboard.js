@@ -10,7 +10,7 @@
             var toDate = $('#txt_to_date').val()
             if (moment(fromDate, 'YYYY-MM-DD', true).isValid() && moment(toDate, 'YYYY-MM-DD', true).isValid()) {
                 $.ajax({
-                    url: 'https://localhost:7025/api/Statistical/GetStatistical',
+                    url: 'https://localhost:44378/api/Statistical/GetStatistical',
                     //url: 'http://api.bookshop.com/api/Statistical/GetStatistical',
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',

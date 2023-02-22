@@ -42,7 +42,7 @@ namespace APIService.Controllers
                         end=g.Key.delivery_date,
                         status=g.Key.status,
                         totalPrice = g.Sum(x => x.od.quantity)*g.Key.price,
-                    }).Where(od => start >= od.start && end<=od.end && od.status==1).ToList().OrderByDescending(x=>x.totalPrice);
+                    }).Where(od => od.start >= start && od.start <= end  && od.status==1).ToList().OrderByDescending(x=>x.totalPrice);
             foreach(StatisticalViewModel item in result)
             {
                 statistical_.Add(item);
