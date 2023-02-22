@@ -36,7 +36,7 @@ namespace BookWorldStore.Controllers
             {
                  order_id = order.order_id;
             }
-            ViewData["list"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
+            ViewData["list_cart"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
             {
                 id = od.order_detail_id,
                 image = od.book.image,
