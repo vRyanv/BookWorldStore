@@ -183,6 +183,7 @@ namespace BookWorldStore.Controllers
                 {
                     if (payment.inventory_num < payment.quantity)
                     {
+                        TempData["message"] = "out of stock ";
                         return RedirectToAction("Index");
                     }
                 }
@@ -204,6 +205,7 @@ namespace BookWorldStore.Controllers
                     dbContext.SaveChanges();
                 }
             }
+           
             return RedirectToAction("Index");
         }
         public void check_inventory(int id, int quantity)

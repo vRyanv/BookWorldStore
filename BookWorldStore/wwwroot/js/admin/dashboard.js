@@ -3,7 +3,6 @@
         SetupButton: function () {
             $('#btn_search_revenue_by_date').click(function () {
                 dashboardApp.GetRevenue()
-                //dashboardApp.UpdateDateChart();
             })
         },
         GetRevenue: function () {
@@ -11,7 +10,7 @@
             var toDate = $('#txt_to_date').val()
             if (moment(fromDate, 'YYYY-MM-DD', true).isValid() && moment(toDate, 'YYYY-MM-DD', true).isValid()) {
                 $.ajax({
-                    url: 'https://localhost:44378/api/Statistical/GetStatistical',
+                    url: 'https://localhost:7025/api/Statistical/GetStatistical',
                     //url: 'http://api.bookshop.com/api/Statistical/GetStatistical',
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',
@@ -21,7 +20,7 @@
                     success: function (data) {
                         console.log(data)
                         if (data.status == 200) {
-                           
+                            dashboardApp.UpdateDateChart(data)
                         } else {
                             $('#error_login').html('password or username wrong')
                         }
@@ -41,7 +40,7 @@
             chartApp.setUp("#product_statistic_chart")
             chartApp.createBlankChart()
         },
-        UpdateDateChart: function () {
+        UpdateDateChart: function (data) {
             var title = ['khang', 'Nhan', 'son', 'Lam']
             var value = [100,200,50,150]
             chartApp.renderDataChart(title, value)

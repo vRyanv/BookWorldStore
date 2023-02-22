@@ -7,8 +7,8 @@
 
 }
 <div class="" style="background-color: rgb(102, 95, 170); text-align: center;margin-top:1rem;margin:.5rem">
-    <button type="button" class="yellow-button" id="btn_get_order" style="margin-top: .5rem; float: right; background: green" >
-        <a asp-controller ="Cart" asp-action="Payment" asp-route-id="@ViewData["order_id"]">Payment</a>
+    <button type="button" class="yellow-button" id="btn_get_order" style="margin-top: .5rem; float: right; background: green" data-bs-toggle="modal" data-bs-target="#Payment_model">
+        <a>Payment</a>
 	</button>
     <button type="button" data-bs-toggle="modal" data-bs-target="#history_model" class="yellow-button" style="margin-top: .5rem; float: right; margin-right: 1rem; background: rgb(151, 127, 34)">
         Old order
@@ -72,7 +72,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="Payment_model" tabindex="-1" aria-labelledby="history_model" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content color-popup-model">
+            <div class="modal-header">
+                <h1 class="modal-title title-model-custom">Payment</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <span>@if (TempData.ContainsKey("message"))
+                {
+                    <div  id="erorr_payment">@TempData["message"]</div>
+                }
+            </span>
+            
+            <div class="modal-body body-model-custome">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="black-button" data-bs-dismiss="modal">Close</button>
+                <a asp-controller="Cart" asp-action="Payment" asp-route-id="@ViewData["order_id"]">
+                    <button type="submit" id="btn_ok_change_infor" class="yellow-button">OK</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Script{
+
+    @if (TempData.ContainsKey("message"))
+    {
+                    <script>
+                        $('#error_change_pass').html('@TempData["message"]')
+
+                        $('#btn_get_order').click()
+                    </script>
+    }
 
 }
