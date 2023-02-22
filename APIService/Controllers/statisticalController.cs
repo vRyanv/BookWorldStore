@@ -1,7 +1,9 @@
 ﻿
 using APIService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Globalization;
 
 namespace APIService.Controllers
@@ -24,6 +26,7 @@ namespace APIService.Controllers
 
         [HttpPost]
         [Consumes("application/json")]
+        [Authorize(Roles = "owner, admin")]
         public IActionResult GetStatistical(DateStati dateStati)
         {
             string format = "yyyy-MM-dd";

@@ -3,43 +3,35 @@
     Layout = "_CLientLayout";
 }
 
-@model IEnumerable<Book>
+@model Book
 
 @section Style{
     <link href="~/css/client/searchBox.css" rel="stylesheet" type="text/css" asp-append-version="true" />
 }
 
 <div id="templatemo_content">
-<div id="templatemo_content_left">
-    <div class="templatemo_content_left_section">
-        <h1>Categories</h1>
-        <ul>
-            <li><a href="subpage.html">Donec accumsan urna</a></li>
-            <li><a href="subpage.html">Proin vulputate justo</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">Aliquam tristique dolor</a></li>
-            <li><a href="#">Maece nas metus</a></li>
-            <li><a href="#">Sed pellentesque placerat</a></li>
-            <li><a href="#">Suspen disse</a></li>
-            <li><a href="#">Maece nas metus</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-        </ul>
+    <div id="templatemo_content_left">
+        <div class="templatemo_content_left_section">
+            <h1>Categories</h1>
+            <ul>
+                @foreach (Category cate in (List<Category>)ViewData["cateList"])
+                {
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-id="@cate.cate_id">@cate.name</a></li>
+                }
+
+            </ul>
+        </div>
+        <div class="templatemo_content_left_section">
+            <h1>Bestsellers</h1>
+            <ul>
+                @foreach (Category cate in (List<Category>)ViewData["cateList"])
+                {
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-id="@cate.cate_id">@cate.name</a></li>
+                }
+            </ul>
+        </div>
     </div>
-    <div class="templatemo_content_left_section">
-        <h1>Bestsellers</h1>
-        <ul>
-            <li><a href="#">Vestibulum ullamcorper</a></li>
-            <li><a href="#">Maece nas metus</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="#">In sed risus ac feli</a></li>
-            <li><a href="http://www.photovaco.com" target="_parent">Free Photos</a></li>
-        </ul>
-    </div>
-</div>
-<!-- end content left -->
+    <!-- end content left -->
 
     <!-- content right -->
     <div id="templatemo_content_right">
@@ -56,30 +48,28 @@
                 <span class="close" onclick="searchToggle(this, event);"></span>
             </div>
         </div>
-        @foreach (var book in Model)
-        {
+
             <div class="templatemo_product_box" style="padding:1rem; height: 27rem">
-                <h1>@book.title</h1>
-                <img src="~/img/book/@book.image" alt="image" style="height:9rem;width:6rem" />
+                <h1>@Model.title</h1>
+                <img src="~/img/book/@Model.image" alt="image" style="height:9rem;width:6rem" />
                 <div class="product_info">
 
-                    <h3 style="margin:0;font-size:small">Author: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.author</p> </h3>
-                    <h3 style="font-size:small;margin:0;">Category: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.category.name</p> </h3>
-                    <h3 style="font-size:small;margin:0;">Supplier: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.supplier.name</p> </h3>
-                    <h3 style="font-size:small;margin:0;"> Publishing: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.publishing_year</p> </h3>
-                    <h3 style="margin:0;color:forestgreen">$<p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@book.price</p> </h3>
-                    <h3 style="font-size:small">Available: <p style="color:rgb(203, 199, 80);display:inline-block">@book.inventory_num</p> </h3>
+                <h3 style="margin:0;font-size:small">Author: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@Model.author</p> </h3>
+                    <h3 style="font-size:small;margin:0;">Category: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@Model.category.name</p> </h3>
+                    <h3 style="font-size:small;margin:0;">Supplier: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@Model.supplier.name</p> </h3>
+                    <h3 style="font-size:small;margin:0;"> Publishing: <p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@Model.publishing_year</p> </h3>
+                <h3 style="margin:0;color:forestgreen">$<p style="margin:0;color:rgb(203, 199, 80);display:inline-block">@Model.price</p> </h3>
+                <h3 style="font-size:small">Available: <p style="color:rgb(203, 199, 80);display:inline-block">@Model.inventory_num</p> </h3>
                     <p style="overflow: hidden; text-overflow: ellipsis; height: 8.9rem; font-size:larger;width: 34.5rem;">
-                      @book.des
+                    @Model.des
                     </p>
                 </div>
                 <div style="float:left">
-                    <div class="buy_now_button" style="margin:0;cursor:pointer" data-book-id="@book.book_id">
-                        <a asp-controller="Cart" asp-route-id="@book.book_id" asp-action="AddToCart">Add to cart</a>
+                <div class="buy_now_button" style="margin:0;cursor:pointer" data-book-id="@Model.book_id">
+                    <a asp-controller="Cart" asp-route-id="@Model.book_id" asp-action="AddToCart">Add to cart</a>
                     </div>
                 </div>
             </div>
-        }
            
             <div class="cleaner_with_height">&nbsp;</div>
 

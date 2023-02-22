@@ -41,10 +41,8 @@
             var value = []
             for(var i = 0; i < data.length; i++)
             {
-                if(i < 5){
-                    title[i] = data[i].title
-                    value[i] = data[i].totalPrice
-                }
+                title[i] = data[i].title
+                value[i] = data[i].totalPrice
                 totalRevenue += data[i].totalPrice
             }
 

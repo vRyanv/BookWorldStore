@@ -17,11 +17,16 @@ namespace BookWorldStore.Controllers
             this.dbContext = dbContext;
         }
 
+        [HttpGet]
         [Authorize(Roles = "client, owner, admin")]
         public async Task<IActionResult> Index()
         {
             int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
-            Order order = await dbContext.orders.Where(o => o.user_id == userId && o.status == 0).FirstOrDefaultAsync();
+            ViewBag.loggedIn = true;
+
+            Order order = await dbContext.orders
+                                .Where(o => o.user_id == userId && o.status == 0)
+                                .FirstOrDefaultAsync();
             int order_id;
             if (order == null)
             {
@@ -36,50 +41,59 @@ namespace BookWorldStore.Controllers
             {
                  order_id = order.order_id;
             }
-            ViewData["list"] = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
-            {
-                id = od.order_detail_id,
-                image = od.book.image,
-                title = od.book.title,
-                price = od.book.price,
-                quantity = od.quantity,
-                total = od.book.price * od.quantity,
-                orderid = o.order_id,
-                date = o.delivery_date,
-                status = o.status,
-                user_id = o.user_id,
 
-            }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
-            ViewBag.loggedIn = true;
+            ViewData["list_cart"] = await dbContext.orderDetails.Include("book")
+                                        .Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) 
+                                        => new OldOrderViewModel
+                                        {
+                                            id = od.order_detail_id,
+                                            image = od.book.image,
+                                            title = od.book.title,
+                                            price = od.book.price,
+                                            quantity = od.quantity,
+                                            total = od.book.price * od.quantity,
+                                            orderid = o.order_id,
+                                            date = o.delivery_date,
+                                            status = o.status,
+                                            user_id = o.user_id,
 
-            var result = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new OldOrderViewModel
-            {
-                id = od.order_detail_id,
-                image = od.book.image,
-                title = od.book.title,
-                price = od.book.price,
-                quantity = od.quantity,
-                total = od.book.price * od.quantity,
-                date = o.delivery_date,
-                status = o.status,
-                user_id = o.user_id,
-            }).Where(od => od.status == 1 && od.user_id == userId).ToListAsync();
+                                        }).Where(od => od.status == 0 && od.user_id == userId)
+                                        .ToListAsync();
+    
+
+            var result = await dbContext.orderDetails
+                                .Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o)
+                                => new OldOrderViewModel
+                                    {
+                                        id = od.order_detail_id,
+                                        image = od.book.image,
+                                        title = od.book.title,
+                                        price = od.book.price,
+                                        quantity = od.quantity,
+                                        total = od.book.price * od.quantity,
+                                        date = o.delivery_date,
+                                        status = o.status,
+                                        user_id = o.user_id,
+                                    }).Where(od => od.status == 1 && od.user_id == userId)
+                                    .ToListAsync();
+
             ViewData["history"] = result;
-            ViewData["order_id"]=order_id;
+            ViewData["order_id"]= order_id;
 
             var bills= await dbContext.orders.Include("user")
-                .Where(bill => bill.order_id == order_id && bill.user_id == userId && bill.status == 0)
-                .Select(bill => new BillViewModel
-            {
-                email = bill.user.email,
-                address = bill.user.address,
-                phone = bill.user.phone,
-                order_id = bill.order_id,
-                order_date = bill.order_date,
-                order_delivery = bill.delivery_date,
-                status = bill.status,
-            }).ToListAsync();
+                            .Where(bill => bill.order_id == order_id && bill.user_id == userId && bill.status == 0)
+                            .Select(bill => new BillViewModel
+                                {
+                                    email = bill.user.email,
+                                    address = bill.user.address,
+                                    phone = bill.user.phone,
+                                    order_id = bill.order_id,
+                                    order_date = bill.order_date,
+                                    order_delivery = bill.delivery_date,
+                                    status = bill.status,
+                                }).ToListAsync();
             ViewData["bill"] = bills;
+
             return View();
         }
         
@@ -129,6 +143,9 @@ namespace BookWorldStore.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        [Authorize(Roles = "client, owner, admin")]
         public async Task<IActionResult> Remove(int id)
         {
             OrderDetail orderDetail=dbContext.orderDetails.Find(id);
@@ -137,6 +154,8 @@ namespace BookWorldStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "client, owner, admin")]
         public async Task<IActionResult> Increase(int id)
         {
             OrderDetail orderDetail = dbContext.orderDetails.Find(id);
@@ -146,6 +165,8 @@ namespace BookWorldStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "client, owner, admin")]
         public async Task<IActionResult> Decrease(int id)
         {
             OrderDetail orderDetail = dbContext.orderDetails.Find(id);
@@ -158,25 +179,31 @@ namespace BookWorldStore.Controllers
             return RedirectToAction("Index");
              
         }
+
+        [HttpGet]
+        [Authorize(Roles = "client, owner, admin")]
         public async Task<IActionResult> Payment(int id)
         {
             var order = await dbContext.orders.FindAsync(id);
             int userId = UserUtils.Instance.GetUser(HttpContext).user_id;
             //get all order in cart
-            var Payments = await dbContext.orderDetails.Include("book").Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) => new PaymentViewModel
-            {
-                book_Id=od.book.book_id,
-                quantity = od.quantity,
-                total = od.book.price * od.quantity,
-                inventory_num=od.book.inventory_num,
-                user_id = o.user_id,
-                status  =o.status,
+            var Payments = await dbContext.orderDetails.Include("book")
+                            .Join(dbContext.orders, od => od.order_id, o => o.order_id, (od, o) 
+                            => new PaymentViewModel
+                            {
+                                book_Id=od.book.book_id,
+                                quantity = od.quantity,
+                                total = od.book.price * od.quantity,
+                                inventory_num=od.book.inventory_num,
+                                user_id = o.user_id,
+                                status  =o.status,
 
-            }).Where(od => od.status == 0 && od.user_id == userId).ToListAsync();
+                            }).Where(od => od.status == 0 && od.user_id == userId)
+                            .ToListAsync();
             // create the field to save the total of money of order
             float total=0;
             // check have order or not
-            if (Payments == null)
+            if (Payments.Count == 0)
             {
                 return RedirectToAction("Index");
             }
@@ -195,10 +222,10 @@ namespace BookWorldStore.Controllers
                 {
                     // decrease the inventory num and sum total
                     foreach (PaymentViewModel payment in Payments)
-                {
-                    check_inventory(payment.book_Id, payment.quantity);
-                        total = total + payment.total;
-                }    
+                    {
+                        check_inventory(payment.book_Id, payment.quantity);
+                            total = total + payment.total;
+                    }    
                     // save order
                     order.order_date = DateTime.Today;
                     order.delivery_date = order.order_date.AddDays(5);
@@ -211,7 +238,8 @@ namespace BookWorldStore.Controllers
            
             return RedirectToAction("Index");
         }
-        public void check_inventory(int id, int quantity)
+
+        private void check_inventory(int id, int quantity)
         {
             var book = dbContext.books.Find(id);
             if (book!= null)

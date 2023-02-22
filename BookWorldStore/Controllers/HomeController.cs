@@ -65,10 +65,16 @@ namespace BookWorldStore.Controllers
                 ViewBag.loggedIn = true;
             }
 
-            ICollection<Book> bookList = await dbContext.books.Where(b => b.status == 1 && b.book_id == id)
-                                    .Include(c => c.category).Include(s => s.supplier)
-                                    .ToListAsync();
-            return View(bookList);
+            Book book = await dbContext.books.Where(b => b.status == 1 && b.book_id == id)
+                        .Include(c => c.category).Include(s => s.supplier)
+                        .FirstOrDefaultAsync();
+            if(book == null)
+            {
+                return NotFound();
+            }
+            var cateList = await dbContext.categories.Where(c => c.status == 1).ToListAsync();
+            ViewData["cateList"] = cateList;
+            return View(book);
         }
 
 		public IActionResult Login()
