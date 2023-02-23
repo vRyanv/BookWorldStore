@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <title>@ViewBag.title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" href="/img/decoration/book-ion-web.png">
     <partial name="_ShareLibCss" />
     <link rel="stylesheet" href="~/css/admin/dashboardRemote.css" asp-append-version="true">
 </head>
@@ -30,7 +30,7 @@
                     <div class="controller-in-dashboard @ActivePage("Customer Request")" data-page-name="supperadmin/CustomerRequest"><i class="bi-tags"></i> Customer </div>
                     <div class="controller-in-dashboard @ActivePage("Owner Request")" data-page-name="supperadmin/OwnerRequest"><i class="bi-tags"></i> Owner </div>
                     <div class="controller-in-dashboard" data-page-name="Home"><i class="bi-box-seam"></i> Website </div>
-                    <a asp-controller="Home" asp-action="Logout" style="text-decoration: none; color: black"><div class="controller-in-dashboard"><i class="bi-power"></i> Logout</div></a>
+                    <a id="btn_logout" style="text-decoration: none; color: black"><div class="controller-in-dashboard"><i class="bi-power"></i> Logout</div></a>
                 </div>
             </div>
 
