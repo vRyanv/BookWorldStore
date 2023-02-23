@@ -134,7 +134,12 @@
 </div>
 
 @section Script{
-
+    <script>
+                    $('#btn_logout').click(function () {
+                Utils.deleteCookie('__UserToken')
+                location.href = "/Home/Login"
+            })
+    </script>
     @if (TempData.ContainsKey("message"))
     {
                     <script>

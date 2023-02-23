@@ -29,6 +29,10 @@
 @section Script{
         <script src="~/js/client/searchBox.js" asp-append-version="true"></script>
         <script>
+            $('#btn_logout').click(function () {
+                Utils.deleteCookie('__UserToken')
+                location.href = "/Home/Login"
+            })
             $('#change_password_form').submit(function(e){
                 if ($('#user_new_pass').val().trim() !== $('#user_confirm_pass').val().trim()){
                     e.preventDefault()
