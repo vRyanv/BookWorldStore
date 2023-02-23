@@ -9,9 +9,13 @@
         },
         GetRevenue: function (fromDate, toDate) {
             if (moment(fromDate, 'YYYY-MM-DD', true).isValid() && moment(toDate, 'YYYY-MM-DD', true).isValid()) {
+                var token = Utils.getCookie('__UserToken')
                 $.ajax({
                     url: 'http://api.bookshop.com:81/api/Statistical/GetStatistical',
                     type: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify({start_date:fromDate,end_date:toDate}),
                     dataType: 'json',
