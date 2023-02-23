@@ -28,7 +28,7 @@ namespace BookWorldStore.Controllers
                 address=p.address,
                 phone=p.phone,
                 gender=p.gender,
-            }).Where(u=> user.email==u.email).FirstAsync();
+            }).Where(u=> user.email==u.email).FirstOrDefaultAsync();
 
             ViewBag.loggedIn = true;
             return View(result);
@@ -38,7 +38,7 @@ namespace BookWorldStore.Controllers
         public IActionResult ChangesImformation(ProfileViewModel profile) {
 
             var user = UserUtils.Instance.GetUser(this.HttpContext);
-            User infor= dbContext.users.Where(u => user.email == u.email).First();
+            User infor= dbContext.users.Where(u => user.email == u.email).FirstOrDefault();
             infor.phone = profile.phone;
             infor.gender = profile.gender;
             infor.address = profile.address;

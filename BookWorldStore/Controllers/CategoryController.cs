@@ -67,7 +67,7 @@ namespace BookWorldStore.Controllers
         public async Task<IActionResult> Delete(int id)
         {
 
-            Category category= await dbContext.categories.Where(c=>c.cate_id==id && c.status==1).FirstAsync();
+            Category category= await dbContext.categories.Where(c=>c.cate_id==id && c.status==1).FirstOrDefaultAsync();
             category.status = 0;
             dbContext.SaveChanges();
             return RedirectToAction("Index");

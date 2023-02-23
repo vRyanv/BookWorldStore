@@ -50,7 +50,7 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Edit(int id,Supplier Model)
         {
-            var supplier= await dbContext.suppliers.Where(s=>s.status==1 && s.sup_id==id).FirstAsync();
+            var supplier= await dbContext.suppliers.Where(s=>s.status==1 && s.sup_id==id).FirstOrDefaultAsync();
             if (supplier != null)
             {
                 supplier.name= Model.name;
@@ -66,7 +66,7 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "owner, admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            Supplier supplier= await dbContext.suppliers.Where(s=>s.status==1&& s.sup_id==id).FirstAsync();
+            Supplier supplier= await dbContext.suppliers.Where(s=>s.status==1&& s.sup_id==id).FirstOrDefaultAsync();
             supplier.status = 0;
             dbContext.SaveChanges();
             return RedirectToAction("Index");
