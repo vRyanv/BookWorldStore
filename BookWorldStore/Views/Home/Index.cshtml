@@ -25,9 +25,19 @@
     <div class="templatemo_content_left_section">
         <h1>Bestsellers</h1>
         <ul>
-                @foreach (Category cate in (List<Category>)ViewData["cateList"])
+                @{
+                    int quantityBestSell = 5;
+                }
+                @foreach (Book book in Model)
                 {
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-id="@cate.cate_id">@cate.name</a></li>
+                    <li><a asp-controller="Home" asp-action="Detail" asp-route-id="@book.book_id">@book.title</a></li>
+                    {
+                        quantityBestSell -= 1;
+                    }
+                    @if (quantityBestSell == 0)
+                    {
+                       break;
+                    }
                 }
         </ul>
     </div>

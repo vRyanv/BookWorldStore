@@ -58,10 +58,17 @@
                 <div id="templatemo_new_books">
                     <ul>
                         @{int quantityNewBook = 3;}
-@*                       @foreach (var item in collection)
+                        @foreach (Book book in Model)
                         {
-                            <li></li>
-                        }*@
+                            <li>@book.title</li>
+                            {
+                                quantityNewBook -= 1;
+                            }
+                            @if (quantityNewBook == 0)
+                            {
+                                break;
+                            }
+                        }
                     </ul>
                 </div>
             </div>
