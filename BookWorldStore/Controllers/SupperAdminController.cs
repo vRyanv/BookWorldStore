@@ -84,7 +84,7 @@ namespace BookWorldStore.Controllers
                 user.status = 0;
                 dbContext.SaveChanges();
                 string subject = "Response to password reset request";
-                string message = $"<h3>Your reset request has been accepted</h3><br/><a href='http://book.fpt.com:8080/SupperAdmin/GetNewPass?email={email}&&token={tokenResetPass}'>Click here to get new password</a>";
+                string message = $"<h3>Your reset request has been accepted</h3><br/><a href='http://book.fpt.com/SupperAdmin/GetNewPass?email={email}&&token={tokenResetPass}'>Click here to get new password</a>";
                 await MailHelper.Instance.SendEmail(email, subject, message);
 
 

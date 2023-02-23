@@ -295,7 +295,7 @@ img {
     padding: 10px;
     margin: 0 0 20px 0;
     font-size: 15px;
-    color: #cbc750;
+    color: yellow;
     background: url(../../img/decoration/templatemo_h1_bg.jpg);
 }
 
@@ -311,7 +311,7 @@ img {
     padding: 0;
     margin: 0 0 20px 0;
     font-size: 18px;
-    color: #85391f;
+    color: aquamarine;
 }
 
 #templatemo_content_right ul {

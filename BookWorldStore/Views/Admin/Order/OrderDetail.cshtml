@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<OrderDetail>
 @{
     Layout = "_AdminLayout";
-    ViewBag.title = "OrderDetail";
+    ViewBag.title = "Order";
 }
 
-}
-<table class="table table-hover pt-10">
+<table class="table table-hover pt-10" style="text-align:center">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -24,10 +23,11 @@
                 <th scope="row">@orderD.order_detail_id</th>
                 <td>@orderD.book.title</td>
                 <th scope="row">
-                    <img style="width: 5rem; height: 5rem" src="~/img/decoration/@orderD.book.image">
+                    <img style="width: 5rem; height: 5rem" src="~/img/book/@orderD.book.image">
                 </th>
+                <td>$@orderD.book.price </td>
                 <td> @orderD.quantity</td>
-                <td>  @orderD.book.price </td>
+                <td>$@(orderD.book.price * orderD.quantity)</td>
             </tr>
         }
         <!-- render in js-->

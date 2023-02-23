@@ -5,7 +5,7 @@
 }
 
 <div style="padding-top: 5rem">
-    <table class="table table-hover pt-10">
+    <table class="table table-hover pt-10" style="text-align:center">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -26,9 +26,9 @@
                     <td>@order.user.email</td>
                     <td>@order.user.phone</td>
                     <td>@order.user.address</td>
-                    <td>@order.order_date</td>
-                    <td>@order.total</td>
-                    <td>@order.delivery_date</td>
+                    <td>@order.order_date.ToShortDateString()</td>
+                    <td>@order.delivery_date.ToShortDateString()</td>
+                    <td>$@order.total</td>
                     <td>
                         <div class="btn-group" role="group">
                             <a href="/order/orderdetail/@order.order_id"><button type="button" class="btn btn-primary btn-view-detail" data-order-id="@order.order_id">view</button></a>

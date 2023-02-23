@@ -43,4 +43,10 @@
 <partial name="_ShareLibJS" />
 <script src="~/js/admin/dashboardRemote.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required:false)
+<script>
+    $('#btn_logout').click(function () {
+        Utils.deleteCookie('__UserToken')
+        location.href = "/Home/Login"
+    })
+</script>
 </html>

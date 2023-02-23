@@ -8,10 +8,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="d-flex" id="search_box_product" role="search">
-                    <input class="form-control me-2" id="txt_search_pro" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" id="btn_search_product">Search</button>
+                    <input class="form-control me-2" id="txt_search_book" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" id="btn_search_book">Search</button>
                     <a href="/Book/Create"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#new_product_model" style="width: 8rem;margin-left: 2rem">New product</button></a>
-                    <a href="/Book" style="margin-left: 3rem"><button class="btn btn-primary">Refresh</button></a>
                 </div>
             </div>
         </div>
@@ -39,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col-5">
-                    <div style="width:100%;height:fit-content;font-size:14px;font-family:Arial;text-align: justify;">
+                    <div style="width:100%;height:fit-content;font-size:14px;font-family:Arial;text-align: justify;padding: 1rem;">
                         @book.des
                     </div>
                 </div>
@@ -94,6 +93,12 @@
                 form.append(IdInput);
                 form.appendTo("body");
                 form.submit();
+            })
+
+            $('#btn_search_book').click(function(){
+                if($('#txt_search_book').val().trim() !== ""){
+                    location.href = "/Book/SearchBook?title="+$('#txt_search_book').val()
+                }
             })
         })
     </script>

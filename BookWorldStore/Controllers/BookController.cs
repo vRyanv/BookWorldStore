@@ -21,7 +21,7 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "owner, admin")]
         public IActionResult Index()
         {
-            var book = dbContext.books.Include("category").Include("supplier").ToList();
+            var book = dbContext.books.Where(b => b.status == 1).Include("category").Include("supplier").ToList();
             return View("~/Views/Admin/Book/Index.cshtml",book);
         }
 
@@ -148,6 +148,17 @@ namespace BookWorldStore.Controllers
                 return NotFound();
             }
 
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "owner, admin")]
+        public async Task<IActionResult> SearchBook([FromQuery(Name ="title")]string title)
+        {
+            ICollection<Book> bookList = await dbContext.books
+                                            .Where(b => b.status == 1 && b.title.Contains(title))
+                                            .Include(c => c.category).Include(s => s.supplier)
+                                            .ToListAsync();
+            return View("~/Views/Admin/Book/Index.cshtml", bookList);
         }
 
     }

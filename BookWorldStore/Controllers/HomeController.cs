@@ -55,8 +55,6 @@ namespace BookWorldStore.Controllers
             return View("Index", bookList);
         }
 
-
-
         public async Task<IActionResult> Detail(int id)
         {
             User user = Utils.UserUtils.Instance.GetUser(HttpContext);
@@ -92,7 +90,7 @@ namespace BookWorldStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                User exisEmail = await dbContext.users.Where(e => e.email == user.email).FirstAsync();
+                User exisEmail = await dbContext.users.Where(e => e.email == user.email).FirstOrDefaultAsync();
                 if(exisEmail == null)
                 {
                     user.status = 0;

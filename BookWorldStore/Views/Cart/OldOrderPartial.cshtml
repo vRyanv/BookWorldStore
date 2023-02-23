@@ -1,6 +1,6 @@
 ﻿@using BookWorldStore.Repository;
 <div id="cart_content">
-    <table class="table pt-10" style="color:white; font-size:12px;min-height: 28rem;">
+    <table class="table pt-10" style="color:white; font-size:12px;min-height: 28rem;text-align:center">
         <thead>
             <tr style="text-align: center">
                     <th scope="col">#</th>
@@ -18,18 +18,18 @@
                 <tr>
                     <th scope="row"> @order.id </th>
                     <th scope="row">
-                        <img style="width: 5rem; height: 7rem" src="~/img/book/@order.image" alt="">
+                        <img style="border-radius: 0.5rem;width: 5rem; height: 7rem" src="~/img/book/@order.image" alt="">
                     </th>
                     <td>@order.title</td>
-                    <td>@order.price $</td>
+                    <td>$@order.price</td>
                     <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 @order.quantity
                             </div>
                     </td>
-                    <td>@order.total</td>
+                    <td>$@order.total</td>
                     <td>
-                        @order.date
+                        @order.date.ToShortDateString()
                     </td>
                 </tr>
             }

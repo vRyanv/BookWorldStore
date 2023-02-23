@@ -62,7 +62,7 @@
                     <div class="controller-in-dashboard @ActivePage("Supplier")" data-page-name="Supplier"><i class="bi-skype"></i> Supplier </div>
                     <div class="controller-in-dashboard @ActivePage("Order")" data-page-name="Order"><i class="bi-box-seam"></i> Order </div>
                     <div class="controller-in-dashboard" data-page-name="Home"><i class="bi-box-seam"></i> Website </div>
-                    <a href="/logout" style="text-decoration: none; color: black"><div class="controller-in-dashboard"><i class="bi-power"></i> Logout</div></a>
+                    <a id="btn_logout" style="text-decoration: none; color: black"><div class="controller-in-dashboard"><i class="bi-power"></i> Logout</div></a>
                 </div>
             </div>
             <div class="col" style="margin-left: 17rem;">
@@ -76,4 +76,10 @@
 <partial name="_ShareLibJS" />
 <script src="~/js/admin/dashboardRemote.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required:false)
+<script>
+    $('#btn_logout').click(function () {
+        Utils.deleteCookie('__UserToken')
+        location.href = "/Home/Login"
+    })
+</script>
 </html>

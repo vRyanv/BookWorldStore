@@ -79,48 +79,49 @@
                 <div class="modal-body body-model-custome">
                 <partial name="OldOrderPartial" />
                 </div>
+                <div class="modal-footer">
+                        <button type="button" class="black-button" data-bs-dismiss="modal">Close</button>
+                </div>
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="Payment_model" tabindex="-1" aria-labelledby="history_model" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content color-popup-model">
             <div class="modal-header">
                 <h1 class="modal-title title-model-custom">Payment</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            @foreach (BillViewModel bill in (List<BillViewModel>)ViewData["bill"])
-            {
-                <div>
-                    @bill.email
-                </div>
-                <div>
-                    @bill.address
-                </div>
-                <div>
-                   @bill.phone
-                </div>
-                <div>
-                    @bill.order_date
-                </div>
-                 <div>
-                    @bill.order_delivery
-                </div>
-                  break;
-            }
-
-                <div>
-                    @total
-                </div>
-            <span>@if (TempData.ContainsKey("message"))
+            </div>           
+            <div class="modal-body body-model-custome" style="color:white">
+                @foreach (BillViewModel bill in (List<BillViewModel>)ViewData["bill"])
                 {
-                    <div  id="erorr_payment">@TempData["message"]</div>
+                    <div style="margin-bottom:1rem">
+                        Email: @bill.email
+                    </div>
+                    <div style ="margin-bottom:1rem">
+                        Address: @bill.address
+                    </div>
+                    <div style="margin-bottom:1rem">
+                        Phone: @bill.phone
+                    </div>
+                    <div style="margin-bottom:1rem">
+                        Order date: @bill.order_date.ToShortDateString()
+                    </div>
+                    <div style="margin-bottom:1rem">
+                        Delivery date: @bill.order_delivery.ToShortDateString()
+                    </div style="margin-bottom:1rem">
+                    break;
                 }
-            </span>
-            
-            <div class="modal-body body-model-custome">
-                
+                    <div style="margin-bottom:1rem">
+                        Total: $@total
+                    </div>
+                    <span style="color:orangered">
+                        @if (TempData.ContainsKey("message"))
+                        {
+                            <div id="erorr_payment">@TempData["message"]</div>
+                        }
+                    </span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="black-button" data-bs-dismiss="modal">Close</button>
