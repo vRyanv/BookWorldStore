@@ -57,7 +57,9 @@
                         </div>
                     </td>
                     <td>@od.total</td>
-                     @(total=total+od.total)
+                    @{
+                        total = total + od.total;
+                    }
                     <td id="total_price_"></td>
                     <td>
 						<button type="button" class="yellow-button" data-order-detail-id=""><a asp-controller="Cart" asp-route-id="@od.id" asp-action="Remove">Delete</a></button>
