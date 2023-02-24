@@ -14,13 +14,14 @@
         <div class="templatemo_content_left_section">
             <h1>Categories</h1>
             <ul>
+                 <li><a asp-controller="Home" asp-action="Index">All</a></li>
                 @foreach (Category cate in (List<Category>)ViewData["cateList"])
                 {
                     <li><a asp-controller="Home" asp-action="Index" asp-route-id="@cate.cate_id">@cate.name</a></li>
                 }
 
             </ul>
-        </div>  
+        </div>  c
         <div class="templatemo_content_left_section">
             <h1>Bestsellers</h1>
             <ul>
