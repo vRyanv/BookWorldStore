@@ -92,15 +92,10 @@ namespace BookWorldStore.Controllers
                     {
                         string oldImg = updateBook[0].image;
                         string folder = "img/book";
-                        bool result = FileHelper.Instance.DeleteFileAsync(oldImg, folder);
-                        if (result)
-                        {
-                            string fileName = await FileHelper.Instance.SaveFileAsync(image, folder);
-                            if(fileName != "")
-                            {
-                                updateBook[0].image = fileName;
-                            }
-                        }
+                        FileHelper.Instance.DeleteFileAsync(oldImg, folder);
+                        string fileName = await FileHelper.Instance.SaveFileAsync(image, folder);
+
+                        updateBook[0].image = fileName;
                     }
 
                     dbContext.Update(updateBook[0]);
@@ -133,15 +128,10 @@ namespace BookWorldStore.Controllers
             {
                 string fileName = deleteBook[0].image;
                 string folder = "img/book";
-                bool result =  FileHelper.Instance.DeleteFileAsync(fileName, folder);
-                if (result)
-                {
-                    deleteBook[0].status = 0;
-                    dbContext.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                return NotFound();
-        
+                FileHelper.Instance.DeleteFileAsync(fileName, folder);
+                deleteBook[0].status = 0;
+                dbContext.SaveChanges();
+                return RedirectToAction("Index");
             }
             else
             {
