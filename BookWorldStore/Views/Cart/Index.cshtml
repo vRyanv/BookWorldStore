@@ -106,10 +106,10 @@
                         Phone: @bill.phone
                     </div>
                     <div style="margin-bottom:1rem">
-                        Order date: @bill.order_date.ToShortDateString()
+                        Order date: @DateTime.Now.ToShortDateString()
                     </div>
                     <div style="margin-bottom:1rem">
-                        Delivery date: @bill.order_delivery.ToShortDateString()
+                        Delivery date:@DateTime.Now.AddDays(5).ToShortDateString()
                     </div style="margin-bottom:1rem">
                     break;
                 }
