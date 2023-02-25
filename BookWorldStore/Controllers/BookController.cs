@@ -126,9 +126,7 @@ namespace BookWorldStore.Controllers
                            .ToListAsync();
             if(deleteBook.Count > 0)
             {
-                string fileName = deleteBook[0].image;
-                string folder = "img/book";
-                FileHelper.Instance.DeleteFileAsync(fileName, folder);
+
                 deleteBook[0].status = 0;
                 dbContext.SaveChanges();
                 return RedirectToAction("Index");
