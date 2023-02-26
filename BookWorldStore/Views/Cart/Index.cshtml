@@ -56,12 +56,11 @@
                             <a asp-controller ="Cart" asp-route-id="@od.id" asp-action="Increase"><button type="button" class="btn btn-info btn-increase" data-pro-id="@od.id" data-order-detail-id="">+</button></a>
                         </div>
                     </td>
-                    <td>@od.total</td>
+                    <td>$@od.total</td>
                     @{
                         total = total + od.total;
                     }
-                    <td id="total_price_"></td>
-                    <td>
+                    <td style="text-align: -webkit-center;">
 						<button type="button" class="yellow-button" data-order-detail-id=""><a asp-controller="Cart" asp-route-id="@od.id" asp-action="Remove">Delete</a></button>
                     </td>
                 </tr>

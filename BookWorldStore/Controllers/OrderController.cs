@@ -16,7 +16,7 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "client, owner, admin")]
         public IActionResult Index()
         {
-            var result=dbContext.orders.Include("user").ToList();
+            var result=dbContext.orders.Where(o => o.status == 1).Include("user").ToList();
             return View("~/Views/Admin/Order/Index.cshtml",result);
         }
 
