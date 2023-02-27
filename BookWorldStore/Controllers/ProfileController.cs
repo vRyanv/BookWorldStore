@@ -20,7 +20,6 @@ namespace BookWorldStore.Controllers
         [Authorize(Roles = "client, owner, admin")]
         public async Task<IActionResult> Index()
         {
-
             var user = UserUtils.Instance.GetUser(this.HttpContext);
             ProfileViewModel result = await dbContext.users.Select(p=>new ProfileViewModel
             {
@@ -54,9 +53,9 @@ namespace BookWorldStore.Controllers
             string notification = "";
             string email = UserUtils.Instance.GetUser(HttpContext).email;
             User user = await dbContext.users.Where(u => u.email == email && u.password == currentPass).FirstOrDefaultAsync();
-            if(user != null)
+            if(user != null && currentPass!="")
             {
-                if(newPass == confirmPass)
+                if(newPass == confirmPass && (newPass!=""&& confirmPass!=""))
                 {
                     user.password = newPass;
                     await dbContext.SaveChangesAsync();
@@ -64,14 +63,13 @@ namespace BookWorldStore.Controllers
                 }
                 else
                 {
-                    notification = "Confimr password not match";
+                    notification = "Confirm password not match";
                 }
             }
             else
             {
                 notification = "Current password is wrong";
             }
-
             TempData["notification"] = notification;
             return RedirectToAction("Index");
         }

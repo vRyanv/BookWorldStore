@@ -32,10 +32,11 @@ namespace BookWorldStore.Controllers
         [HttpPost]
         [Authorize(Roles = "owner, admin")]
         public IActionResult Create(Supplier supplier)
-        {   supplier.status = 1;
-            dbContext.suppliers.Add(supplier);
-            dbContext.SaveChanges();
-            return RedirectToAction("Index");
+        {
+                supplier.status = 1;
+                dbContext.suppliers.Add(supplier);
+                dbContext.SaveChanges();
+                return RedirectToAction("Index");
         }
 
         [HttpGet]
