@@ -3,14 +3,15 @@
     Layout = "_AdminLayout";
     ViewBag.title = "Category";
 }
-<form asp-controller="Category" asp-action="Edit">
+<form asp-controller="Category" asp-action="Edit" id="Edit_category_form">
 <div style="text-align: center">
     <h1 class="mt-3">Update Category</h1>
 </div>
 <div class="add-form mt-5 col-sm-11">
     <div class="mb-3">
         <label for="pro_name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="cate_name" placeholder="Category name" asp-for="name" value="@Model.name">
+        <input type="text" class="form-control" id="cate_name_edit" placeholder="Category name" asp-for="name" value="@Model.name">
+        <span id="empty_name_edit" class="bi-x-circle-fill" style="vertical-align: -webkit-baseline-middle; color: red; display:none;"></span>
         <input type="hidden" class="form-control" id="cate_id" placeholder="Category id" asp-for="cate_id" value="@Model.cate_id">
     </div>
     <div style="text-align: end">
@@ -19,3 +20,8 @@
     </div>
 </div>
 </form>
+@section Scripts{
+    <script src="/js/admin/category.js">
+
+    </script>
+}
