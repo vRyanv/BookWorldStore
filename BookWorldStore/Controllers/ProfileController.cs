@@ -34,7 +34,7 @@ namespace BookWorldStore.Controllers
         }
 
         [Authorize(Roles = "client, owner, admin")]
-        public IActionResult ChangesImformation(ProfileViewModel profile) {
+        public IActionResult ChangesInformation(ProfileViewModel profile) {
 
             var user = UserUtils.Instance.GetUser(this.HttpContext);
             User infor= dbContext.users.Where(u => user.email == u.email).FirstOrDefault();
