@@ -35,7 +35,7 @@ namespace BookWorldStore.Helper
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("khangak1999@gmail.com", "nmdpdbaenvufwrxm");
+                client.Authenticate("khangak1999@gmail.com", "nmdpdbaeaawrxm");
                 client.Send(emailMessage);
                 client.Disconnect(true);
             }
